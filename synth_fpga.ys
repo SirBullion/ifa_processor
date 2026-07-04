@@ -1,0 +1,24 @@
+read_verilog -sv \
+rtl/ifa_p2.sv \
+rtl/ifa_p4.sv \
+rtl/ifa_p8.sv \
+rtl/ifa_p2_inv.sv \
+rtl/ifa_p4_inv.sv \
+rtl/ifa_p8_inv.sv \
+rtl/ifa_t8.sv \
+rtl/ifa_cpu.sv \
+rtl/ifa_fpga_top.sv
+
+hierarchy -top ifa_fpga_top
+
+proc
+opt
+fsm
+opt
+memory
+opt
+techmap
+opt
+
+stat
+check

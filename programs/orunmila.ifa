@@ -1,0 +1,4 @@
+PRINT "ÒRÚNMÌLÀ"
+HALT
+
+EXPECT 0x80

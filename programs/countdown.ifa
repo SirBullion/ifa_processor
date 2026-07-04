@@ -1,0 +1,13 @@
+LOAD 0x03
+
+loop:
+OUT
+DEC
+JZ end
+JMP loop
+
+end:
+OUT
+HALT
+
+EXPECT 0x00

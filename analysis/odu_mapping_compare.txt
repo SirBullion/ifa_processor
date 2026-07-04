@@ -1,0 +1,30 @@
+==============================================================================================================
+OLD vs NEW ODU MAPPING
+==============================================================================================================
+x        old_odu        anchors agreements  AGREE byte/odu          FLIP byte/odu           DISAGREE byte/odu
+--------------------------------------------------------------------------------------------------------------
+10100101  Òfún Òsé           1100     0000       11110000 Òyèkú Ògbè         11110000 Òyèkú Ògbè         10100101 Òfún Òsé          
+11111111  Òyèkú Òyèkú        1111     1111       11111111 Òyèkú Òyèkú        10101010 Òfún Òfún          10101010 Òfún Òfún         
+00000000  Ògbè Ògbè          0000     1111       00000000 Ògbè Ògbè          01010101 Òsé Òsé            01010101 Òsé Òsé           
+01010101  Òsé Òsé            0000     0000       00000000 Ògbè Ògbè          00000000 Ògbè Ògbè          01010101 Òsé Òsé           
+10101010  Òfún Òfún          1111     0000       11111111 Òyèkú Òyèkú        11111111 Òyèkú Òyèkú        10101010 Òfún Òfún         
+
+INTERPRETATION
+--------------------------------------------------------------------------------------------------------------
+
+OLD:
+    byte is read directly as two Odu nibbles.
+
+NEW:
+    byte is interpreted as anchors + agreements.
+    Relation instructions change the agreement structure while preserving anchors.
+
+For A5:
+    old:      A5 -> Òfún Òsé
+    AGREE:    F0 -> Ògbè Òyèkú
+    FLIP:     F0? or depends on current state
+    DISAGREE: A5-style disagreement state
+
+The new mapping does not replace the old Odu index.
+It adds a relation-space layer before Odu interpretation.
+

@@ -1,0 +1,60 @@
+================================================================================
+KEYED RELATION TRANSFORM SECURITY TEST
+================================================================================
+Correctness tests: 4096
+Correctness failures: 0
+
+================================================================================
+WRONG-KEY RECOVERY TEST
+================================================================================
+Wrong-key tests: 61440
+Wrong-key recovered original: 0
+
+================================================================================
+UNKNOWN-KEY CANDIDATE COUNT
+================================================================================
+Candidate count histogram: {16: 4096}
+
+================================================================================
+SAMPLE
+================================================================================
+Plaintext : 10100101
+Key       : 1011
+Cipher    : 11100101
+Recovered : 10100101
+
+Wrong-key candidates:
+0000 -> 11100000
+0001 -> 11100001
+0010 -> 11100100
+0011 -> 11100101
+0100 -> 11110000
+0101 -> 11110001
+0110 -> 11110100
+0111 -> 11110101
+1000 -> 10100000
+1001 -> 10100001
+1010 -> 10100100
+1011 -> 10100101
+1100 -> 10110000
+1101 -> 10110001
+1110 -> 10110100
+1111 -> 10110101
+
+================================================================================
+INTERPRETATION
+================================================================================
+
+This is not full encryption yet, because anchors remain visible.
+
+But it is the first keyed security layer:
+    - Φ-P8 maps bits into anchor/agreement coordinates.
+    - The key masks only the agreement channel.
+    - Correct key recovers the original.
+    - Wrong key gives another plausible state.
+
+Security direction:
+    1. mask agreement channel,
+    2. then also permute/mix anchors,
+    3. then stack rounds for diffusion.
+

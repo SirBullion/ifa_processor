@@ -1,0 +1,4 @@
+PRINT "IFÁ"
+HALT
+
+EXPECT 0x81

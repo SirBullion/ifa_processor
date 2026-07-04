@@ -1,0 +1,47 @@
+==========================================================================================
+ANCHOR–AGREEMENT NATURAL OPERATIONS AUDIT
+==========================================================================================
+
+x        anchors agreements  flip_agree  force_agree force_disagree
+------------------------------------------------------------------------------------------
+00000000 [0, 0, 0, 0] [1, 1, 1, 1] 01010101 00000000 01010101
+00000001 [0, 0, 0, 0] [1, 1, 1, 0] 01010100 00000000 01010101
+00000010 [0, 0, 0, 1] [1, 1, 1, 0] 01010111 00000011 01010110
+00000011 [0, 0, 0, 1] [1, 1, 1, 1] 01010110 00000011 01010110
+01010101 [0, 0, 0, 0] [0, 0, 0, 0] 00000000 00000000 01010101
+10101010 [1, 1, 1, 1] [0, 0, 0, 0] 11111111 11111111 10101010
+10100101 [1, 1, 0, 0] [0, 0, 0, 0] 11110000 11110000 10100101
+11111111 [1, 1, 1, 1] [1, 1, 1, 1] 10101010 11111111 10101010
+
+==========================================================================================
+INTERPRETATION
+==========================================================================================
+
+In Anchor–Agreement space, the natural operations are not ordinary arithmetic.
+
+Examples:
+
+1. flip_all_agreements(x)
+   Keeps the anchor stream A C E G unchanged.
+   Inverts every agreement relation.
+
+2. force_agreement(x)
+   Keeps anchors unchanged.
+   Forces each pair to agree:
+       AB -> AA
+       CD -> CC
+       EF -> EE
+       GH -> GG
+
+3. force_disagreement(x)
+   Keeps anchors unchanged.
+   Forces each pair to disagree:
+       AB -> A~A
+       CD -> C~C
+       EF -> E~E
+       GH -> G~G
+
+These are relation-space operations.
+They are different from ADD/SUB because they operate on agreement structure,
+not numeric magnitude.
+

@@ -1,0 +1,40 @@
+================================================================================
+KEYED Φ-P8 + REVERSIBLE DIFFUSION TEST
+================================================================================
+Mixer inverse failures: 0
+
+1_round
+----------------------------------------
+keys: ['1011']
+correctness failures: 0
+tests: 2048
+average output bit changes: 1.875
+histogram: {1: 256, 2: 1792}
+
+2_round
+----------------------------------------
+keys: ['1011', '0110']
+correctness failures: 0
+tests: 2048
+average output bit changes: 1.75
+histogram: {1: 512, 2: 1536}
+
+4_round
+----------------------------------------
+keys: ['1011', '0110', '1101', '0011']
+correctness failures: 0
+tests: 2048
+average output bit changes: 1.5
+histogram: {1: 1024, 2: 1024}
+
+8_round
+----------------------------------------
+keys: ['1011', '0110', '1101', '0011', '1001', '1100', '0101', '1010']
+correctness failures: 0
+tests: 2048
+average output bit changes: 1.0
+histogram: {1: 2048}
+
+Interpretation:
+If diffusion improves above 1.0 and approaches 4.0,
+the reversible mixer is successfully coupling bits across the state.

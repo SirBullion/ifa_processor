@@ -1,0 +1,14 @@
+================================================================================
+IFÁ RELATION-SPACE BENCHMARKS
+================================================================================
+program                                        cycles      final status
+--------------------------------------------------------------------------------
+benchmarks/bench_compute_direct.ifa                 3   10100101 PASS
+benchmarks/bench_compute_agree.ifa                  4   11110000 PASS
+benchmarks/bench_compute_flip.ifa                   4   11110000 PASS
+benchmarks/bench_compute_disagree.ifa               4   10101010 PASS
+benchmarks/bench_direct_printodu.ifa               16   00001010 PASS
+benchmarks/bench_relation_agree_printodu.ifa         20   00001010 PASS
+benchmarks/bench_relation_flip_printodu.ifa         20   00001010 PASS
+benchmarks/bench_relation_disagree_printodu.ifa         17   00001010 PASS
+================================================================================

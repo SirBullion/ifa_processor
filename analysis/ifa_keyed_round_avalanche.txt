@@ -1,0 +1,39 @@
+================================================================================
+KEYED Φ-P8 ROUND AVALANCHE TEST
+================================================================================
+
+1_round
+----------------------------------------
+keys: ['1011']
+correctness failures: 0
+tests: 2048
+average output bit changes: 1.0
+histogram: {1: 2048}
+
+2_round
+----------------------------------------
+keys: ['1011', '0110']
+correctness failures: 0
+tests: 2048
+average output bit changes: 1.0
+histogram: {1: 2048}
+
+4_round
+----------------------------------------
+keys: ['1011', '0110', '1101', '0011']
+correctness failures: 0
+tests: 2048
+average output bit changes: 1.0
+histogram: {1: 2048}
+
+8_round
+----------------------------------------
+keys: ['1011', '0110', '1101', '0011', '1001', '1100', '0101', '1010']
+correctness failures: 0
+tests: 2048
+average output bit changes: 1.0
+histogram: {1: 2048}
+
+Interpretation:
+If stacked keyed rounds improve diffusion toward ~4 changed bits,
+then security belongs to the keyed multi-round layer, not Φ-P8 alone.

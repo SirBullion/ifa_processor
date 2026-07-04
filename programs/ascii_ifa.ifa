@@ -1,0 +1,9 @@
+LOAD 'I'
+OUT
+LOAD 'F'
+OUT
+LOAD 'A'
+OUT
+HALT
+
+EXPECT 'A'

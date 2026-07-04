@@ -1,0 +1,276 @@
+###############################################################################
+# IFÁ REVERSIBLE PROCESSOR
+# Makefile
+###############################################################################
+
+IVERILOG = iverilog
+VVP      = vvp
+GTKWAVE  = gtkwave
+
+RTL = rtl
+TB  = tb
+SIM = sim
+
+SVFLAGS = -g2012
+
+
+###############################################################################
+# Default
+###############################################################################
+
+all: p2 p4 p8 rm4 t8 recovery error corrector top
+
+###############################################################################
+# P2
+###############################################################################
+
+p2:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_p2.sv \
+	$(TB)/tb_p2.sv \
+	-o $(SIM)/tb_p2.out
+	$(VVP) $(SIM)/tb_p2.out
+
+wave-p2:
+	$(GTKWAVE) $(SIM)/p2.vcd
+
+###############################################################################
+# P4
+###############################################################################
+
+p4:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_p2.sv \
+	$(RTL)/ifa_p4.sv \
+	$(TB)/tb_p4.sv \
+	-o $(SIM)/tb_p4.out
+	$(VVP) $(SIM)/tb_p4.out
+
+wave-p4:
+	$(GTKWAVE) $(SIM)/p4.vcd
+
+###############################################################################
+# P8
+###############################################################################
+
+p8:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_p2.sv \
+	$(RTL)/ifa_p4.sv \
+	$(RTL)/ifa_p8.sv \
+	$(TB)/tb_p8.sv \
+	-o $(SIM)/tb_p8.out
+	$(VVP) $(SIM)/tb_p8.out
+
+wave-p8:
+	$(GTKWAVE) $(SIM)/p8.vcd
+
+###############################################################################
+# Routing Matrix
+###############################################################################
+
+rm4:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_rm4.sv \
+	$(TB)/tb_rm4.sv \
+	-o $(SIM)/tb_rm4.out
+	$(VVP) $(SIM)/tb_rm4.out
+
+wave-rm4:
+	$(GTKWAVE) $(SIM)/rm4.vcd
+
+###############################################################################
+# Transport Matrix
+###############################################################################
+
+t8:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_t8.sv \
+	$(TB)/tb_t8.sv \
+	-o $(SIM)/tb_t8.out
+	$(VVP) $(SIM)/tb_t8.out
+
+wave-t8:
+	$(GTKWAVE) $(SIM)/t8.vcd
+
+###############################################################################
+# Recovery
+###############################################################################
+
+recovery:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_p2.sv \
+	$(RTL)/ifa_p4.sv \
+	$(RTL)/ifa_p8.sv \
+	$(RTL)/ifa_p2_inv.sv \
+	$(RTL)/ifa_p4_inv.sv \
+	$(RTL)/ifa_p8_inv.sv \
+	$(TB)/tb_recovery.sv \
+	-o $(SIM)/tb_recovery.out
+	$(VVP) $(SIM)/tb_recovery.out
+
+wave-recovery:
+	$(GTKWAVE) $(SIM)/recovery.vcd
+
+###############################################################################
+# Error Transport
+###############################################################################
+
+error:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_p2.sv \
+	$(RTL)/ifa_p4.sv \
+	$(RTL)/ifa_p8.sv \
+	$(RTL)/ifa_p2_inv.sv \
+	$(RTL)/ifa_p4_inv.sv \
+	$(RTL)/ifa_p8_inv.sv \
+	$(RTL)/ifa_t8.sv \
+	$(TB)/tb_error_transport.sv \
+	-o $(SIM)/tb_error_transport.out
+	$(VVP) $(SIM)/tb_error_transport.out
+
+wave-error:
+	$(GTKWAVE) $(SIM)/error_transport.vcd
+
+###############################################################################
+# Corrector
+###############################################################################
+
+corrector:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_p2.sv \
+	$(RTL)/ifa_p4.sv \
+	$(RTL)/ifa_p8.sv \
+	$(RTL)/ifa_p2_inv.sv \
+	$(RTL)/ifa_p4_inv.sv \
+	$(RTL)/ifa_p8_inv.sv \
+	$(RTL)/ifa_t8.sv \
+	$(RTL)/ifa_corrector.sv \
+	$(TB)/tb_corrector.sv \
+	-o $(SIM)/tb_corrector.out
+	$(VVP) $(SIM)/tb_corrector.out
+
+wave-corrector:
+	$(GTKWAVE) $(SIM)/corrector.vcd
+
+###############################################################################
+# Complete Processor
+###############################################################################
+
+top:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_p2.sv \
+	$(RTL)/ifa_p4.sv \
+	$(RTL)/ifa_p8.sv \
+	$(RTL)/ifa_rm4.sv \
+	$(RTL)/ifa_t8.sv \
+	$(RTL)/ifa_top.sv \
+	$(TB)/tb_top.sv \
+	-o $(SIM)/tb_top.out
+	$(VVP) $(SIM)/tb_top.out
+
+wave-top:
+	$(GTKWAVE) $(SIM)/top.vcd
+
+###############################################################################
+# Clean
+###############################################################################
+
+clean:
+	rm -f $(SIM)/*.out
+	rm -f $(SIM)/*.vcd
+
+###############################################################################
+# Help
+###############################################################################
+
+help:
+	@echo ""
+	@echo "==============================="
+	@echo " IFÁ REVERSIBLE PROCESSOR"
+	@echo "==============================="
+	@echo ""
+	@echo "Simulation Targets"
+	@echo "------------------"
+	@echo "make p2"
+	@echo "make p4"
+	@echo "make p8"
+	@echo "make rm4"
+	@echo "make t8"
+	@echo "make recovery"
+	@echo "make error"
+	@echo "make corrector"
+	@echo "make top"
+	@echo "make all"
+	@echo ""
+	@echo "Waveforms"
+	@echo "---------"
+	@echo "make wave-p2"
+	@echo "make wave-p4"
+	@echo "make wave-p8"
+	@echo "make wave-rm4"
+	@echo "make wave-t8"
+	@echo "make wave-recovery"
+	@echo "make wave-error"
+	@echo "make wave-corrector"
+	@echo "make wave-top"
+	@echo ""
+	@echo "Utilities"
+	@echo "---------"
+	@echo "make clean"
+	@echo "make help"
+
+###############################################################################
+# CPU ROM Top
+###############################################################################
+
+cpu-rom:
+	$(IVERILOG) $(SVFLAGS) \
+	$(RTL)/ifa_p2.sv \
+	$(RTL)/ifa_p4.sv \
+	$(RTL)/ifa_p8.sv \
+	$(RTL)/ifa_p2_inv.sv \
+	$(RTL)/ifa_p4_inv.sv \
+	$(RTL)/ifa_p8_inv.sv \
+	$(RTL)/ifa_t8.sv \
+	$(RTL)/ifa_rom.sv \
+	$(RTL)/ifa_cpu_core.sv \
+	$(RTL)/ifa_cpu_rom_top.sv \
+	$(TB)/tb_cpu_rom_top.sv \
+	-o $(SIM)/tb_cpu_rom_top.out
+	$(VVP) $(SIM)/tb_cpu_rom_top.out
+
+wave-cpu-rom:
+	$(GTKWAVE) $(SIM)/cpu_rom_top.vcd
+
+###############################################################################
+# Assemble Demo Program
+###############################################################################
+
+assemble:
+	python3 tools/ifaasm.py demo.ifa
+
+run-program: assemble cpu-rom
+
+###############################################################################
+# Yosys Synthesis
+###############################################################################
+
+synth-cpu:
+	yosys -s synth_cpu.ys
+
+synth-fpga:
+	yosys -s synth_fpga.ys
+
+###############################################################################
+# Ifa Monitor v1
+###############################################################################
+
+monitor:
+	cp programs/monitor_v1.ifa demo.ifa
+	python3 tools/ifaasm.py demo.ifa
+	$(MAKE) cpu-rom
+	@echo ""
+	@echo "Monitor output saved to: sim/odu_all_output.txt"
+	@echo ""
+	@cat sim/odu_all_output.txt

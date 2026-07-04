@@ -1,0 +1,43 @@
+# Simulation outputs
+sim_v2/
+*.vcd
+*.vvp
+*.gtkw
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Build
+*.log
+*.tmp
+
+# Linux
+*~
+
+# Generated datasets
+*.csv
+*.xlsx
+
+# Hex files generated during testing
+expected.hex
+program.hex
+
+# Python notebooks cache
+.ipynb_checkpoints/
+
+# Simulation directories
+sim/
+sim_v2/
+
+# Python virtual environments
+.env
+.venv
+venv/
+itertools
+pd

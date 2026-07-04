@@ -1,0 +1,14 @@
+case(addr)
+
+8'h00: instr = 16'h1049;
+8'h01: instr = 16'h7000;
+8'h02: instr = 16'h1046;
+8'h03: instr = 16'h7000;
+8'h04: instr = 16'h10C3;
+8'h05: instr = 16'h7000;
+8'h06: instr = 16'h1081;
+8'h07: instr = 16'h7000;
+8'h08: instr = 16'hF000;
+
+default: instr = 16'h0000;
+endcase

@@ -1,0 +1,51 @@
+================================================================================
+IFÁ SEPARATE FEEDBACK MIXER TEST
+================================================================================
+Key: Ofun Meji = 10101010
+
+rounds=1
+  tests: 2048
+  mean avalanche: 4.0
+  histogram: {4: 2048}
+
+rounds=2
+  tests: 2048
+  mean avalanche: 2.0
+  histogram: {2: 2048}
+
+rounds=3
+  tests: 2048
+  mean avalanche: 4.0
+  histogram: {4: 2048}
+
+rounds=4
+  tests: 2048
+  mean avalanche: 0.0
+  histogram: {0: 2048}
+
+rounds=5
+  tests: 2048
+  mean avalanche: 0.0
+  histogram: {0: 2048}
+
+rounds=6
+  tests: 2048
+  mean avalanche: 0.0
+  histogram: {0: 2048}
+
+rounds=8
+  tests: 2048
+  mean avalanche: 0.0
+  histogram: {0: 2048}
+
+================================================================================
+INTERPRETATION
+================================================================================
+
+This treats feedback as a separate architectural block:
+
+    Φ-P8  ->  Relation Unit  ->  Feedback Mixer  ->  Output
+
+If avalanche improves toward 4.0, then the security/diffusion role belongs
+to the feedback mixer, not to Φ-P8 itself.
+
