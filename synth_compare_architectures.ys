@@ -1,0 +1,33 @@
+# Compare Ifa relation architectures
+
+read_verilog -sv rtl_v2/ifa_relation_execute.sv
+read_verilog -sv rtl_v2/ifa_relation_barrel_loop.sv
+
+# -----------------------------
+# REM-style relation execute mux
+# -----------------------------
+hierarchy -top ifa_relation_execute
+proc
+opt
+techmap
+opt
+stat
+
+write_json analysis/ifa_relation_execute.json
+
+# Reset design before next top
+design -reset
+
+# -----------------------------
+# RBL relation barrel loop
+# -----------------------------
+read_verilog -sv rtl_v2/ifa_relation_barrel_loop.sv
+hierarchy -top ifa_relation_barrel_loop
+proc
+opt
+techmap
+opt
+stat
+
+write_json analysis/ifa_relation_barrel_loop.json
+
