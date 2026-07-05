@@ -1,0 +1,27 @@
+# CPU relation reference vs Ifa V1 closed-loop core
+
+# -----------------------------
+# CPU sequential relation core
+# -----------------------------
+read_verilog -sv rtl_v2/cpu_relation_sequential_ref.sv
+hierarchy -top cpu_relation_sequential_ref
+proc
+opt
+techmap
+opt
+stat
+
+design -reset
+
+# -----------------------------
+# Ifa V1 closed-loop core
+# -----------------------------
+read_verilog -sv rtl_v2/ifa_relation_memory_unit.sv
+read_verilog -sv rtl_v2/ifa_relation_ram.sv
+read_verilog -sv rtl_v2/ifa_pipelined_core_v1_closed_loop.sv
+hierarchy -top ifa_pipelined_core_v1_closed_loop
+proc
+opt
+techmap
+opt
+stat

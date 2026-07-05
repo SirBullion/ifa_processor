@@ -1,0 +1,51 @@
+# RMU breakdown and fair CPU reference
+
+# -----------------------------
+# RMU compression logic only
+# -----------------------------
+read_verilog -sv rtl_v2/ifa_rmu_compression_logic_only.sv
+hierarchy -top ifa_rmu_compression_logic_only
+proc
+opt
+techmap
+opt
+stat
+
+design -reset
+
+# -----------------------------
+# RBL barrel feedback only
+# -----------------------------
+read_verilog -sv rtl_v2/ifa_relation_barrel_loop.sv
+hierarchy -top ifa_relation_barrel_loop
+proc
+opt
+techmap
+opt
+stat
+
+design -reset
+
+# -----------------------------
+# Unified RMU
+# -----------------------------
+read_verilog -sv rtl_v2/ifa_relation_memory_unit.sv
+hierarchy -top ifa_relation_memory_unit
+proc
+opt
+techmap
+opt
+stat
+
+design -reset
+
+# -----------------------------
+# CPU sequential relation reference
+# -----------------------------
+read_verilog -sv rtl_v2/cpu_relation_sequential_ref.sv
+hierarchy -top cpu_relation_sequential_ref
+proc
+opt
+techmap
+opt
+stat

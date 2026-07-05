@@ -1,0 +1,587 @@
+{
+  "creator": "Yosys 0.33 (git sha1 2584903a060)",
+  "modules": {
+    "ifa_relation_barrel_loop": {
+      "attributes": {
+        "dynports": "00000000000000000000000000000001",
+        "top": "00000000000000000000000000000001",
+        "src": "rtl_v2/ifa_relation_barrel_loop.sv:1.1-57.10"
+      },
+      "parameter_default_values": {
+        "WIDTH": "00000000000000000000000000000100"
+      },
+      "ports": {
+        "clk": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "rst_n": {
+          "direction": "input",
+          "bits": [ 3 ]
+        },
+        "shift_en": {
+          "direction": "input",
+          "bits": [ 4 ]
+        },
+        "odu_new_ra": {
+          "direction": "input",
+          "bits": [ 5, 6, 7, 8 ]
+        },
+        "Y_rel": {
+          "direction": "output",
+          "bits": [ 9, 10, 11, 12 ]
+        },
+        "R_A_mem": {
+          "direction": "output",
+          "bits": [ 9, 10, 11, 12 ]
+        },
+        "R_D_mem": {
+          "direction": "output",
+          "bits": [ 13, 14, 15, 16 ]
+        },
+        "T_mem": {
+          "direction": "output",
+          "bits": [ 17, 18, 19, 20 ]
+        },
+        "R_0_mem": {
+          "direction": "output",
+          "bits": [ 21, 22, 23, 24 ]
+        }
+      },
+      "cells": {
+        "$auto$ff.cc:266:slice$300": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 25 ],
+            "E": [ 4 ],
+            "Q": [ 9 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$301": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 26 ],
+            "E": [ 4 ],
+            "Q": [ 10 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$302": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN1P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 27 ],
+            "E": [ 4 ],
+            "Q": [ 11 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$303": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 28 ],
+            "E": [ 4 ],
+            "Q": [ 12 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$308": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 21 ],
+            "E": [ 4 ],
+            "Q": [ 17 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$309": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 22 ],
+            "E": [ 4 ],
+            "Q": [ 18 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$310": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN1P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 23 ],
+            "E": [ 4 ],
+            "Q": [ 19 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$311": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN1P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 24 ],
+            "E": [ 4 ],
+            "Q": [ 20 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$312": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN1P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 17 ],
+            "E": [ 4 ],
+            "Q": [ 13 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$313": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN1P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 18 ],
+            "E": [ 4 ],
+            "Q": [ 14 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$314": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 19 ],
+            "E": [ 4 ],
+            "Q": [ 15 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$315": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN1P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 20 ],
+            "E": [ 4 ],
+            "Q": [ 16 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$316": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 9 ],
+            "E": [ 4 ],
+            "Q": [ 21 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$317": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 10 ],
+            "E": [ 4 ],
+            "Q": [ 22 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$318": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 11 ],
+            "E": [ 4 ],
+            "Q": [ 23 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$ff.cc:266:slice$319": {
+          "hide_name": 1,
+          "type": "$_DFFE_PN0P_",
+          "parameters": {
+          },
+          "attributes": {
+            "always_ff": "00000000000000000000000000000001",
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:31.5-55.8"
+          },
+          "port_directions": {
+            "C": "input",
+            "D": "input",
+            "E": "input",
+            "Q": "output",
+            "R": "input"
+          },
+          "connections": {
+            "C": [ 2 ],
+            "D": [ 12 ],
+            "E": [ 4 ],
+            "Q": [ 24 ],
+            "R": [ 3 ]
+          }
+        },
+        "$auto$simplemap.cc:75:simplemap_bitop$304": {
+          "hide_name": 1,
+          "type": "$_XOR_",
+          "parameters": {
+          },
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:46.23-46.43"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 13 ],
+            "B": [ 5 ],
+            "Y": [ 25 ]
+          }
+        },
+        "$auto$simplemap.cc:75:simplemap_bitop$305": {
+          "hide_name": 1,
+          "type": "$_XOR_",
+          "parameters": {
+          },
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:46.23-46.43"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 14 ],
+            "B": [ 6 ],
+            "Y": [ 26 ]
+          }
+        },
+        "$auto$simplemap.cc:75:simplemap_bitop$306": {
+          "hide_name": 1,
+          "type": "$_XOR_",
+          "parameters": {
+          },
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:46.23-46.43"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 15 ],
+            "B": [ 7 ],
+            "Y": [ 27 ]
+          }
+        },
+        "$auto$simplemap.cc:75:simplemap_bitop$307": {
+          "hide_name": 1,
+          "type": "$_XOR_",
+          "parameters": {
+          },
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:46.23-46.43"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 16 ],
+            "B": [ 8 ],
+            "Y": [ 28 ]
+          }
+        }
+      },
+      "netnames": {
+        "$xor$rtl_v2/ifa_relation_barrel_loop.sv:46$193_Y": {
+          "hide_name": 1,
+          "bits": [ 25, 26, 27, 28 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:46.23-46.43"
+          }
+        },
+        "R_0_mem": {
+          "hide_name": 0,
+          "bits": [ 21, 22, 23, 24 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:18.34-18.41"
+          }
+        },
+        "R_A_mem": {
+          "hide_name": 0,
+          "bits": [ 9, 10, 11, 12 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:15.34-15.41"
+          }
+        },
+        "R_D_mem": {
+          "hide_name": 0,
+          "bits": [ 13, 14, 15, 16 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:16.34-16.41"
+          }
+        },
+        "T_mem": {
+          "hide_name": 0,
+          "bits": [ 17, 18, 19, 20 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:17.34-17.39"
+          }
+        },
+        "Y_rel": {
+          "hide_name": 0,
+          "bits": [ 9, 10, 11, 12 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:12.34-12.39"
+          }
+        },
+        "clk": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:4.34-4.37"
+          }
+        },
+        "odu_new_ra": {
+          "hide_name": 0,
+          "bits": [ 5, 6, 7, 8 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:9.34-9.44"
+          }
+        },
+        "rst_n": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:5.34-5.39"
+          }
+        },
+        "shift_en": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "attributes": {
+            "src": "rtl_v2/ifa_relation_barrel_loop.sv:6.34-6.42"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+# Naive relation mux vs RMU/RBL feedback comparison
+
+# -----------------------------
+# Naive relation mux
+# -----------------------------
+read_verilog -sv rtl_v2/ifa_naive_relation_mux.sv
+hierarchy -top ifa_naive_relation_mux
+proc
+opt
+techmap
+opt
+stat
+
+design -reset
+
+# -----------------------------
+# Relation Barrel Loop
+# -----------------------------
+read_verilog -sv rtl_v2/ifa_relation_barrel_loop.sv
+hierarchy -top ifa_relation_barrel_loop
+proc
+opt
+techmap
+opt
+stat
+
+design -reset
+
+# -----------------------------
+# Unified RMU
+# -----------------------------
+read_verilog -sv rtl_v2/ifa_relation_memory_unit.sv
+hierarchy -top ifa_relation_memory_unit
+proc
+opt
+techmap
+opt
+stat
