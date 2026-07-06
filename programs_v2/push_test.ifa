@@ -1,0 +1,8 @@
+; PUSH test
+; Compute EE + 11 = FF, then PUSH OUT_Y onto stack.
+
+LOADA 0xEE
+LOADB 0x11
+RPC_ADD
+PUSH
+HALT

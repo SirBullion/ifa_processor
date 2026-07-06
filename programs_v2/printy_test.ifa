@@ -1,0 +1,8 @@
+; PRINTY test
+; EE + 11 = FF, then print Y.
+
+LOADA 0xEE
+LOADB 0x11
+RPC_ADD
+PRINTY
+HALT

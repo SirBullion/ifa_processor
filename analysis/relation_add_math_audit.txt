@@ -1,0 +1,73 @@
+==========================================================================================
+RELATION-DERIVED ADD AUDIT
+==========================================================================================
+Testing all 256 x 256 byte pairs
+
+Total tests: 65536
+Failures: 0
+
+==========================================================================================
+SAMPLE RELATION ADD
+==========================================================================================
+A=00001010 B=00000101
+RESULT       = 00001111 carry=0
+AGREEMENT    = 11110000
+DISAGREEMENT = 00001111
+SHARED_ONE   = 00000000
+SHARED_ZERO  = 11110000
+CARRY_TRACE  = 00000000
+------------------------------------------------------------
+A=10100101 B=01011010
+RESULT       = 11111111 carry=0
+AGREEMENT    = 00000000
+DISAGREEMENT = 11111111
+SHARED_ONE   = 00000000
+SHARED_ZERO  = 00000000
+CARRY_TRACE  = 00000000
+------------------------------------------------------------
+A=11111111 B=00000001
+RESULT       = 00000000 carry=1
+AGREEMENT    = 00000001
+DISAGREEMENT = 11111110
+SHARED_ONE   = 00000001
+SHARED_ZERO  = 00000000
+CARRY_TRACE  = 11111111
+------------------------------------------------------------
+A=00110011 B=01010101
+RESULT       = 10001000 carry=0
+AGREEMENT    = 10011001
+DISAGREEMENT = 01100110
+SHARED_ONE   = 00010001
+SHARED_ZERO  = 10001000
+CARRY_TRACE  = 01110111
+------------------------------------------------------------
+A=11110000 B=10100101
+RESULT       = 10010101 carry=1
+AGREEMENT    = 10101010
+DISAGREEMENT = 01010101
+SHARED_ONE   = 10100000
+SHARED_ZERO  = 00001010
+CARRY_TRACE  = 11100000
+------------------------------------------------------------
+
+==========================================================================================
+CONCLUSION
+==========================================================================================
+
+PASS.
+
+8-bit ADD can be derived from relation primitives:
+
+    R_D = A XOR B                 disagreement
+    R_A = NOT(A XOR B)            agreement
+    R_1 = A AND B                 shared-one
+    R_0 = NOT(A OR B)             shared-zero
+
+Then per bit:
+
+    SUM  = R_D XOR Cin
+    Cout = R_1 OR (R_D AND Cin)
+
+This means ADD does not need to be treated as a primitive ALU operation.
+It can be constructed as a relation algorithm.
+

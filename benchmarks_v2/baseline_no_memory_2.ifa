@@ -1,0 +1,13 @@
+; Baseline 2 — compute two relations, no feedback
+
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_RAW
+
+LOADA 0xF0
+LOADB 0xA5
+ADDR 0
+ODU_RAW
+
+HALT

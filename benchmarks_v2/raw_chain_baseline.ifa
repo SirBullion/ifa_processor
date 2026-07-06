@@ -1,0 +1,24 @@
+; Raw chain baseline
+; Same A/B sequence, no memory feedback.
+
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_RAW
+
+LOADA 0xF0
+LOADB 0xA5
+ADDR 0
+ODU_RAW
+
+LOADA 0x33
+LOADB 0x55
+ADDR 0
+ODU_RAW
+
+LOADA 0x0F
+LOADB 0xF0
+ADDR 0
+ODU_RAW
+
+HALT

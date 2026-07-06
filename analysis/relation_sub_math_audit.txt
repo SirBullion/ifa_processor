@@ -1,0 +1,77 @@
+==========================================================================================
+RELATION-DERIVED SUB AUDIT
+==========================================================================================
+Testing all 256 x 256 byte pairs
+
+Total tests: 65536
+Failures: 0
+
+==========================================================================================
+SAMPLE RELATION SUB
+==========================================================================================
+A=00010000 B=00000001
+RESULT       = 00001111 borrow=0
+AGREEMENT    = 11101110
+DISAGREEMENT = 00010001
+SHARED_ONE   = 00000000
+SHARED_ZERO  = 11101110
+B_OVER_A     = 00000001
+BORROW_TRACE = 00001111
+------------------------------------------------------------
+A=10100101 B=00000101
+RESULT       = 10100000 borrow=0
+AGREEMENT    = 01011111
+DISAGREEMENT = 10100000
+SHARED_ONE   = 00000101
+SHARED_ZERO  = 01011010
+B_OVER_A     = 00000000
+BORROW_TRACE = 00000000
+------------------------------------------------------------
+A=00000000 B=00000001
+RESULT       = 11111111 borrow=1
+AGREEMENT    = 11111110
+DISAGREEMENT = 00000001
+SHARED_ONE   = 00000000
+SHARED_ZERO  = 11111110
+B_OVER_A     = 00000001
+BORROW_TRACE = 11111111
+------------------------------------------------------------
+A=00110011 B=01010101
+RESULT       = 11011110 borrow=1
+AGREEMENT    = 10011001
+DISAGREEMENT = 01100110
+SHARED_ONE   = 00010001
+SHARED_ZERO  = 10001000
+B_OVER_A     = 01000100
+BORROW_TRACE = 11011100
+------------------------------------------------------------
+A=11110000 B=10100101
+RESULT       = 01001011 borrow=0
+AGREEMENT    = 10101010
+DISAGREEMENT = 01010101
+SHARED_ONE   = 10100000
+SHARED_ZERO  = 00001010
+B_OVER_A     = 00000101
+BORROW_TRACE = 00001111
+------------------------------------------------------------
+
+==========================================================================================
+CONCLUSION
+==========================================================================================
+
+PASS.
+
+8-bit SUB can be derived from relation primitives:
+
+    R_D = A XOR B                 disagreement
+    R_A = NOT(A XOR B)            agreement
+    B_OVER_A = NOT(A) AND B       directional borrow relation
+
+Then per bit:
+
+    DIFF = R_D XOR Bin
+    Bout = B_OVER_A OR (R_A AND Bin)
+
+This means SUB also does not need to be treated as a primitive ALU operation.
+It can be constructed as a relation algorithm.
+

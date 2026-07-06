@@ -1,0 +1,10 @@
+; Relation Algorithm 1 — Store and Recall
+
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_STORE
+
+ODU_RECALL
+
+HALT

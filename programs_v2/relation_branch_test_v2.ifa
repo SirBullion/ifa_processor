@@ -1,0 +1,30 @@
+; Relation branch test with full 8-bit labels
+
+LOADA 0xA5
+LOADB 0xA5
+RPC_COMPARE
+BR_EQ gt_test
+LOADA 0x00
+HALT
+
+gt_test:
+LOADA 0xA5
+LOADB 0x5A
+RPC_COMPARE
+BR_GT lt_test
+LOADA 0x00
+HALT
+
+lt_test:
+LOADA 0x33
+LOADB 0x55
+RPC_COMPARE
+BR_LT success
+LOADA 0x00
+HALT
+
+success:
+LOADA 0xEE
+LOADB 0x11
+RPC_ADD
+HALT

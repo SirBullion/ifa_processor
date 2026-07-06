@@ -1,0 +1,14 @@
+; RPUSH/RPOP test
+; Save full relation frame from EE+11, overwrite it with 00+00, restore full frame.
+
+LOADA 0xEE
+LOADB 0x11
+RPC_ADD
+RPUSH
+
+LOADA 0x00
+LOADB 0x00
+RPC_ADD
+
+RPOP
+HALT

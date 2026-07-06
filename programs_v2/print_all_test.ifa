@@ -1,0 +1,14 @@
+; Print all relation outputs
+; EE + 11 = FF
+
+LOADA 0xEE
+LOADB 0x11
+RPC_ADD
+
+PRINTY
+PRINTRA
+PRINTRD
+PRINTR0
+PRINTT
+
+HALT

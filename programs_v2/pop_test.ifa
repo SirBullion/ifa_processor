@@ -1,0 +1,14 @@
+; POP test
+; Compute EE + 11 = FF, push it, overwrite out_y, then pop FF back.
+
+LOADA 0xEE
+LOADB 0x11
+RPC_ADD
+PUSH
+
+LOADA 0x00
+LOADB 0x00
+RPC_ADD
+
+POP
+HALT

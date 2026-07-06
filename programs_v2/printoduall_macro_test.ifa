@@ -1,0 +1,10 @@
+; PRINTODUALL macro test
+; Full V2 processor state dump after EE + 11 = FF.
+
+LOADA 0xEE
+LOADB 0x11
+RPC_ADD
+
+PRINTODUALL
+
+HALT

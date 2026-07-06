@@ -1,0 +1,31 @@
+; Relation branch test
+
+; EQ test: A5 == A5, should branch to 6
+LOADA 0xA5
+LOADB 0xA5
+RPC_COMPARE
+BR_EQ 6
+LOADA 0x00
+HALT
+
+; GT test: A5 > 5A, should branch to 10
+LOADA 0xA5
+LOADB 0x5A
+RPC_COMPARE
+BR_GT 10
+LOADA 0x00
+HALT
+
+; LT test: 33 < 55, should branch to 14
+LOADA 0x33
+LOADB 0x55
+RPC_COMPARE
+BR_LT 14
+LOADA 0x00
+HALT
+
+; success marker: EE + 11 = FF
+LOADA 0xEE
+LOADB 0x11
+RPC_ADD
+HALT

@@ -1,0 +1,66 @@
+==========================================================================================
+RELATION-DERIVED MUL AUDIT
+==========================================================================================
+Testing all 256 x 256 byte pairs
+
+Total tests: 65536
+Failures: 0
+
+==========================================================================================
+SAMPLE RELATION MUL
+==========================================================================================
+A=00000011 B=00000101
+RESULT   = 00001111
+EXPECTED = 00001111
+RELATION_ADD_COUNT = 2
+------------------------------------------------------------
+A=00001010 B=00000101
+RESULT   = 00110010
+EXPECTED = 00110010
+RELATION_ADD_COUNT = 2
+------------------------------------------------------------
+A=00001111 B=00001111
+RESULT   = 11100001
+EXPECTED = 11100001
+RELATION_ADD_COUNT = 4
+------------------------------------------------------------
+A=10100101 B=00000011
+RESULT   = 11101111
+EXPECTED = 11101111
+RELATION_ADD_COUNT = 2
+------------------------------------------------------------
+A=00110011 B=00000101
+RESULT   = 11111111
+EXPECTED = 11111111
+RELATION_ADD_COUNT = 2
+------------------------------------------------------------
+A=11111111 B=00000010
+RESULT   = 11111110
+EXPECTED = 11111110
+RELATION_ADD_COUNT = 1
+------------------------------------------------------------
+
+==========================================================================================
+CONCLUSION
+==========================================================================================
+
+PASS.
+
+8-bit MUL can be constructed from relation-derived ADD.
+
+This is not yet a primitive one-cycle multiplier.
+It proves that multiplication can be built as a relation algorithm:
+
+    MUL(A,B)
+        = repeated shifted Relation-ADD
+
+So far:
+
+    ADD      derived from relation primitives
+    SUB      derived from relation primitives
+    COMPARE  derived from relation primitives
+    MUL      derived from relation-derived ADD
+
+This supports the RAU/RPC idea:
+arithmetic can be built from relation extraction and relation propagation.
+

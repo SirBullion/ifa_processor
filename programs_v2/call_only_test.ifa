@@ -1,0 +1,12 @@
+; CALL-only test
+; CALL should jump to subroutine and execute RPC_ADD.
+
+LOADA 0xEE
+CALL sub_add
+LOADA 0x00
+HALT
+
+sub_add:
+LOADB 0x11
+RPC_ADD
+HALT

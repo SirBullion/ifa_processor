@@ -1,0 +1,13 @@
+; Baseline 3 — compute two memory-slot relations but do not store/recall
+
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_RAW
+
+LOADA 0x0F
+LOADB 0xF0
+ADDR 1
+ODU_RAW
+
+HALT

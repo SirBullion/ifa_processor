@@ -1,0 +1,192 @@
+#!/usr/bin/env python3
+import sys
+
+VERSION = "ifa-sdk v0.1 MVP"
+WIDTH = 4
+MASK = (1 << WIDTH) - 1
+
+ODU_NAMES = [
+    "Ogbe", "Ogunda", "Irete", "Irosun",
+    "Otura", "Ose", "Odi", "Obara",
+    "Osa", "Iwori", "Ofun", "Ika",
+    "Owonrin", "Oturupon", "Okanran", "Oyeku"
+]
+
+def relations(a, b, width=WIDTH):
+    mask = (1 << width) - 1
+    mod = 1 << width
+
+    y = (a + b) & mask
+    ra = a & b
+    rd = a ^ b
+    r0 = (~(a | b)) & mask
+
+    diff = abs(a - b)
+    wrap = mod - diff
+    t = min(diff, wrap) & mask
+
+    return y, ra, rd, r0, t
+
+def oduname(x):
+    return ODU_NAMES[x & MASK]
+
+def printodu(a, b):
+    y, ra, rd, r0, t = relations(a, b)
+
+    print("IFA ODU STATE")
+    print("-------------")
+    print(f"A   = {a:04b} ({a}) → {oduname(a)}")
+    print(f"B   = {b:04b} ({b}) → {oduname(b)}")
+    print(f"Y   = {y:04b} ({y}) → {oduname(y)}")
+    print(f"R_A = {ra:04b} Agreement")
+    print(f"R_D = {rd:04b} Disagreement")
+    print(f"R_0 = {r0:04b} Shared-zero / Toggle")
+    print(f"T   = {t:04b} Minimum Relation Distance")
+    print()
+    print(f"Φ-P coordinate = ({ra}, {rd}, {t})")
+
+def inspect(a, b):
+    printodu(a, b)
+    print()
+    print("PIPELINE")
+    print("--------")
+    print("P0 Fetch")
+    print("P1 Decode / Feedback Mix")
+    print("P2 Φ-P Coordinate Mapper")
+    print("P3 ODU")
+    print("P4 RMU")
+    print("P5 RSM / PCM")
+    print("P6 Feedback")
+
+def phi(a, b):
+    _, ra, rd, _, t = relations(a, b)
+    print("Φ-P COORDINATE")
+    print("--------------")
+    print(f"R_A = {ra}")
+    print(f"R_D = {rd}")
+    print(f"T   = {t}")
+    print(f"coord = ({ra}, {rd}, {t})")
+
+def reconstruct(ra, rd, t):
+    for a in range(16):
+        for b in range(16):
+            y, ra2, rd2, r0, t2 = relations(a, b)
+            if (ra2, rd2, t2) == (ra, rd, t):
+                print("INVERSE Φ-P RECONSTRUCTION")
+                print("--------------------------")
+                print(f"coord = ({ra}, {rd}, {t})")
+                print(f"A={a:04b} ({a}) B={b:04b} ({b})")
+                print(f"Y={y:04b} ({y})")
+                print(f"R_0={r0:04b}")
+                return
+    print("No reconstruction found.")
+
+def odulist():
+    for i, name in enumerate(ODU_NAMES):
+        print(f"{i:02d}  {i:04b}  {name}")
+
+def trace(a, b):
+    y, ra, rd, r0, t = relations(a, b)
+    print("IFA TRACE")
+    print("---------")
+    print(f"Input A={a:04b}, B={b:04b}")
+    print("↓")
+    print("P2 Φ-P")
+    print(f"  Agreement={ra:04b}, Disagreement={rd:04b}, Toggle={r0:04b}, Transport={t:04b}")
+    print("↓")
+    print("P3 ODU")
+    print(f"  Y={y:04b}")
+    print("↓")
+    print("P4 RMU")
+    print("  relation state prepared")
+    print("↓")
+    print("P5 PCM/RSM")
+    print(f"  stored coordinate=({ra},{rd},{t})")
+    print("↓")
+    print("P6 Feedback")
+
+def benchmark_summary():
+    print("IFA BENCHMARK SUMMARY")
+    print("---------------------")
+    print("Exponential + division : 0.0% coordinate reuse")
+    print("Matrix multiplication  : 43.0% coordinate reuse")
+    print("Robot consensus        : 95.9% coordinate reuse")
+
+def help_msg():
+    print(VERSION)
+    print()
+    print("Core:")
+    print("  ifa help")
+    print("  ifa version")
+    print("  ifa info")
+    print()
+    print("ODU:")
+    print("  ifa printodu A B")
+    print("  ifa inspect A B")
+    print("  ifa trace A B")
+    print("  ifa odu-list")
+    print()
+    print("Φ-P / PCM:")
+    print("  ifa phi A B")
+    print("  ifa reconstruct RA RD T")
+    print()
+    print("Benchmarks:")
+    print("  ifa benchmark")
+    print()
+    print("Example:")
+    print("  ifa printodu 13 6")
+
+def main():
+    if len(sys.argv) < 2:
+        help_msg()
+        return
+
+    cmd = sys.argv[1]
+
+    if cmd == "help":
+        help_msg()
+
+    elif cmd == "version":
+        print(VERSION)
+
+    elif cmd == "info":
+        print("Ifá Processor SDK")
+        print("V1.1: Φ-P → ODU → RMU → RSM/PCM → feedback")
+        print("V2: Φ-P coordinate memory using (R_A, R_D, T)")
+
+    elif cmd == "odu-list":
+        odulist()
+
+    elif cmd in ["printodu", "inspect", "phi", "trace"]:
+        if len(sys.argv) != 4:
+            print(f"Usage: ifa {cmd} A B")
+            return
+        a = int(sys.argv[2], 0) & MASK
+        b = int(sys.argv[3], 0) & MASK
+
+        if cmd == "printodu":
+            printodu(a, b)
+        elif cmd == "inspect":
+            inspect(a, b)
+        elif cmd == "phi":
+            phi(a, b)
+        elif cmd == "trace":
+            trace(a, b)
+
+    elif cmd == "reconstruct":
+        if len(sys.argv) != 5:
+            print("Usage: ifa reconstruct RA RD T")
+            return
+        ra = int(sys.argv[2], 0) & MASK
+        rd = int(sys.argv[3], 0) & MASK
+        t = int(sys.argv[4], 0) & MASK
+        reconstruct(ra, rd, t)
+
+    elif cmd == "benchmark":
+        benchmark_summary()
+
+    else:
+        help_msg()
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,13 @@
+; Relation Algorithm 2 — Store then Feedback Reuse
+
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_STORE
+
+LOADA 0xF0
+LOADB 0xA5
+ADDR 0
+ODU_FEEDBACK
+
+HALT

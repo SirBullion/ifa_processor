@@ -1,0 +1,17 @@
+; CALL / RET test
+
+LOADA 0xEE
+
+CALL add
+
+LOADB 0x22
+
+HALT
+
+add:
+
+LOADB 0x11
+
+RPC_ADD
+
+RET

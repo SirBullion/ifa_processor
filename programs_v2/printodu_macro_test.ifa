@@ -1,0 +1,10 @@
+; PRINTODU macro test
+; PRINTODU should expand into PRINTY/RA/RD/R0/T.
+
+LOADA 0xEE
+LOADB 0x11
+RPC_ADD
+
+PRINTODU
+
+HALT

@@ -1,0 +1,33 @@
+; Recursive Relation Algorithm V2
+; state[n+1] = ODU_FEEDBACK(input[n], state[n])
+; ODU_FEEDBACK now stores its feedback result.
+
+; Seed relation state
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_STORE
+
+; Recursive step 1
+LOADA 0xF0
+LOADB 0xA5
+ADDR 0
+ODU_FEEDBACK
+
+; Recursive step 2
+LOADA 0x33
+LOADB 0x55
+ADDR 0
+ODU_FEEDBACK
+
+; Recursive step 3
+LOADA 0x0F
+LOADB 0xF0
+ADDR 0
+ODU_FEEDBACK
+
+; Final recall
+ADDR 0
+ODU_RECALL
+
+HALT

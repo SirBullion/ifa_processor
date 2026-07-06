@@ -1,0 +1,38 @@
+; RMU management test
+
+; slot 0 = AA vs 55
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_STORE
+
+; slot 1 = 0F vs F0
+LOADA 0x0F
+LOADB 0xF0
+ADDR 1
+ODU_STORE
+
+; copy slot 0 -> slot 2
+LOADB 0x00
+ADDR 2
+RMU_COPY
+ODU_RECALL
+
+; swap slot 1 and slot 2
+LOADB 0x01
+ADDR 2
+RMU_SWAP
+ODU_RECALL
+
+; move slot 2 -> slot 3
+LOADB 0x02
+ADDR 3
+RMU_MOVE
+ODU_RECALL
+
+; clear slot 3
+ADDR 3
+RMU_CLEAR
+ODU_RECALL
+
+HALT

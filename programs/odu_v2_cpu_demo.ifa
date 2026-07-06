@@ -1,0 +1,26 @@
+; ODU V2 CPU demo
+
+; Store raw relation at address 0
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_RAW
+
+; Recall address 0
+ODU_RECALL
+
+; Feedback using previous address 0
+LOADA 0xF0
+LOADB 0xA5
+ODU_FEEDBACK
+
+; Store raw relation at address 1
+LOADA 0x0F
+LOADB 0xF0
+ADDR 1
+ODU_STORE
+
+; Recall address 1
+ODU_RECALL
+
+HALT

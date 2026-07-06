@@ -1,0 +1,19 @@
+; Relation Algorithm 3 — Two Memory Slots
+
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_STORE
+
+LOADA 0x0F
+LOADB 0xF0
+ADDR 1
+ODU_STORE
+
+ADDR 0
+ODU_RECALL
+
+ADDR 1
+ODU_RECALL
+
+HALT

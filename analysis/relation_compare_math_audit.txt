@@ -1,0 +1,76 @@
+==========================================================================================
+RELATION-DERIVED COMPARE AUDIT
+==========================================================================================
+Testing all 256 x 256 byte pairs
+
+Total tests: 65536
+Failures: 0
+
+==========================================================================================
+SAMPLE RELATION COMPARE
+==========================================================================================
+A=10100101 B=10100101
+EQ=1 GT=0 LT=0
+AGREEMENT    = 11111111
+DISAGREEMENT = 00000000
+A_OVER_B     = 00000000
+B_OVER_A     = 00000000
+------------------------------------------------------------
+A=10100101 B=01011010
+EQ=0 GT=1 LT=0
+AGREEMENT    = 00000000
+DISAGREEMENT = 11111111
+A_OVER_B     = 10100101
+B_OVER_A     = 01011010
+------------------------------------------------------------
+A=00110011 B=01010101
+EQ=0 GT=0 LT=1
+AGREEMENT    = 10011001
+DISAGREEMENT = 01100110
+A_OVER_B     = 00100010
+B_OVER_A     = 01000100
+------------------------------------------------------------
+A=11110000 B=10100101
+EQ=0 GT=1 LT=0
+AGREEMENT    = 10101010
+DISAGREEMENT = 01010101
+A_OVER_B     = 01010000
+B_OVER_A     = 00000101
+------------------------------------------------------------
+A=00000000 B=00000001
+EQ=0 GT=0 LT=1
+AGREEMENT    = 11111110
+DISAGREEMENT = 00000001
+A_OVER_B     = 00000000
+B_OVER_A     = 00000001
+------------------------------------------------------------
+A=11111111 B=00000001
+EQ=0 GT=1 LT=0
+AGREEMENT    = 00000001
+DISAGREEMENT = 11111110
+A_OVER_B     = 11111110
+B_OVER_A     = 00000000
+------------------------------------------------------------
+
+==========================================================================================
+CONCLUSION
+==========================================================================================
+
+PASS.
+
+8-bit COMPARE can be derived from relation primitives without subtraction.
+
+Per bit:
+
+    R_A = NOT(A XOR B)        agreement
+    R_D = A XOR B             disagreement
+    A_OVER_B = A AND NOT(B)   directional greater relation
+    B_OVER_A = NOT(A) AND B   directional lesser relation
+
+From MSB to LSB:
+
+    The first disagreement decides GT or LT.
+    If no disagreement occurs, EQ = 1.
+
+This means COMPARE is naturally relation-native.
+

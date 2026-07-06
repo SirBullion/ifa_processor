@@ -1,0 +1,16 @@
+VCD info: dumpfile sim/ifa_rpc.vcd opened for output.
+============================================================
+IFÁ RPC TEST
+============================================================
+OP=0 A=0a B=05 RESULT=0f CB=0 EQ=0 GT=1 LT=0 RA=f0 RD=0f R1=00 R0=f0 A>B=0a B>A=05
+OP=0 A=ff B=01 RESULT=00 CB=1 EQ=0 GT=1 LT=0 RA=01 RD=fe R1=01 R0=00 A>B=fe B>A=00
+OP=0 A=a5 B=5a RESULT=ff CB=0 EQ=0 GT=1 LT=0 RA=00 RD=ff R1=00 R0=00 A>B=a5 B>A=5a
+OP=1 A=10 B=01 RESULT=0f CB=0 EQ=0 GT=1 LT=0 RA=ee RD=11 R1=00 R0=ee A>B=10 B>A=01
+OP=1 A=00 B=01 RESULT=ff CB=1 EQ=0 GT=0 LT=1 RA=fe RD=01 R1=00 R0=fe A>B=00 B>A=01
+OP=1 A=a5 B=05 RESULT=a0 CB=0 EQ=0 GT=1 LT=0 RA=5f RD=a0 R1=05 R0=5a A>B=a0 B>A=00
+OP=2 A=a5 B=a5 RESULT=04 CB=0 EQ=1 GT=0 LT=0 RA=ff RD=00 R1=a5 R0=5a A>B=00 B>A=00
+OP=2 A=a5 B=5a RESULT=02 CB=0 EQ=0 GT=1 LT=0 RA=00 RD=ff R1=00 R0=00 A>B=a5 B>A=5a
+OP=2 A=33 B=55 RESULT=01 CB=0 EQ=0 GT=0 LT=1 RA=99 RD=66 R1=11 R0=88 A>B=22 B>A=44
+============================================================
+RPC test complete.
+tb_v3/tb_ifa_rpc.sv:71: $finish called at 9000 (1ps)

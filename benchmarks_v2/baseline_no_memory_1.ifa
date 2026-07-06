@@ -1,0 +1,8 @@
+; Baseline 1 — compute same relation once, no recall/feedback
+
+LOADA 0xAA
+LOADB 0x55
+ADDR 0
+ODU_RAW
+
+HALT
