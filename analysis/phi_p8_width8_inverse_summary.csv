@@ -1,0 +1,2 @@
+width,total_states,unique_coordinates,ambiguous_coordinates,failures,passed
+8,65536,24768,0,0,True

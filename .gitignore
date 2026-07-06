@@ -1,43 +1,28 @@
 # Simulation outputs
-sim_v2/
-*.vcd
-*.vvp
-*.gtkw
+sim/*.out
+sim/*.vcd
+sim/*.vvp
+sim/*.gtkw
+sim_v2/*.out
+sim_v2/*.vcd
+sim_v2/*.vvp
+
+# Build / FPGA outputs
+*.json
+*.asc
+*.bin
+*.rpt
+*.log
+
+# Generated program files
+odu_v2_program.hex
+odu_v2_program.lst
+program.hex
+program_rom_case.txt
 
 # Python
 __pycache__/
 *.pyc
-.venv/
-venv/
 
-# VS Code
-.vscode/
-
-# Build
-*.log
-*.tmp
-
-# Linux
-*~
-
-# Generated datasets
-*.csv
-*.xlsx
-
-# Hex files generated during testing
-expected.hex
-program.hex
-
-# Python notebooks cache
-.ipynb_checkpoints/
-
-# Simulation directories
-sim/
-sim_v2/
-
-# Python virtual environments
-.env
-.venv
-venv/
-itertools
-pd
+# Temp monitor files
+programs_v2/_monitor_*.ifa

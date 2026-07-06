@@ -1,0 +1,2 @@
+width,steps,modules,total_coordinate_events,unique_coordinates,reused_events,unique_reused_coordinates,coordinate_hit_rate,reuse_percent
+8,64,8,1792,73,1719,73,0.9592633928571429,95.92633928571429

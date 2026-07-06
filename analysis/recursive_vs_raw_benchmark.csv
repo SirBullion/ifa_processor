@@ -1,0 +1,3 @@
+name,program,cycles,final_y,final_ra,final_rd,final_r0,final_t
+raw_chain_baseline,benchmarks_v2/raw_chain_baseline.ifa,38,11111111,00000000,11111111,00000000,11111111
+recursive_feedback_chain,benchmarks_v2/recursive_feedback_chain.ifa,43,01101100,00110011,00110011,00110011,11011101

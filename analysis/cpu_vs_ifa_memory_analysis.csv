@@ -1,0 +1,10 @@
+analysis,A,B,Y,Agreement_RA,Disagreement_RD,Toggle_R0,Transport_T,CPU_ops,IFA_ops,Ops_saved,CPU_memory_state_bits,IFA_REM_state_bits,Memory_overhead_x,CPU_recomputes_relation,IFA_reads_relation,cycle
+easy_relation_reuse,13.0,6.0,3,4,11,0,12,56,40,16,4,20,5,1,1,
+complex_relation_barrel_loop,,,4,4,11,0,12,16,4,12,4,20,5,1,1,0.0
+complex_relation_barrel_loop,,,9,9,4,4,4,32,8,24,4,20,5,1,1,1.0
+complex_relation_barrel_loop,,,6,6,9,9,9,48,12,36,4,20,5,1,1,2.0
+complex_relation_barrel_loop,,,11,11,6,6,6,64,16,48,4,20,5,1,1,3.0
+complex_relation_barrel_loop,,,4,4,11,11,11,80,20,60,4,20,5,1,1,4.0
+complex_relation_barrel_loop,,,9,9,4,4,4,96,24,72,4,20,5,1,1,5.0
+complex_relation_barrel_loop,,,6,6,9,9,9,112,28,84,4,20,5,1,1,6.0
+complex_relation_barrel_loop,,,11,11,6,6,6,128,32,96,4,20,5,1,1,7.0

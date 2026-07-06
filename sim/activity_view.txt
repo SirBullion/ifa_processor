@@ -1,0 +1,39 @@
+WARNING: rtl/ifa_rom.sv:9: $readmemh(program.hex): Not enough words in the file for the requested range [0:1023].
+VCD info: dumpfile sim/activity_view.vcd opened for output.
+
+==================================================================================================================
+                                      IFÁ ACTIVITY VIEW
+==================================================================================================================
+cycle pc  instr opcode       data     out_byte valid tx_start tx_busy printing_odu odu_pos active_blocks
+------------------------------------------------------------------------------------------------------------------
+    1 001 7000 OUT          01001001 00      0     0        0       0            00      FETCH DECODE 
+    2 002 1046 LOAD         01001001 49      1     0        0       0            00      FETCH DECODE OUT_BYTE 
+    3 003 7000 OUT          01000110 49      0     0        0       0            00      FETCH DECODE 
+    4 004 10c3 LOAD         01000110 46      1     1        0       0            00      FETCH DECODE OUT_BYTE UART_START 
+    5 005 7000 OUT          11000011 46      0     0        1       0            00      FETCH DECODE UART_BUSY 
+    6 006 1081 LOAD         11000011 c3      1     0        1       0            00      FETCH DECODE OUT_BYTE UART_BUSY 
+    7 007 7000 OUT          10000001 c3      0     0        1       0            00      FETCH DECODE UART_BUSY 
+    8 008 100a LOAD         10000001 81      1     0        1       0            00      FETCH DECODE OUT_BYTE UART_BUSY 
+    9 009 7000 OUT          00001010 81      0     0        1       0            00      FETCH DECODE UART_BUSY 
+   10 00a 10a5 LOAD         00001010 0a      1     0        1       0            00      FETCH DECODE OUT_BYTE UART_BUSY 
+   11 00b e000 PRINT_ODU    10100101 0a      0     0        1       0            00      FETCH DECODE UART_BUSY 
+   12 00b e000 PRINT_ODU    10100101 0a      0     0        1       1            00      FETCH DECODE ODU_STREAM UART_BUSY 
+   13 00b e000 PRINT_ODU    10100101 c3      1     0        1       1            01      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   14 00b e000 PRINT_ODU    10100101 92      1     0        1       1            02      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   15 00b e000 PRINT_ODU    10100101 66      1     0        1       1            03      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   16 00b e000 PRINT_ODU    10100101 c3      1     0        1       1            04      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   17 00b e000 PRINT_ODU    10100101 ba      1     0        1       1            05      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   18 00b e000 PRINT_ODU    10100101 6e      1     0        1       1            06      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   19 00b e000 PRINT_ODU    10100101 20      1     0        1       1            07      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   20 00b e000 PRINT_ODU    10100101 c3      1     0        1       1            08      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   21 00b e000 PRINT_ODU    10100101 92      1     0        1       1            09      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   22 00b e000 PRINT_ODU    10100101 73      1     0        1       1            10      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   23 00b e000 PRINT_ODU    10100101 c3      1     0        1       1            11      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   24 00b e000 PRINT_ODU    10100101 a9      1     0        1       1            12      FETCH DECODE ODU_STREAM OUT_BYTE UART_BUSY 
+   25 00c f000 HALT         10100101 0a      1     0        1       0            00      FETCH DECODE OUT_BYTE UART_BUSY 
+   26 00c f000 HALT         10100101 0a      0     0        1       0            00      UART_BUSY HALTED 
+------------------------------------------------------------------------------------------------------------------
+HALTED = 1
+CYCLES = 26
+==================================================================================================================
+tb/tb_activity_view.sv:143: $finish called at 276000 (1ps)

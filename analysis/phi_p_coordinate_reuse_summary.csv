@@ -1,0 +1,2 @@
+width,steps,total_coordinate_events,unique_coordinates,reused_events,unique_reused_coordinates,coordinate_hit_rate,reuse_percent
+8,32,64,64,0,0,0.0,0.0
