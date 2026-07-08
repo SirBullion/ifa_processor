@@ -1,0 +1,7 @@
+; IFÁ V3 direct Yorùbá assembly
+
+LOADA 0x02
+LOADB 0x01
+PAPO
+TEODU
+DURO

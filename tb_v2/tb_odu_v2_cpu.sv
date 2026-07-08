@@ -155,10 +155,22 @@ endtask
                         else
                             $display(">>> PRINTY  = %02h (%0d)", dut.print_data, dut.print_data);
                     end
-                    4'h8: $display(">>> PRINTRA = %02h (%0d)  %s", dut.print_data, dut.print_data, oju_odu_name(dut.print_data));
-                    4'h9: $display(">>> PRINTRD = %02h (%0d)  %s", dut.print_data, dut.print_data, oju_odu_name(dut.print_data));
-                    4'hA: $display(">>> PRINTR0 = %02h (%0d)  %s", dut.print_data, dut.print_data, oju_odu_name(dut.print_data));
-                    4'hB: $display(">>> PRINTT  = %02h (%0d)  %s", dut.print_data, dut.print_data, oju_odu_name(dut.print_data));
+                    4'h8: begin
+                        $write(">>> PRINTRA = ");
+                        print_oju_odu(dut.print_data);
+                    end
+                    4'h9: begin
+                        $write(">>> PRINTRD = ");
+                        print_oju_odu(dut.print_data);
+                    end
+                    4'hA: begin
+                        $write(">>> PRINTR0 = ");
+                        print_oju_odu(dut.print_data);
+                    end
+                    4'hB: begin
+                        $write(">>> PRINTT  = ");
+                        print_oju_odu(dut.print_data);
+                    end
                     4'hC: $display(">>> PRINTA  = %02h (%0d)", dut.print_data, dut.print_data);
                     4'hD: $display(">>> PRINTB  = %02h (%0d)", dut.print_data, dut.print_data);
                     4'hE: $display(">>> PRINTPC = %02h (%0d)", dut.print_data, dut.print_data);

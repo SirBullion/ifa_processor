@@ -1,0 +1,15 @@
+VOICE = {
+    "accepted": "Ó WỌLÉ",
+    "unknown": "KÒ WỌLÉ",
+    "success": "ÀṢEYỌRÍ",
+    "error": "ÀṢÌṢE",
+    "warning": "ÌKÌLỌ̀",
+    "working": "Ń ṢE",
+    "loading": "Ń GBÉ WỌLÉ",
+    "ready": "Ó ṢETÁN",
+    "listening": "ODÙ Ń GBỌ́",
+    "finished": "Ó PARÍ",
+    "goodbye": "ỌDÀBỌ̀",
+    "not_found": "KÒ RÍ Ọ̀RỌ̀",
+    "reserved": "A FI PAMỌ́",
+}

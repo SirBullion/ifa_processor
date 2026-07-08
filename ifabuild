@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+./ifa3 "$1"
+
+echo
+echo "======================================"
+echo " IFÁ V3 BUILD COMPLETE"
+echo "======================================"
+
+cat odu_v2_program.lst

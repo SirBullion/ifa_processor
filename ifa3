@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+if [ $# -lt 1 ]; then
+    echo "Usage:"
+    echo "./ifa3 program.ifa3"
+    exit 1
+fi
+
+TMP=programs_v3/_expanded.ifa
+
+PYTHONPATH=. python3 tools/ifa_yoruba_frontend.py "$1" "$TMP"
+
+python3 tools/ifaasm_odu_v3.py "$TMP"

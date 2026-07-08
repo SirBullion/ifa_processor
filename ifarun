@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+if [ $# -lt 1 ]; then
+    echo "Usage:"
+    echo "    ./ifarun program.ifa3"
+    exit 1
+fi
+
+./ifa3 "$1"
+
+iverilog -g2012 \
+rtl_v2/ifa_call_stack.sv \
+rtl_v2/ifa_relation_frame_stack.sv \
+rtl_v3/ifa_rpc.sv \
+rtl_v2/ifa_relation_state_memory.sv \
+rtl_v2/ifa_relation_feedback_unit.sv \
+rtl_v2/ifa_odu_v2_core.sv \
+rtl_v2/ifa_odu_v2_cpu.sv \
+tb_v2/tb_odu_v2_cpu.sv \
+-o sim/tb_v3.out
+
+vvp sim/tb_v3.out
