@@ -1,0 +1,49 @@
+[*]
+[*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
+[*] Thu Jul  9 12:59:59 2026
+[*]
+[dumpfile] "/home/sirbullion/ifa_processor/sim/v4/ifa_v4_modus_tollens.vcd"
+[dumpfile_mtime] "Thu Jul  9 12:56:29 2026"
+[dumpfile_size] 4554
+[savefile] "/home/sirbullion/ifa_processor/sim/v4/ifa_v4.gtkw"
+[timestart] 0
+[size] 1003 600
+[pos] 5 -51
+*-14.051677 14090 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_ifa_v4_modus_tollens.
+[sst_width] 278
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 157
+@22
+tb_ifa_v4_modus_tollens.store_count[31:0]
+@28
+tb_ifa_v4_modus_tollens.rst
+tb_ifa_v4_modus_tollens.rmu_miss
+tb_ifa_v4_modus_tollens.rmu_hit
+@22
+tb_ifa_v4_modus_tollens.out_y[7:0]
+tb_ifa_v4_modus_tollens.out_t[7:0]
+tb_ifa_v4_modus_tollens.out_rd[7:0]
+tb_ifa_v4_modus_tollens.out_ra[7:0]
+tb_ifa_v4_modus_tollens.out_r0[7:0]
+tb_ifa_v4_modus_tollens.miss_count[31:0]
+@28
+tb_ifa_v4_modus_tollens.in_valid
+@22
+tb_ifa_v4_modus_tollens.hit_count[31:0]
+tb_ifa_v4_modus_tollens.evict_count[31:0]
+@420
+tb_ifa_v4_modus_tollens.cycles
+@28
+tb_ifa_v4_modus_tollens.conclusion_not_p
+tb_ifa_v4_modus_tollens.clk
+@420
+tb_ifa_v4_modus_tollens.WIDTH
+@22
+tb_ifa_v4_modus_tollens.Q[7:0]
+tb_ifa_v4_modus_tollens.P[7:0]
+@421
+tb_ifa_v4_modus_tollens.DEPTH
+[pattern_trace] 1
+[pattern_trace] 0

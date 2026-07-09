@@ -1,0 +1,319 @@
+$date
+	Fri Jul 10 00:18:53 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_ifa_v4_modus_tollens $end
+$var wire 32 ! store_count [31:0] $end
+$var wire 1 " rmu_miss $end
+$var wire 1 # rmu_hit $end
+$var wire 8 $ out_y [7:0] $end
+$var wire 8 % out_t [7:0] $end
+$var wire 8 & out_rd [7:0] $end
+$var wire 8 ' out_ra [7:0] $end
+$var wire 8 ( out_r0 [7:0] $end
+$var wire 32 ) miss_count [31:0] $end
+$var wire 32 * hit_count [31:0] $end
+$var wire 32 + evict_count [31:0] $end
+$var parameter 32 , DEPTH $end
+$var parameter 32 - WIDTH $end
+$var reg 8 . P [7:0] $end
+$var reg 8 / Q [7:0] $end
+$var reg 1 0 clk $end
+$var reg 1 1 conclusion_not_p $end
+$var reg 1 2 in_valid $end
+$var reg 1 3 rst $end
+$var integer 32 4 cycles [31:0] $end
+$scope module dut $end
+$var wire 8 5 A [7:0] $end
+$var wire 8 6 B [7:0] $end
+$var wire 1 0 clk $end
+$var wire 1 2 in_valid $end
+$var wire 1 3 rst $end
+$var wire 32 7 store_count [31:0] $end
+$var wire 8 8 rpc_y [7:0] $end
+$var wire 8 9 rpc_t [7:0] $end
+$var wire 8 : rpc_rd [7:0] $end
+$var wire 8 ; rpc_ra [7:0] $end
+$var wire 8 < rpc_r0 [7:0] $end
+$var wire 1 " rmu_miss $end
+$var wire 1 # rmu_hit $end
+$var wire 8 = out_y [7:0] $end
+$var wire 8 > out_t [7:0] $end
+$var wire 8 ? out_rd [7:0] $end
+$var wire 8 @ out_ra [7:0] $end
+$var wire 8 A out_r0 [7:0] $end
+$var wire 32 B miss_count [31:0] $end
+$var wire 32 C hit_count [31:0] $end
+$var wire 32 D evict_count [31:0] $end
+$var parameter 32 E DEPTH $end
+$var parameter 32 F WIDTH $end
+$scope module core $end
+$var wire 1 0 clk $end
+$var wire 1 2 rpc_valid $end
+$var wire 1 3 rst $end
+$var wire 32 G store_count [31:0] $end
+$var wire 8 H rpc_y [7:0] $end
+$var wire 8 I rpc_t [7:0] $end
+$var wire 8 J rpc_rd [7:0] $end
+$var wire 8 K rpc_ra [7:0] $end
+$var wire 8 L rpc_r0 [7:0] $end
+$var wire 1 " rmu_miss $end
+$var wire 1 # rmu_hit $end
+$var wire 8 M out_y [7:0] $end
+$var wire 8 N out_t [7:0] $end
+$var wire 8 O out_rd [7:0] $end
+$var wire 8 P out_ra [7:0] $end
+$var wire 8 Q out_r0 [7:0] $end
+$var wire 32 R miss_count [31:0] $end
+$var wire 32 S hit_count [31:0] $end
+$var wire 32 T evict_count [31:0] $end
+$var parameter 32 U DEPTH $end
+$var parameter 32 V WIDTH $end
+$scope module rmc $end
+$var wire 1 0 clk $end
+$var wire 1 2 req_valid $end
+$var wire 1 3 rst $end
+$var wire 8 W in_y [7:0] $end
+$var wire 8 X in_t [7:0] $end
+$var wire 8 Y in_rd [7:0] $end
+$var wire 8 Z in_ra [7:0] $end
+$var wire 8 [ in_r0 [7:0] $end
+$var parameter 32 \ DEPTH $end
+$var parameter 32 ] INDEX_W $end
+$var parameter 32 ^ WIDTH $end
+$var reg 32 _ evict_count [31:0] $end
+$var reg 4 ` fifo_ptr [3:0] $end
+$var reg 1 # hit $end
+$var reg 32 a hit_count [31:0] $end
+$var reg 1 b lookup_hit $end
+$var reg 4 c lookup_index [3:0] $end
+$var reg 1 " miss $end
+$var reg 32 d miss_count [31:0] $end
+$var reg 8 e out_r0 [7:0] $end
+$var reg 8 f out_ra [7:0] $end
+$var reg 8 g out_rd [7:0] $end
+$var reg 8 h out_t [7:0] $end
+$var reg 8 i out_y [7:0] $end
+$var reg 32 j store_count [31:0] $end
+$var integer 32 k i [31:0] $end
+$scope begin $ivl_for_loop0 $end
+$var integer 32 l j [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module rpc $end
+$var wire 8 m A [7:0] $end
+$var wire 8 n B [7:0] $end
+$var parameter 32 o WIDTH $end
+$var reg 8 p R0 [7:0] $end
+$var reg 8 q RA [7:0] $end
+$var reg 8 r RD [7:0] $end
+$var reg 8 s T [7:0] $end
+$var reg 8 t Y [7:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1000 o
+b1000 ^
+b100 ]
+b10000 \
+b1000 V
+b10000 U
+b1000 F
+b10000 E
+b1000 -
+b10000 ,
+$end
+#0
+$dumpvars
+b0 t
+b0 s
+b0 r
+b0 q
+b11111111 p
+b0 n
+b0 m
+b10000 l
+bx k
+bx j
+bx i
+bx h
+bx g
+bx f
+bx e
+bx d
+b0 c
+0b
+bx a
+bx `
+bx _
+b11111111 [
+b0 Z
+b0 Y
+b0 X
+b0 W
+bx T
+bx S
+bx R
+bx Q
+bx P
+bx O
+bx N
+bx M
+b11111111 L
+b0 K
+b0 J
+b0 I
+b0 H
+bx G
+bx D
+bx C
+bx B
+bx A
+bx @
+bx ?
+bx >
+bx =
+b11111111 <
+b0 ;
+b0 :
+b0 9
+b0 8
+bx 7
+b0 6
+b0 5
+b0 4
+13
+02
+01
+00
+b0 /
+b0 .
+bx +
+bx *
+bx )
+bx (
+bx '
+bx &
+bx %
+bx $
+x#
+x"
+bx !
+$end
+#5000
+b10000 l
+b0 +
+b0 D
+b0 T
+b0 _
+b0 !
+b0 7
+b0 G
+b0 j
+b0 )
+b0 B
+b0 R
+b0 d
+b0 *
+b0 C
+b0 S
+b0 a
+b0 %
+b0 >
+b0 N
+b0 h
+b0 (
+b0 A
+b0 Q
+b0 e
+b0 &
+b0 ?
+b0 O
+b0 g
+b0 '
+b0 @
+b0 P
+b0 f
+b0 $
+b0 =
+b0 M
+b0 i
+0"
+0#
+b0 `
+b10000 k
+10
+#10000
+00
+#15000
+b10000 k
+10
+#20000
+00
+#25000
+b1 4
+03
+10
+#30000
+b10000 l
+b11111110 <
+b11111110 L
+b11111110 [
+b11111110 p
+b1 :
+b1 J
+b1 Y
+b1 r
+b1 8
+b1 H
+b1 W
+b1 t
+12
+b1 .
+b1 5
+b1 m
+00
+#35000
+1b
+b10000 l
+b10 4
+b1 `
+b11111110 (
+b11111110 A
+b11111110 Q
+b11111110 e
+b1 &
+b1 ?
+b1 O
+b1 g
+b1 $
+b1 =
+b1 M
+b1 i
+b1 !
+b1 7
+b1 G
+b1 j
+b1 )
+b1 B
+b1 R
+b1 d
+1"
+10
+#40000
+02
+00
+#45000
+0"
+b11 4
+11
+10
