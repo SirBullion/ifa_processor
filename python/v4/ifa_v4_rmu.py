@@ -107,6 +107,11 @@ class RelationMemoryUnit:
         self.store(key, computed)
         return computed, False
 
+
+    def clear(self) -> None:
+        """Security flush: remove all stored relation frames."""
+        self.entries.clear()
+
     def stats(self) -> Dict[str, float]:
         total = self.hits + self.misses
         return {
