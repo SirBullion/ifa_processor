@@ -1,0 +1,19 @@
+;===============================================================
+; IFÁ V4 — Complete native-operation assembler verification
+;===============================================================
+
+; A = 13, B = 6
+LDAI 0x0D
+LDBI 0x06
+
+PAPO
+YO
+DAGBA
+PIN
+KU
+GBE
+SEDA
+JU
+KERE
+
+HALT

@@ -1,0 +1,188 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2009.vpi";
+S_0x58f27693f850 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x58f27693f9e0 .scope module, "tb_relation_feedback_unit" "tb_relation_feedback_unit" 3 3;
+ .timescale -9 -12;
+P_0x58f27693fb70 .param/l "WIDTH" 1 3 5, +C4<00000000000000000000000000001000>;
+v0x58f27696e900_0 .var "current_r0", 7 0;
+v0x58f27696e9e0_0 .var "current_ra", 7 0;
+v0x58f27696eab0_0 .var "current_rd", 7 0;
+v0x58f27696ebb0_0 .var "current_t", 7 0;
+v0x58f27696ec80_0 .var "current_y", 7 0;
+v0x58f27696ed20_0 .net "fb_r0", 7 0, v0x58f27696de60_0;  1 drivers
+v0x58f27696edf0_0 .net "fb_ra", 7 0, v0x58f27696df40_0;  1 drivers
+v0x58f27696eec0_0 .net "fb_rd", 7 0, v0x58f27696e020_0;  1 drivers
+v0x58f27696ef90_0 .net "fb_t", 7 0, v0x58f27696e100_0;  1 drivers
+v0x58f27696f0f0_0 .net "fb_y", 7 0, v0x58f27696e1e0_0;  1 drivers
+v0x58f27696f1c0_0 .var "prev_r0", 7 0;
+v0x58f27696f290_0 .var "prev_ra", 7 0;
+v0x58f27696f360_0 .var "prev_rd", 7 0;
+v0x58f27696f430_0 .var "prev_t", 7 0;
+v0x58f27696f500_0 .var "prev_y", 7 0;
+S_0x58f27694efb0 .scope module, "dut" "ifa_relation_feedback_unit" 3 11, 4 1 0, S_0x58f27693f9e0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 8 "current_y";
+    .port_info 1 /INPUT 8 "current_ra";
+    .port_info 2 /INPUT 8 "current_rd";
+    .port_info 3 /INPUT 8 "current_r0";
+    .port_info 4 /INPUT 8 "current_t";
+    .port_info 5 /INPUT 8 "prev_y";
+    .port_info 6 /INPUT 8 "prev_ra";
+    .port_info 7 /INPUT 8 "prev_rd";
+    .port_info 8 /INPUT 8 "prev_r0";
+    .port_info 9 /INPUT 8 "prev_t";
+    .port_info 10 /OUTPUT 8 "fb_y";
+    .port_info 11 /OUTPUT 8 "fb_ra";
+    .port_info 12 /OUTPUT 8 "fb_rd";
+    .port_info 13 /OUTPUT 8 "fb_r0";
+    .port_info 14 /OUTPUT 8 "fb_t";
+P_0x58f27694f190 .param/l "WIDTH" 0 4 2, +C4<00000000000000000000000000001000>;
+v0x58f276910490_0 .net "current_r0", 7 0, v0x58f27696e900_0;  1 drivers
+v0x58f27696da80_0 .net "current_ra", 7 0, v0x58f27696e9e0_0;  1 drivers
+v0x58f27696db60_0 .net "current_rd", 7 0, v0x58f27696eab0_0;  1 drivers
+v0x58f27696dc50_0 .net "current_t", 7 0, v0x58f27696ebb0_0;  1 drivers
+v0x58f27696dd30_0 .net "current_y", 7 0, v0x58f27696ec80_0;  1 drivers
+v0x58f27696de60_0 .var "fb_r0", 7 0;
+v0x58f27696df40_0 .var "fb_ra", 7 0;
+v0x58f27696e020_0 .var "fb_rd", 7 0;
+v0x58f27696e100_0 .var "fb_t", 7 0;
+v0x58f27696e1e0_0 .var "fb_y", 7 0;
+v0x58f27696e2c0_0 .net "prev_r0", 7 0, v0x58f27696f1c0_0;  1 drivers
+v0x58f27696e3a0_0 .net "prev_ra", 7 0, v0x58f27696f290_0;  1 drivers
+v0x58f27696e480_0 .net "prev_rd", 7 0, v0x58f27696f360_0;  1 drivers
+v0x58f27696e560_0 .net "prev_t", 7 0, v0x58f27696f430_0;  1 drivers
+v0x58f27696e640_0 .net "prev_y", 7 0, v0x58f27696f500_0;  1 drivers
+E_0x58f27694b3f0/0 .event anyedge, v0x58f27696dd30_0, v0x58f27696e560_0, v0x58f27696da80_0, v0x58f27696e480_0;
+E_0x58f27694b3f0/1 .event anyedge, v0x58f27696db60_0, v0x58f27696e3a0_0, v0x58f276910490_0, v0x58f27696e640_0;
+E_0x58f27694b3f0/2 .event anyedge, v0x58f27696dc50_0, v0x58f27696e2c0_0;
+E_0x58f27694b3f0 .event/or E_0x58f27694b3f0/0, E_0x58f27694b3f0/1, E_0x58f27694b3f0/2;
+    .scope S_0x58f27694efb0;
+T_0 ;
+Ewait_0 .event/or E_0x58f27694b3f0, E_0x0;
+    %wait Ewait_0;
+    %load/vec4 v0x58f27696dd30_0;
+    %load/vec4 v0x58f27696e560_0;
+    %xor;
+    %store/vec4 v0x58f27696e1e0_0, 0, 8;
+    %load/vec4 v0x58f27696da80_0;
+    %load/vec4 v0x58f27696e480_0;
+    %xor;
+    %store/vec4 v0x58f27696df40_0, 0, 8;
+    %load/vec4 v0x58f27696db60_0;
+    %load/vec4 v0x58f27696e3a0_0;
+    %xor;
+    %store/vec4 v0x58f27696e020_0, 0, 8;
+    %load/vec4 v0x58f276910490_0;
+    %load/vec4 v0x58f27696e640_0;
+    %xor;
+    %store/vec4 v0x58f27696de60_0, 0, 8;
+    %load/vec4 v0x58f27696dc50_0;
+    %load/vec4 v0x58f27696e2c0_0;
+    %xor;
+    %store/vec4 v0x58f27696e100_0, 0, 8;
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_0x58f27693f9e0;
+T_1 ;
+    %pushi/vec4 19, 0, 8;
+    %store/vec4 v0x58f27696ec80_0, 0, 8;
+    %pushi/vec4 4, 0, 8;
+    %store/vec4 v0x58f27696e9e0_0, 0, 8;
+    %pushi/vec4 11, 0, 8;
+    %store/vec4 v0x58f27696eab0_0, 0, 8;
+    %pushi/vec4 240, 0, 8;
+    %store/vec4 v0x58f27696e900_0, 0, 8;
+    %pushi/vec4 24, 0, 8;
+    %store/vec4 v0x58f27696ebb0_0, 0, 8;
+    %pushi/vec4 1, 0, 8;
+    %store/vec4 v0x58f27696f500_0, 0, 8;
+    %pushi/vec4 2, 0, 8;
+    %store/vec4 v0x58f27696f290_0, 0, 8;
+    %pushi/vec4 3, 0, 8;
+    %store/vec4 v0x58f27696f360_0, 0, 8;
+    %pushi/vec4 4, 0, 8;
+    %store/vec4 v0x58f27696f1c0_0, 0, 8;
+    %pushi/vec4 5, 0, 8;
+    %store/vec4 v0x58f27696f430_0, 0, 8;
+    %delay 1000, 0;
+    %vpi_call/w 3 46 "$display", "FEEDBACK UNIT TEST" {0 0 0};
+    %load/vec4 v0x58f27696ec80_0;
+    %load/vec4 v0x58f27696f430_0;
+    %xor;
+    %vpi_call/w 3 47 "$display", "fb_y  = %02h expected %02h", v0x58f27696f0f0_0, S<0,vec4,u8> {1 0 0};
+    %load/vec4 v0x58f27696e9e0_0;
+    %load/vec4 v0x58f27696f360_0;
+    %xor;
+    %vpi_call/w 3 48 "$display", "fb_ra = %02h expected %02h", v0x58f27696edf0_0, S<0,vec4,u8> {1 0 0};
+    %load/vec4 v0x58f27696eab0_0;
+    %load/vec4 v0x58f27696f290_0;
+    %xor;
+    %vpi_call/w 3 49 "$display", "fb_rd = %02h expected %02h", v0x58f27696eec0_0, S<0,vec4,u8> {1 0 0};
+    %load/vec4 v0x58f27696e900_0;
+    %load/vec4 v0x58f27696f500_0;
+    %xor;
+    %vpi_call/w 3 50 "$display", "fb_r0 = %02h expected %02h", v0x58f27696ed20_0, S<0,vec4,u8> {1 0 0};
+    %load/vec4 v0x58f27696ebb0_0;
+    %load/vec4 v0x58f27696f1c0_0;
+    %xor;
+    %vpi_call/w 3 51 "$display", "fb_t  = %02h expected %02h", v0x58f27696ef90_0, S<0,vec4,u8> {1 0 0};
+    %load/vec4 v0x58f27696f0f0_0;
+    %load/vec4 v0x58f27696ec80_0;
+    %load/vec4 v0x58f27696f430_0;
+    %xor;
+    %cmp/ne;
+    %jmp/0xz  T_1.0, 6;
+    %vpi_call/w 3 53 "$fatal", 32'sb00000000000000000000000000000001, "fb_y mismatch" {0 0 0};
+T_1.0 ;
+    %load/vec4 v0x58f27696edf0_0;
+    %load/vec4 v0x58f27696e9e0_0;
+    %load/vec4 v0x58f27696f360_0;
+    %xor;
+    %cmp/ne;
+    %jmp/0xz  T_1.2, 6;
+    %vpi_call/w 3 54 "$fatal", 32'sb00000000000000000000000000000001, "fb_ra mismatch" {0 0 0};
+T_1.2 ;
+    %load/vec4 v0x58f27696eec0_0;
+    %load/vec4 v0x58f27696eab0_0;
+    %load/vec4 v0x58f27696f290_0;
+    %xor;
+    %cmp/ne;
+    %jmp/0xz  T_1.4, 6;
+    %vpi_call/w 3 55 "$fatal", 32'sb00000000000000000000000000000001, "fb_rd mismatch" {0 0 0};
+T_1.4 ;
+    %load/vec4 v0x58f27696ed20_0;
+    %load/vec4 v0x58f27696e900_0;
+    %load/vec4 v0x58f27696f500_0;
+    %xor;
+    %cmp/ne;
+    %jmp/0xz  T_1.6, 6;
+    %vpi_call/w 3 56 "$fatal", 32'sb00000000000000000000000000000001, "fb_r0 mismatch" {0 0 0};
+T_1.6 ;
+    %load/vec4 v0x58f27696ef90_0;
+    %load/vec4 v0x58f27696ebb0_0;
+    %load/vec4 v0x58f27696f1c0_0;
+    %xor;
+    %cmp/ne;
+    %jmp/0xz  T_1.8, 6;
+    %vpi_call/w 3 57 "$fatal", 32'sb00000000000000000000000000000001, "fb_t mismatch" {0 0 0};
+T_1.8 ;
+    %vpi_call/w 3 59 "$display", "PASS: feedback unit cross-coupled XOR transform verified" {0 0 0};
+    %vpi_call/w 3 60 "$finish" {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "tb/v2/tb_relation_feedback_unit.sv";
+    "rtl_v2/ifa_relation_feedback_unit.sv";

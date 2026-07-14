@@ -67,3 +67,18 @@ V3 rule:
 |---|---|---|---|
 | And / with | ATI | ATI | ATI |
 | With | PẸ̀LÚ | PELU | PELU |
+
+
+## Odù Execution Room
+
+| Computing role | Official Yorùbá | Plain form | Compatibility alias |
+|---|---|---|---|
+| Odù execution room | YÀRÁ | YARA | STATION |
+
+Example:
+
+    YARA OGBE
+
+or:
+
+    YÀRÁ OGBE

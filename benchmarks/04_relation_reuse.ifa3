@@ -1,0 +1,29 @@
+BERE
+
+; ==========================================================
+; V4 Relation Reuse Benchmark
+;
+; Goal:
+;   Compute the same relation multiple times.
+;   V3: every PAPO executes the RPC.
+;   V4: first PAPO executes, later ones reuse the frame.
+; ==========================================================
+
+; First computation (must execute RPC)
+PAPO 12 ATI 5
+
+; Same relation again
+PAPO 12 ATI 5
+
+; Same relation again
+PAPO 12 ATI 5
+
+; Different relation
+PAPO 9 ATI 2
+
+; Same relation again
+PAPO 12 ATI 5
+
+TE ODU
+
+DURO

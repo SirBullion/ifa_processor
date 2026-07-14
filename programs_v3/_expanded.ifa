@@ -1,7 +1,5 @@
 
-GBA A 0x02
-GBA B 0x04
-PAPO
+grep -nE \
 
 TEODU
 

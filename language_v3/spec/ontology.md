@@ -57,3 +57,18 @@ ODÙ
 The IFÁ processor does not execute "instructions."
 
 It receives Ọ̀RỌ̀, interprets ÌTUMỌ̀ through ODÙ, performs ÌṢẸ́, and produces ÀBÁJÁDE.
+
+
+## YÀRÁ ODÙ
+
+YÀRÁ is an Odù execution room.
+
+A YÀRÁ gives a human-readable name to an execution address and may later
+contain relation memory, security context, frame state, and reversible state.
+
+Current mapping:
+
+    YARA OGBE -> address 0x00
+
+The programmer enters a YÀRÁ by Odù name while the processor continues to
+execute using its physical address.

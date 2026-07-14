@@ -1,0 +1,15 @@
+; LogicBench → Ifá Assembly
+; source: modus_tollens_1_0
+; axiom: modus_tollens
+
+SYM P ; liam_finished_work_early
+SYM Q ; liam_ordered_pizza
+
+RULE_IMP P Q ; P -> Q
+
+FACT_NOT Q
+
+INFER_MT P Q
+ASSERT_NOT P
+PRINT
+HALT

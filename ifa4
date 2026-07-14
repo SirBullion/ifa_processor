@@ -1,0 +1,66 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [ $# -lt 1 ]; then
+    echo "Usage:"
+    echo "    ./ifa4 program.ifa4 [--yara ID]"
+    echo "    ./ifa4 program.ifa4y [--yara ID]"
+    exit 1
+fi
+
+SOURCE="$1"
+shift
+
+YARA_ID=0
+
+if [ "${1:-}" = "--yara" ]; then
+    if [ $# -lt 2 ]; then
+        echo "ERROR: --yara requires an ID"
+        exit 1
+    fi
+
+    YARA_ID="$2"
+    shift 2
+fi
+
+if [ $# -ne 0 ]; then
+    echo "ERROR: unexpected arguments: $*"
+    exit 1
+fi
+
+OUTPUT_PREFIX="programs_v4/_program_v4"
+GENERATED_ASSEMBLY="programs_v4/_generated_v4.ifa4"
+
+mkdir -p programs_v4
+
+case "$SOURCE" in
+    *.ifa4y)
+        python3 tools/ifa_yoruba_frontend_v4.py \
+            "$SOURCE" \
+            "$GENERATED_ASSEMBLY"
+
+        ASSEMBLY_SOURCE="$GENERATED_ASSEMBLY"
+        ;;
+
+    *.ifa4)
+        ASSEMBLY_SOURCE="$SOURCE"
+        ;;
+
+    *)
+        echo "ERROR: source must end in .ifa4 or .ifa4y"
+        exit 1
+        ;;
+esac
+
+python3 tools/ifaasm_v4.py \
+    "$ASSEMBLY_SOURCE" \
+    "$OUTPUT_PREFIX"
+
+echo
+echo "Running V4 program in YÀRÁ ${YARA_ID}..."
+echo
+
+python3 tools/ifarun_v4.py \
+    "${OUTPUT_PREFIX}.hex" \
+    --yara "$YARA_ID"

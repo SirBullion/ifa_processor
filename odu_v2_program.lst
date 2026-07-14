@@ -1,8 +1,8 @@
 IFÁ ODU V2 PROGRAM ADDRESS MAP
 ============================================================
-000 0x00  1002  GBA A 0x02
-001 0x01  2004  GBA B 0x04
-002 0x02  8000  PAPO
+000 0x00  1009  GBA A 0x09
+001 0x01  2003  GBA B 0x03
+002 0x02  9000  YO
 003 0x03  f700  PRINTY
 004 0x04  f800  PRINTRA
 005 0x05  f900  PRINTRD

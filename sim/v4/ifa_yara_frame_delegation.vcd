@@ -1,0 +1,847 @@
+$date
+	Fri Jul 10 20:54:29 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_ifa_yara_frame_delegation $end
+$var wire 32 ! yara1_misses [31:0] $end
+$var wire 32 " yara1_imports [31:0] $end
+$var wire 32 # yara1_hits [31:0] $end
+$var wire 32 $ yara0_misses [31:0] $end
+$var wire 32 % yara0_imports [31:0] $end
+$var wire 32 & yara0_hits [31:0] $end
+$var wire 1 ' share_done $end
+$var wire 1 ( share_denied $end
+$var wire 1 ) rmu_miss $end
+$var wire 1 * rmu_hit $end
+$var wire 8 + out_y [7:0] $end
+$var wire 8 , out_t [7:0] $end
+$var wire 8 - out_rd [7:0] $end
+$var wire 8 . out_ra [7:0] $end
+$var wire 8 / out_r0 [7:0] $end
+$var reg 8 0 A [7:0] $end
+$var reg 8 1 B [7:0] $end
+$var reg 1 2 active_yara $end
+$var reg 1 3 clk $end
+$var reg 1 4 in_valid $end
+$var reg 1 5 last_share_denied $end
+$var reg 1 6 last_share_done $end
+$var reg 1 7 rst $end
+$var reg 1 8 share_authorized $end
+$var reg 1 9 share_commit $end
+$var reg 1 : share_destination_yara $end
+$var reg 1 ; share_source_yara $end
+$scope module dut $end
+$var wire 8 < A [7:0] $end
+$var wire 8 = B [7:0] $end
+$var wire 1 2 active_yara $end
+$var wire 1 3 clk $end
+$var wire 1 4 in_valid $end
+$var wire 1 7 rst $end
+$var wire 1 8 share_authorized $end
+$var wire 1 9 share_commit $end
+$var wire 1 : share_destination_yara $end
+$var wire 1 ; share_source_yara $end
+$var wire 8 > rpc_y [7:0] $end
+$var wire 8 ? rpc_t [7:0] $end
+$var wire 8 @ rpc_rd [7:0] $end
+$var wire 8 A rpc_ra [7:0] $end
+$var wire 8 B rpc_r0 [7:0] $end
+$var wire 2 C room_miss [1:0] $end
+$var wire 2 D room_import_done [1:0] $end
+$var wire 2 E room_hit [1:0] $end
+$var parameter 32 F DEPTH $end
+$var parameter 32 G MAX_YARA $end
+$var parameter 32 H WIDTH $end
+$var parameter 32 I YARA_COUNT $end
+$var parameter 32 J YARA_W $end
+$var reg 1 K active_yara_valid $end
+$var reg 1 L delegation_allowed $end
+$var reg 1 M destination_yara_valid $end
+$var reg 8 N out_r0 [7:0] $end
+$var reg 8 O out_ra [7:0] $end
+$var reg 8 P out_rd [7:0] $end
+$var reg 8 Q out_t [7:0] $end
+$var reg 8 R out_y [7:0] $end
+$var reg 1 * rmu_hit $end
+$var reg 1 ) rmu_miss $end
+$var reg 2 S room_admin_import_valid [1:0] $end
+$var reg 2 T room_req_valid [1:0] $end
+$var reg 1 ( share_denied $end
+$var reg 1 ' share_done $end
+$var reg 8 U share_r0 [7:0] $end
+$var reg 8 V share_ra [7:0] $end
+$var reg 8 W share_rd [7:0] $end
+$var reg 8 X share_t [7:0] $end
+$var reg 8 Y share_y [7:0] $end
+$var reg 1 Z source_yara_valid $end
+$var reg 32 [ yara0_hits [31:0] $end
+$var reg 32 \ yara0_imports [31:0] $end
+$var reg 32 ] yara0_misses [31:0] $end
+$var reg 32 ^ yara1_hits [31:0] $end
+$var reg 32 _ yara1_imports [31:0] $end
+$var reg 32 ` yara1_misses [31:0] $end
+$var integer 32 a destination_index [31:0] $end
+$var integer 32 b done_index [31:0] $end
+$var integer 32 c request_index [31:0] $end
+$scope begin generate_local_rmu[0] $end
+$var parameter 2 d yara_index $end
+$scope module local_rmu $end
+$var wire 1 e admin_import_valid $end
+$var wire 8 f admin_r0 [7:0] $end
+$var wire 8 g admin_ra [7:0] $end
+$var wire 8 h admin_rd [7:0] $end
+$var wire 8 i admin_t [7:0] $end
+$var wire 8 j admin_y [7:0] $end
+$var wire 1 3 clk $end
+$var wire 1 k req_valid $end
+$var wire 1 7 rst $end
+$var wire 8 l in_y [7:0] $end
+$var wire 8 m in_t [7:0] $end
+$var wire 8 n in_rd [7:0] $end
+$var wire 8 o in_ra [7:0] $end
+$var wire 8 p in_r0 [7:0] $end
+$var parameter 32 q DEPTH $end
+$var parameter 32 r INDEX_W $end
+$var parameter 32 s WIDTH $end
+$var reg 1 t admin_key_exists $end
+$var reg 4 u admin_key_index [3:0] $end
+$var reg 32 v evict_count [31:0] $end
+$var reg 4 w fifo_ptr [3:0] $end
+$var reg 1 x hit $end
+$var reg 32 y hit_count [31:0] $end
+$var reg 32 z import_count [31:0] $end
+$var reg 1 { import_done $end
+$var reg 1 | lookup_hit $end
+$var reg 4 } lookup_index [3:0] $end
+$var reg 1 ~ miss $end
+$var reg 32 !" miss_count [31:0] $end
+$var reg 8 "" out_r0 [7:0] $end
+$var reg 8 #" out_ra [7:0] $end
+$var reg 8 $" out_rd [7:0] $end
+$var reg 8 %" out_t [7:0] $end
+$var reg 8 &" out_y [7:0] $end
+$var reg 32 '" store_count [31:0] $end
+$var integer 32 (" i [31:0] $end
+$var integer 32 )" j [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin generate_local_rmu[1] $end
+$var parameter 2 *" yara_index $end
+$scope module local_rmu $end
+$var wire 1 +" admin_import_valid $end
+$var wire 8 ," admin_r0 [7:0] $end
+$var wire 8 -" admin_ra [7:0] $end
+$var wire 8 ." admin_rd [7:0] $end
+$var wire 8 /" admin_t [7:0] $end
+$var wire 8 0" admin_y [7:0] $end
+$var wire 1 3 clk $end
+$var wire 1 1" req_valid $end
+$var wire 1 7 rst $end
+$var wire 8 2" in_y [7:0] $end
+$var wire 8 3" in_t [7:0] $end
+$var wire 8 4" in_rd [7:0] $end
+$var wire 8 5" in_ra [7:0] $end
+$var wire 8 6" in_r0 [7:0] $end
+$var parameter 32 7" DEPTH $end
+$var parameter 32 8" INDEX_W $end
+$var parameter 32 9" WIDTH $end
+$var reg 1 :" admin_key_exists $end
+$var reg 4 ;" admin_key_index [3:0] $end
+$var reg 32 <" evict_count [31:0] $end
+$var reg 4 =" fifo_ptr [3:0] $end
+$var reg 1 >" hit $end
+$var reg 32 ?" hit_count [31:0] $end
+$var reg 32 @" import_count [31:0] $end
+$var reg 1 A" import_done $end
+$var reg 1 B" lookup_hit $end
+$var reg 4 C" lookup_index [3:0] $end
+$var reg 1 D" miss $end
+$var reg 32 E" miss_count [31:0] $end
+$var reg 8 F" out_r0 [7:0] $end
+$var reg 8 G" out_ra [7:0] $end
+$var reg 8 H" out_rd [7:0] $end
+$var reg 8 I" out_t [7:0] $end
+$var reg 8 J" out_y [7:0] $end
+$var reg 32 K" store_count [31:0] $end
+$var integer 32 L" i [31:0] $end
+$var integer 32 M" j [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin generate_yara0_statistics $end
+$upscope $end
+$scope begin generate_yara1_statistics $end
+$upscope $end
+$scope module shared_rpc $end
+$var wire 8 N" A [7:0] $end
+$var wire 8 O" B [7:0] $end
+$var parameter 32 P" WIDTH $end
+$var reg 8 Q" R0 [7:0] $end
+$var reg 8 R" RA [7:0] $end
+$var reg 8 S" RD [7:0] $end
+$var reg 8 T" T [7:0] $end
+$var reg 8 U" Y [7:0] $end
+$upscope $end
+$upscope $end
+$scope task delegate_frame $end
+$upscope $end
+$scope task execute_relation $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1000 P"
+b1000 9"
+b100 8"
+b10000 7"
+b1 *"
+b1000 s
+b100 r
+b10000 q
+b0 d
+b1 J
+b10 I
+b1000 H
+b10 G
+b10000 F
+$end
+#0
+$dumpvars
+b0 U"
+b0 T"
+b0 S"
+b0 R"
+b11111111 Q"
+b0 O"
+b0 N"
+b10000 M"
+bx L"
+bx K"
+bx J"
+bx I"
+bx H"
+bx G"
+bx F"
+bx E"
+xD"
+b0 C"
+0B"
+xA"
+bx @"
+bx ?"
+x>"
+bx ="
+bx <"
+b0 ;"
+0:"
+b11111111 6"
+b0 5"
+b0 4"
+b0 3"
+b0 2"
+01"
+bx 0"
+bx /"
+bx ."
+bx -"
+bx ,"
+0+"
+b10000 )"
+bx ("
+bx '"
+bx &"
+bx %"
+bx $"
+bx #"
+bx ""
+bx !"
+x~
+b0 }
+0|
+x{
+bx z
+bx y
+xx
+bx w
+bx v
+b0 u
+0t
+b11111111 p
+b0 o
+b0 n
+b0 m
+b0 l
+0k
+bx j
+bx i
+bx h
+bx g
+bx f
+0e
+bx c
+b10 b
+bx a
+bx `
+bx _
+bx ^
+bx ]
+bx \
+bx [
+1Z
+bx Y
+bx X
+bx W
+bx V
+bx U
+b0 T
+b0 S
+bx R
+bx Q
+bx P
+bx O
+bx N
+1M
+0L
+1K
+bx E
+bx D
+bx C
+b11111111 B
+b0 A
+b0 @
+b0 ?
+b0 >
+b0 =
+b0 <
+0;
+1:
+09
+08
+17
+06
+05
+04
+03
+02
+b0 1
+b0 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+x*
+x)
+0(
+x'
+bx &
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
+#5000
+b10000 )"
+b0 %
+b0 \
+b0 $
+b0 ]
+b0 &
+b0 [
+b10000 M"
+b0 "
+b0 _
+b0 !
+b0 `
+b0 #
+b0 ^
+b0 X
+b0 i
+b0 /"
+b0 U
+b0 f
+b0 ,"
+b0 W
+b0 h
+b0 ."
+b0 V
+b0 g
+b0 -"
+b0 Y
+b0 j
+b0 0"
+b10 b
+0'
+b0 ,
+b0 Q
+b0 /
+b0 N
+b0 -
+b0 P
+b0 .
+b0 O
+b0 +
+b0 R
+0)
+0*
+b0 z
+b0 v
+b0 '"
+b0 !"
+b0 y
+b0 %"
+b0 ""
+b0 $"
+b0 #"
+b0 &"
+0{
+0~
+0x
+b0 w
+b0 @"
+b0 <"
+b0 K"
+b0 E"
+b0 ?"
+b0 I"
+b0 F"
+b0 H"
+b0 G"
+b0 J"
+b0 D
+0A"
+b0 C
+0D"
+b0 E
+0>"
+b0 ="
+b10000 ("
+b10000 L"
+13
+#10000
+03
+#15000
+b10000 L"
+b10000 ("
+13
+#20000
+03
+#25000
+b10000 ("
+b10000 L"
+13
+#30000
+07
+03
+#35000
+13
+#40000
+1k
+b10000 )"
+b10000 M"
+b1 T
+b10 c
+b11000 ?
+b11000 m
+b11000 3"
+b11000 T"
+b11110000 B
+b11110000 p
+b11110000 6"
+b11110000 Q"
+b1011 @
+b1011 n
+b1011 4"
+b1011 S"
+b100 A
+b100 o
+b100 5"
+b100 R"
+b10011 >
+b10011 l
+b10011 2"
+b10011 U"
+14
+b110 1
+b110 =
+b110 O"
+b1101 0
+b1101 <
+b1101 N"
+03
+#45000
+1t
+b10000 M"
+b1 $
+b1 ]
+b11000 X
+b11000 i
+b11000 /"
+b11110000 U
+b11110000 f
+b11110000 ,"
+b1011 W
+b1011 h
+b1011 ."
+b100 V
+b100 g
+b100 -"
+b10011 Y
+b10011 j
+b10011 0"
+1|
+b10000 )"
+b11000 ,
+b11000 Q
+b11110000 /
+b11110000 N
+b1011 -
+b1011 P
+b100 .
+b100 O
+b10011 +
+b10011 R
+1)
+b1 '"
+b1 !"
+b1 w
+b11000 %"
+b11110000 ""
+b1011 $"
+b100 #"
+b10011 &"
+b1 C
+1~
+13
+#50000
+0k
+b0 T
+04
+03
+#55000
+b11000 ,
+b11000 Q
+b11110000 /
+b11110000 N
+b1011 -
+b1011 P
+b100 .
+b100 O
+b10011 +
+b10011 R
+0)
+b0 C
+0~
+13
+#60000
+1(
+19
+03
+#61000
+15
+#65000
+13
+#70000
+0(
+09
+03
+#75000
+13
+#80000
+11"
+b0 ,
+b0 Q
+b0 /
+b0 N
+b0 -
+b0 P
+b0 .
+b0 O
+b0 +
+b0 R
+b10 T
+b10 c
+14
+12
+03
+#85000
+b10000 )"
+1t
+b1 !
+b1 `
+b11000 X
+b11000 i
+b11000 /"
+b11110000 U
+b11110000 f
+b11110000 ,"
+b1011 W
+b1011 h
+b1011 ."
+b100 V
+b100 g
+b100 -"
+b10011 Y
+b10011 j
+b10011 0"
+1:"
+1B"
+b10000 M"
+b11000 ,
+b11000 Q
+b11110000 /
+b11110000 N
+b1011 -
+b1011 P
+b100 .
+b100 O
+b10011 +
+b10011 R
+1)
+b1 K"
+b1 E"
+b1 ="
+b11000 I"
+b11110000 F"
+b1011 H"
+b100 G"
+b10011 J"
+b10 C
+1D"
+13
+#90000
+01"
+b0 T
+04
+03
+#95000
+b11000 ,
+b11000 Q
+b11110000 /
+b11110000 N
+b1011 -
+b1011 P
+b100 .
+b100 O
+b10011 +
+b10011 R
+0)
+b0 C
+0D"
+13
+#100000
+b10000 )"
+0|
+b10000 M"
+0B"
+1k
+b0 ?
+b0 m
+b0 3"
+b0 T"
+b10011100 B
+b10011100 p
+b10011100 6"
+b10011100 Q"
+b1100011 @
+b1100011 n
+b1100011 4"
+b1100011 S"
+b0 A
+b0 o
+b0 5"
+b0 R"
+b1100011 >
+b1100011 l
+b1100011 2"
+b1100011 U"
+b11000 ,
+b11000 Q
+b11110000 /
+b11110000 N
+b1011 -
+b1011 P
+b100 .
+b100 O
+b10011 +
+b10011 R
+b1 T
+b10 c
+14
+b1000010 1
+b1000010 =
+b1000010 O"
+b100001 0
+b100001 <
+b100001 N"
+02
+03
+#105000
+b1 u
+b10000 M"
+0:"
+b10 $
+b10 ]
+b0 X
+b0 i
+b0 /"
+b10011100 U
+b10011100 f
+b10011100 ,"
+b1100011 W
+b1100011 h
+b1100011 ."
+b0 V
+b0 g
+b0 -"
+b1100011 Y
+b1100011 j
+b1100011 0"
+1t
+b1 }
+1|
+b10000 )"
+1)
+b0 ,
+b0 Q
+b10011100 /
+b10011100 N
+b1100011 -
+b1100011 P
+b0 .
+b0 O
+b1100011 +
+b1100011 R
+b10 '"
+b10 !"
+b10 w
+b0 %"
+b10011100 ""
+b1100011 $"
+b0 #"
+b1100011 &"
+b1 C
+1~
+13
+#110000
+0k
+b0 T
+04
+03
+#115000
+b10011100 /
+b10011100 N
+b1100011 -
+b1100011 P
+b1100011 +
+b1100011 R
+0)
+b0 C
+0~
+13
+#120000
+1+"
+b10 S
+b10 a
+1L
+19
+18
+03
+#121000
+05
+#125000
+b1 "
+b1 _
+1'
+b10 b
+b1 ;"
+1:"
+b1 C"
+1B"
+b10000 M"
+b1 @"
+b10 D
+1A"
+b10 ="
+13
+#126000
+16
+#130000
+0+"
+b0 S
+0L
+09
+03
+#135000
+b10 b
+0'
+b0 D
+0A"
+13
+#140000
+11"
+b11000 ,
+b11000 Q
+b100 .
+b100 O
+b11110000 /
+b11110000 N
+b1011 -
+b1011 P
+b10011 +
+b10011 R
+b10 T
+b10 c
+14
+12
+03
+#145000
+b10000 )"
+b1 u
+1t
+b10000 M"
+b1 ;"
+1:"
+b1 #
+b1 ^
+b10011100 U
+b10011100 f
+b10011100 ,"
+b1100011 W
+b1100011 h
+b1100011 ."
+b1100011 Y
+b1100011 j
+b1100011 0"
+1*
+b0 ,
+b0 Q
+b10011100 /
+b10011100 N
+b1100011 -
+b1100011 P
+b0 .
+b0 O
+b1100011 +
+b1100011 R
+b1 ?"
+b0 I"
+b10011100 F"
+b1100011 H"
+b0 G"
+b1100011 J"
+b10 E
+1>"
+13
+#150000
+01"
+b0 T
+04
+03
+#151000

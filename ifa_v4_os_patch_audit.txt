@@ -1,0 +1,2871 @@
+============================================================
+IFA V4 OS PATCH AUDIT
+============================================================
+
+PWD
+/home/sirbullion/ifa_processor
+
+============================================================
+DIRECTORY STRUCTURE
+============================================================
+language_v3
+language_v3/examples
+language_v3/examples/add_chain.ifa3
+language_v3/examples/add_sentence.ifa3
+language_v3/examples/add_symbol.ifa3
+language_v3/examples/add_yoruba.ifa3
+language_v3/examples/add_yoruba_native.ifa3
+language_v3/examples/ado_add.ifa3
+language_v3/examples/ado_symbol_add.ifa3
+language_v3/examples/_monitor_line.ifa3
+language_v3/examples/mul_sentence.ifa3
+language_v3/examples/seda_sentence.ifa3
+language_v3/examples/sub_sentence.ifa3
+language_v3/__init__.py
+language_v3/isa
+language_v3/isa/yoruba_opcode_map.md
+language_v3/kernel.py
+language_v3/macros
+language_v3/macros/yoruba_macros.md
+language_v3/natural
+language_v3/natural/grammar.txt
+language_v3/__pycache__
+language_v3/__pycache__/__init__.cpython-312.pyc
+language_v3/__pycache__/kernel.cpython-312.pyc
+language_v3/spec
+language_v3/spec/dictionary.py
+language_v3/spec/direct_yoruba_assembly.md
+language_v3/spec/examples.md
+language_v3/spec/grammar.md
+language_v3/spec/__init__.py
+language_v3/spec/isa.py
+language_v3/spec/keywords.md
+language_v3/spec/keywords.py
+language_v3/spec/numbers.py
+language_v3/spec/odu_kernel.md
+language_v3/spec/odu.py
+language_v3/spec/ohun.md
+language_v3/spec/ontology.md
+language_v3/spec/operators.md
+language_v3/spec/operators.py
+language_v3/spec/__pycache__
+language_v3/spec/__pycache__/dictionary.cpython-312.pyc
+language_v3/spec/__pycache__/__init__.cpython-312.pyc
+language_v3/spec/__pycache__/keywords.cpython-312.pyc
+language_v3/spec/__pycache__/numbers.cpython-312.pyc
+language_v3/spec/__pycache__/odu.cpython-312.pyc
+language_v3/spec/__pycache__/operators.cpython-312.pyc
+language_v3/spec/__pycache__/voice.cpython-312.pyc
+language_v3/spec/voice.py
+language_v3/stdlib
+language_v3/tests
+monitor
+monitor/ifa_monitor.py
+rtl
+rtl/ifa_corrector.sv
+rtl/ifa_cpu_core.sv
+rtl/ifa_cpu_rom_top.sv
+rtl/ifa_cpu.sv
+rtl/ifa_cpu_uart_top.sv
+rtl/ifa_fpga_top.sv
+rtl/ifa_monitor.sv
+rtl/ifa_monitor_uart_top.sv
+rtl/ifa_odu_printer.sv
+rtl/ifa_p2_inv.sv
+rtl/ifa_p2.sv
+rtl/ifa_p4_inv.sv
+rtl/ifa_p4.sv
+rtl/ifa_p8_inv.sv
+rtl/ifa_p8.sv
+rtl/ifa_rm4.sv
+rtl/ifa_rom.sv
+rtl/ifa_t8.sv
+rtl/ifa_top.sv
+rtl/uart_rx.sv
+rtl/uart_tx.sv
+rtl_v2
+rtl_v2/cpu_relation_sequential_ref.sv
+rtl_v2/ifa_add_4.sv
+rtl_v2/ifa_add_param.sv
+rtl_v2/ifa_alu_4.sv
+rtl_v2/ifa_big_prime_candidate.sv
+rtl_v2/ifa_call_stack.sv
+rtl_v2/ifa_compare_4.sv
+rtl_v2/ifa_core_with_relation_memory.sv
+rtl_v2/ifa_naive_relation_mux.sv
+rtl_v2/ifa_odu_v2_core.sv
+rtl_v2/ifa_odu_v2_cpu.sv
+rtl_v2/ifa_phi_p_coordinate_memory.sv
+rtl_v2/ifa_phi_p_inverse_reconstruct.sv
+rtl_v2/ifa_pipelined_core.sv
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv
+rtl_v2/ifa_pipelined_core_v1_debug.sv
+rtl_v2/ifa_prime_relation_engine.sv
+rtl_v2/ifa_prime_relation_signature.sv
+rtl_v2/ifa_prime_small_filter.sv
+rtl_v2/ifa_relation_4.sv
+rtl_v2/ifa_relation_barrel_loop.sv
+rtl_v2/ifa_relation_compressor.sv
+rtl_v2/ifa_relation_execute.sv
+rtl_v2/ifa_relation_feedback_unit.sv
+rtl_v2/ifa_relation_frame_stack.sv
+rtl_v2/ifa_relation_memory_unit.sv
+rtl_v2/ifa_relation_pattern_encoder.sv
+rtl_v2/ifa_relation_ram.sv
+rtl_v2/ifa_relation_state_memory.sv
+rtl_v2/ifa_rmu_compression_logic_only.sv
+rtl_v2/ifa_state_memory.sv
+rtl_v2/ifa_sub_4.sv
+rtl_v2/ifa_transport_min_distance.sv
+rtl_v3
+rtl_v3/cpu_ref_v3.sv
+rtl_v3/cpu_ref_v3.sv.bak
+rtl_v3/ifa_rau.sv
+rtl_v3/ifa_rpc.sv
+rtl/v4
+rtl/v4
+rtl/v4/ifa_general_memory_guard.sv
+rtl/v4/ifa_general_memory_guard.sv
+rtl/v4/ifa_onile_supervisor.sv
+rtl/v4/ifa_onile_supervisor.sv
+rtl/v4/ifa_relation_cam.sv
+rtl/v4/ifa_relation_cam.sv
+rtl/v4/ifa_relation_frame_ram.sv
+rtl/v4/ifa_relation_frame_ram.sv
+rtl/v4/ifa_relation_memory_controller_admin.sv
+rtl/v4/ifa_relation_memory_controller_admin.sv
+rtl/v4/ifa_relation_memory_controller.sv
+rtl/v4/ifa_relation_memory_controller.sv
+rtl/v4/ifa_rpc_stub.sv
+rtl/v4/ifa_rpc_stub.sv
+rtl/v4/ifa_v4_core.sv
+rtl/v4/ifa_v4_core.sv
+rtl/v4/ifa_v4_end_to_end_core.sv
+rtl/v4/ifa_v4_end_to_end_core.sv
+rtl/v4/ifa_v4_onile_delegation_top.sv
+rtl/v4/ifa_v4_onile_delegation_top.sv
+rtl/v4/ifa_v4_yara_secure_system_top.sv
+rtl/v4/ifa_v4_yara_secure_system_top.sv
+rtl/v4/ifa_v4_yara_system_top.sv
+rtl/v4/ifa_v4_yara_system_top.sv
+rtl/v4/ifa_yara_context_bank.sv
+rtl/v4/ifa_yara_context_bank.sv
+rtl/v4/ifa_yara_frame_share_core.sv
+rtl/v4/ifa_yara_frame_share_core.sv
+rtl/v4/ifa_yara_manager.sv
+rtl/v4/ifa_yara_manager.sv
+rtl/v4/ifa_yara_v4_core.sv
+rtl/v4/ifa_yara_v4_core.sv
+tb/v4
+tb/v4/tb_ifa_general_memory_guard.sv
+tb/v4/tb_ifa_onile_supervisor.sv
+tb/v4/tb_ifa_relation_memory_controller.sv
+tb/v4/tb_ifa_v4_core.sv
+tb/v4/tb_ifa_v4_end_to_end_core.sv
+tb/v4/tb_ifa_v4_exhaustive_batch.sv
+tb/v4/tb_ifa_v4_modus_tollens.sv
+tb/v4/tb_ifa_v4_onile_delegation_top.sv
+tb/v4/tb_ifa_v4_reuse_workload.sv
+tb/v4/tb_ifa_v4_single_case.sv
+tb/v4/tb_ifa_v4_yara_secure_system_top.sv
+tb/v4/tb_ifa_v4_yara_system_top.sv
+tb/v4/tb_ifa_yara_context_switch.sv
+tb/v4/tb_ifa_yara_frame_delegation.sv
+tb/v4/tb_ifa_yara_isolation.sv
+tb/v4/tb_ifa_yara_manager.sv
+tb/v4/tb_v4_gtkwave_overall.sv
+tools
+tools/compare_cpu_vs_ifa_cycles.py
+tools/ifa
+tools/ifaasm_odu_v2.py
+tools/ifaasm_odu_v3.py
+tools/ifaasm.py
+tools/ifa_yoruba_frontend.py
+tools/run_benchmarks.sh
+tools/run_cpu_vs_ifa.sh
+tools/run_ifa_v3_benchmark.sh
+tools/run_phase1_relation_algorithms.sh
+tools/run_phase2_v2_benchmarks.sh
+tools/run_recursive_vs_raw_benchmark.sh
+tools/run_relation_benchmarks.sh
+
+============================================================
+MONITOR FILE
+============================================================
+#!/usr/bin/env python3
+
+# --- IFÁ project import bootstrap ---
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+# -----------------------------------
+
+import os
+import shlex
+import subprocess
+import time
+import re
+from pathlib import Path
+from language_v3.spec.voice import VOICE
+
+OJU_ODU = [
+    ("ÒGBÈ", "light, openness, clarity, emergence"),
+    ("ÒYÈKÚ", "depth, concealment, endings, ancestral shadow"),
+    ("ÌWÒRÌ", "reflection, inner seeing, transformation"),
+    ("ÒDÍ", "boundary, enclosure, protection, resistance"),
+    ("ÌRÒSÙN", "lineage, earth, blood, foundation"),
+    ("ÒWÓNRÍN", "movement, instability, turning point"),
+    ("ÒBÀRÀ", "speech, exchange, manifestation"),
+    ("ÒKÀNRÀN", "fire, conflict, intensity, correction"),
+    ("ÒGÚNDÁ", "cutting, force, iron, breakthrough"),
+    ("ÒSÁ", "wind, change, dispersal, sudden shift"),
+    ("ÌKÁ", "constraint, danger, entanglement"),
+    ("ÒTÚRÚPỌ̀N", "inheritance, burden, continuity"),
+    ("ÒTÚRÁ", "elevation, clarity, spiritual opening"),
+    ("ÌRẸ̀TẸ̀", "pressure, endurance, refinement"),
+    ("ÒṢÉ", "sweetness, renewal, cleansing, blessing"),
+    ("ÒFÚN", "completion, whiteness, fullness, closure"),
+]
+
+HISTORY_LOG = []
+DISPLAY_MODE = "CLEAN"
+LAST_STDOUT = ""
+OHUN_HISTORY = []
+globals()["BABALAWO_MODE"] = False
+
+LAST_RUN_TIME = {"assemble": 0.0, "compile": 0.0, "execute": 0.0, "total": 0.0}
+
+HELP = """
+OHÙN IFÁ — ÌRÀNLỌ́WỌ́
+---------------------
+
+Ọ̀RỌ̀ taara
+-----------
+2+2
+5-3
+PAPO MEJI ATI META
+YO MARUN ATI MEJI
+SEDA 0xA5 ATI 0x11
+TE ODU
+
+Bẹrẹ Ọ̀rọ̀ nínú YÀRÁ ODÙ
+----------------------
+YARA OGBE
+
+Example:
+YARA OGBE
+Ọ̀RỌ̀[OGBE 0x00]> PAPO META ATI MEJI
+Ọ̀RỌ̀[OGBE 0x01]> TE ODU
+Ọ̀RỌ̀[OGBE 0x02]> DURO
+
+Ṣiṣe fáìlì
+----------
+RUN file.ifa
+RUN file.ifa3
+BERE file.ifa3
+
+Ìmọ̀ ODÙ
+--------
+DAIFA
+DÁIFÁ
+PRINTODU
+PRINTODUALL
+
+BABALÁWO mode
+-------------
+BABALAWO        show mode
+BABALAWO TAN    trace/debug ON
+BABALAWO PA     trace/debug OFF
+
+Ètò
+---
+HELP
+VERSION
+STATE
+HISTORY
+TIME
+CLEAR
+EXIT
+QUIT
+
+Àkíyèsí
+-------
+Àmì Yorùbá àti lai àmì mejeeji wọlé.
+Example:
+PÀPỌ̀ MEJI ATI META
+PAPO MEJI ATI META
+"""
+
+
+BANNER = """
+═══════════════════════════════════════════════════════════════════════
+                     OHÙN IFÁ
+═══════════════════════════════════════════════════════════════════════
+
+Version      : 2.0
+Core         : Relation Processor Core (RPC)
+Architecture : ODU V2
+Shell        : OHÙN IFÁ
+
+Native Services
+---------------
+• DÁIFÁ
+• PRINTODU
+• PRINTODUALL
+
+Type HELP for available commands.
+
+═══════════════════════════════════════════════════════════════════════
+"""
+
+def boot():
+    print()
+    print("Booting IFÁ ODU Processor...")
+    print()
+    for item in [
+        "Loading Relation Core",
+        "Loading Relation Memory",
+        "Loading Relation Feedback",
+        "Loading Call Stack",
+        "Loading Relation Stack",
+        "Loading Assembler",
+        "Loading DÁIFÁ Service",
+        "Loading Knowledge Base",
+        "Loading OHÙN IFÁ",
+    ]:
+        print(f"{item:.<45} OK")
+    print()
+    input("Press ENTER to enter IFÁ OS...")
+    print(BANNER)
+
+def parse_value(x):
+    x = x.strip()
+    if x.lower().startswith("0x"):
+        return int(x, 16) & 0xFF
+    if any(c in "ABCDEFabcdef" for c in x):
+        return int(x, 16) & 0xFF
+    return int(x, 10) & 0xFF
+
+def print_daifa():
+    print("═══════════════════════════════════════")
+    print("        DÁ IFÁ — THE SIXTEEN OJÚ ODÙ")
+    print("═══════════════════════════════════════")
+    for i, (name, meaning) in enumerate(OJU_ODU):
+        print(f"0x{i:02X}  {name:<12}  — {meaning}")
+    print("═══════════════════════════════════════")
+
+def print_version():
+    print("IFÁ ODU Processor")
+    print("-----------------")
+    print("Version        : V2.0")
+    print("Core           : ODU V2 / RPC")
+    print("Word Width     : 8-bit relation, 16-bit instruction")
+    print("Control        : Branch, CALL/RET, JMP")
+    print("Stacks         : Value stack + Relation-frame stack")
+    print("Monitor        : IFÁ OS v0")
+    print("Native Service : DÁIFÁ")
+
+def print_state():
+    print("IFÁ PROCESSOR STATE")
+    print("-------------------")
+    print("STATE is monitor-level in v0.")
+    print("Use PRINTODUALL or RUN a program with PRINTODUALL for live CPU state.")
+
+def print_history():
+    if not HISTORY_LOG:
+        print("No history yet.")
+        return
+    for i, item in enumerate(HISTORY_LOG, 1):
+        print(f"{i:03d}  {item}")
+
+def print_time():
+    print("Last Run Timing")
+    print("---------------")
+    print(f"Assemble : {LAST_RUN_TIME['assemble']:.3f} s")
+    print(f"Compile  : {LAST_RUN_TIME['compile']:.3f} s")
+    print(f"Execute  : {LAST_RUN_TIME['execute']:.3f} s")
+    print(f"Total    : {LAST_RUN_TIME['total']:.3f} s")
+
+def clear_screen():
+    os.system("cls" if os.name == "nt" else "clear")
+
+def v3_placeholder(name):
+    print(f"{name}: reserved for V3.")
+
+
+def signed8(v):
+    return v - 256 if v >= 128 else v
+
+def extract_abajade(stdout):
+    fields = {
+        "PRINTY":  "OYÈLÁ",
+        "PRINTRA": "FARAPỌ̀",
+        "PRINTRD": "YÀTỌ̀",
+        "PRINTR0": "ÌPÌLẸ̀",
+        "PRINTT":  "GBÉ",
+    }
+
+    found = {}
+
+    for line in stdout.splitlines():
+        m = re.search(r">>>\s+(PRINTY|PRINTRA|PRINTRD|PRINTR0|PRINTT)\s*=\s*([0-9a-fA-F]{2}).*?([À-ỹA-ZỌṢẸÈÉÍÌÒÓÙÚÂÊÎÔÛÁẸỌṢa-zọṣẹèéíìòóùúàá\-]+)?\s*$", line)
+        if m:
+            key = m.group(1)
+            hx = m.group(2).lower()
+            name = (m.group(3) or "").strip()
+            found[key] = (hx, name)
+
+        # fallback for PRINTY lines like: "03  ÒDÍ"
+        m2 = re.match(r"^([0-9a-fA-F]{2})\s+(.+)$", line.strip())
+        if m2 and "PRINTY" not in found:
+            found["PRINTY"] = (m2.group(1).lower(), m2.group(2).strip())
+
+    print("ÀBÁJÁDE")
+    print("--------")
+
+    if not found:
+        print("KÒ SÍ ÀBÁJÁDE.")
+        return
+
+    order = ["PRINTY", "PRINTRA", "PRINTRD", "PRINTR0", "PRINTT"]
+
+    for k in order:
+        if k not in found:
+            continue
+
+        hx, name = found[k]
+        v = int(hx, 16)
+        label = fields[k]
+
+        if k == "PRINTY":
+            print(f"{label:<8}= 0x{hx.upper()} ({signed8(v)})  {name}")
+        else:
+            print(f"{label:<8}= 0x{hx.upper()}        {name}")
+
+
+def run_program(path):
+    program = Path(path)
+    if not program.exists():
+        print(f"File not found: {program}")
+        return
+
+    t0 = time.perf_counter()
+
+    print(f"[ASSEMBLE] {program}")
+    a0 = time.perf_counter()
+
+    if program.suffix == ".ifa3":
+        subprocess.run(["./ifa3", str(program)], check=True)
+    else:
+        subprocess.run(["python3", "tools/ifaasm_odu_v2.py", str(program)], check=True)
+
+    a1 = time.perf_counter()
+
+    print("[COMPILE]")
+    c0 = time.perf_counter()
+    subprocess.run([
+        "iverilog", "-g2012",
+        "rtl_v2/ifa_call_stack.sv",
+        "rtl_v2/ifa_relation_frame_stack.sv",
+        "rtl_v3/ifa_rpc.sv",
+        "rtl_v2/ifa_relation_state_memory.sv",
+        "rtl_v2/ifa_relation_feedback_unit.sv",
+        "rtl_v2/ifa_odu_v2_core.sv",
+        "rtl_v2/ifa_odu_v2_cpu.sv",
+        "tb_v2/tb_odu_v2_cpu.sv",
+        "-o", "sim/ifa_monitor_run.out",
+    ], check=True)
+    c1 = time.perf_counter()
+
+    print("[RUN]")
+    e0 = time.perf_counter()
+    result = subprocess.run(["vvp", "sim/ifa_monitor_run.out"],  capture_output=True)
+    stdout = result.stdout.decode("utf-8", errors="replace")
+    e1 = time.perf_counter()
+
+    if BABALAWO_MODE:
+        print(stdout, end="")
+    else:
+        extract_abajade(stdout)
+
+    LAST_RUN_TIME["assemble"] = a1 - a0
+    LAST_RUN_TIME["compile"] = c1 - c0
+    LAST_RUN_TIME["execute"] = e1 - e0
+    LAST_RUN_TIME["total"] = time.perf_counter() - t0
+
+def run_macro_program(text, name="_monitor_tmp.ifa"):
+    tmp = Path("programs_v2") / name
+    tmp.write_text(text)
+    run_program(tmp)
+
+def ifa_arithmetic(op, a, b):
+    av = parse_value(a)
+    bv = parse_value(b)
+
+    if op == "ADD":
+        program = f"LOADA 0x{av:02X}\nLOADB 0x{bv:02X}\nRPC_ADD\nPRINTODU\nHALT\n"
+    elif op == "SUB":
+        program = f"LOADA 0x{av:02X}\nLOADB 0x{bv:02X}\nRPC_SUB\nPRINTODU\nHALT\n"
+    elif op == "MUL":
+        y = (av * bv) & 0xFF
+        print(f"IFÁ MUL {av} * {bv} = 0x{y:02X} ({y}) — full native algorithm reserved for V3")
+        return
+    elif op == "DIV":
+        if bv == 0:
+            print("Division by zero.")
+            return
+        y = (av // bv) & 0xFF
+        print(f"IFÁ DIV {av} / {bv} = 0x{y:02X} ({y}) — full native algorithm reserved for V3")
+        return
+    elif op == "MOD":
+        if bv == 0:
+            print("Modulo by zero.")
+            return
+        y = (av % bv) & 0xFF
+        print(f"IFÁ MOD {av} % {bv} = 0x{y:02X} ({y}) — full native algorithm reserved for V3")
+        return
+    elif op == "EXP":
+        y = pow(av, bv, 256)
+        print(f"IFÁ EXP {av}^{bv} = 0x{y:02X} ({y}) — full native algorithm reserved for V3")
+        return
+    else:
+        print("Unknown arithmetic op.")
+        return
+
+    run_macro_program(program, "_monitor_expr.ifa")
+
+def ifa_relation(op, a, b):
+    av = parse_value(a)
+    bv = parse_value(b)
+
+    agree = av & bv
+    disagree = av ^ bv
+    toggle = (~disagree) & 0xFF
+    transport = ((av << 1) | (av >> 7)) & 0xFF
+
+    print("IFÁ Relation")
+    print("------------")
+    print(f"A          : 0x{av:02X}")
+    print(f"B          : 0x{bv:02X}")
+    if op == "AGREE":
+        print(f"Agreement  : 0x{agree:02X}")
+    elif op == "DISAGREE":
+        print(f"Disagree   : 0x{disagree:02X}")
+    elif op == "TOGGLE":
+        print(f"Toggle     : 0x{toggle:02X}")
+    elif op == "TRANSPORT":
+        print(f"Transport  : 0x{transport:02X}")
+    elif op == "PHI":
+        print(f"Agreement  : 0x{agree:02X}")
+        print(f"Disagree   : 0x{disagree:02X}")
+        print(f"Toggle     : 0x{toggle:02X}")
+        print(f"Transport  : 0x{transport:02X}")
+    else:
+        print("Unknown relation op.")
+
+
+
+def normalize_symbolic_oro(c):
+    text = c.strip().replace(" ", "")
+
+    m = re.fullmatch(r"(0x[0-9a-fA-F]+|\d+)\+(0x[0-9a-fA-F]+|\d+)", text)
+    if m:
+        return f"PAPO {m.group(1)} ATI {m.group(2)}"
+
+    m = re.fullmatch(r"(0x[0-9a-fA-F]+|\d+)\-(0x[0-9a-fA-F]+|\d+)", text)
+    if m:
+        return f"YO {m.group(1)} ATI {m.group(2)}"
+
+    return c
+
+def run_yoruba_line(line):
+    tmp = Path("language_v3/examples/_monitor_line.ifa3")
+    tmp.write_text(f"""BERE
+
+{line}
+
+TE ODU
+
+DURO
+""", encoding="utf-8")
+
+    result = subprocess.run(
+        ["./ifarun", str(tmp)],
+        
+        capture_output=True
+    )
+
+    out = result.stdout.decode("utf-8", errors="replace")
+    globals()["LAST_STDOUT"] = out
+
+    err = result.stderr.decode("utf-8", errors="replace")
+
+    if DISPLAY_MODE == "TRACE":
+        print(out, end="")
+    if result.returncode != 0:
+        print(VOICE["error"])
+        print(out, end="")
+        print(err, end="")
+        return
+
+        print(result.stderr)
+        return
+
+    extract_abajade(out)
+    return
+    for ln in out.splitlines():
+        stripped = ln.strip()
+
+        if stripped.startswith(">>>"):
+            print(stripped)
+
+        elif len(stripped) >= 2 and stripped[:2].lower() in [
+            "00","01","02","03","04","05","06","07",
+            "08","09","0a","0b","0c","0d","0e","0f"
+        ]:
+            print(stripped)
+
+
+def run_expression(expr):
+    expr = expr.replace(" ", "")
+    if "+" in expr:
+        a, b = expr.split("+", 1)
+        ifa_arithmetic("ADD", a, b)
+    elif "-" in expr:
+        a, b = expr.split("-", 1)
+        ifa_arithmetic("SUB", a, b)
+    else:
+        print("Expression not understood. Try 2+1 or A5+11.")
+
+
+
+ODU_YARA = {
+    "OGBE": 0x00,
+    "OYEKU": 0x01,
+    "IWORI": 0x02,
+    "ODI": 0x03,
+    "IROSUN": 0x04,
+    "OWONRIN": 0x05,
+    "OBARA": 0x06,
+    "OKANRAN": 0x07,
+    "OGUNDA": 0x08,
+    "OSA": 0x09,
+    "IKA": 0x0A,
+    "OTURUPON": 0x0B,
+    "OTURA": 0x0C,
+    "IRETE": 0x0D,
+    "OSE": 0x0E,
+    "OFUN": 0x0F,
+}
+
+def oro_address_mode(start_addr):
+    addr = int(start_addr, 0)
+    lines = ["BERE\n"]
+
+    print(f"ODÙ Ń GBỌ́ ní adírẹ́sì 0x{addr:02X}.")
+    print("DURO = " + VOICE["finished"])
+
+    while True:
+        try:
+            line = input(f"Ọ̀RỌ̀[0x{addr:02X}]> ")
+        except (EOFError, KeyboardInterrupt):
+            print()
+            return
+
+        lines.append(line + "\n")
+
+        if line.strip().upper() in ("DURO", "DÚRÓ"):
+            break
+
+        addr += 1
+
+    tmp = Path("programs_v3/_ohun_oro_buffer.ifa3")
+    tmp.write_text("".join(lines), encoding="utf-8")
+
+    run_program(tmp)
+
+
+def parse_last_frame(stdout):
+    frame = {}
+
+    patterns = {
+        "Y":  r"(?:>>> PRINTY\s*=\s*|^)([0-9a-fA-F]{2})(?:\s+\((\d+)\))?\s*(.*)$",
+        "RA": r">>> PRINTRA\s*=\s*([0-9a-fA-F]{2})\s*(.*)$",
+        "RD": r">>> PRINTRD\s*=\s*([0-9a-fA-F]{2})\s*(.*)$",
+        "R0": r">>> PRINTR0\s*=\s*([0-9a-fA-F]{2})\s*(.*)$",
+        "T":  r">>> PRINTT\s*=\s*([0-9a-fA-F]{2})\s*(.*)$",
+    }
+
+    for line in stdout.splitlines():
+        line = line.strip()
+
+        # PRINTY can appear as "03  ÒDÍ"
+        m0 = re.match(r"^([0-9a-fA-F]{2})\s+(.+)$", line)
+        if m0 and "Y" not in frame:
+            hx = m0.group(1).upper()
+            frame["Y"] = {
+                "hex": hx,
+                "unsigned": int(hx, 16),
+                "signed": signed8(int(hx, 16)),
+                "odu": m0.group(2).strip(),
+            }
+
+        for key, pat in patterns.items():
+            m = re.match(pat, line)
+            if m:
+                hx = m.group(1).upper()
+                tail = m.group(3).strip() if key == "Y" and len(m.groups()) >= 3 else m.group(2).strip()
+                frame[key] = {
+                    "hex": hx,
+                    "unsigned": int(hx, 16),
+                    "signed": signed8(int(hx, 16)),
+                    "odu": tail,
+                }
+
+    return frame
+
+
+def oyela(english=False):
+    if not LAST_STDOUT:
+        print("KÒ SÍ ÀBÁJÁDE.")
+        return
+
+    frame = parse_last_frame(LAST_STDOUT)
+
+    if not frame:
+        print("KÒ SÍ ÀBÁJÁDE.")
+        return
+
+    if english:
+        print("OYELAA — English Interpretation")
+        print("--------------------------------")
+        if "Y" in frame:
+            y = frame["Y"]
+            print(f"Result        : {y['signed']}  (raw 0x{y['hex']}, unsigned {y['unsigned']})")
+            if y.get("odu"):
+                print(f"Result Odù    : {y['odu']}")
+
+        print()
+        print("Relation Frame")
+        print("--------------")
+        labels = {
+            "RA": "Agreement",
+            "RD": "Disagreement",
+            "R0": "Base/Return",
+            "T":  "Transport",
+        }
+        for k in ("RA", "RD", "R0", "T"):
+            if k in frame:
+                v = frame[k]
+                print(f"{labels[k]:<13}: 0x{v['hex']}  {v.get('odu','')}")
+
+        print()
+        print("Meaning")
+        print("-------")
+        print("OYELAA reads the last IFÁ computation as a human-facing result plus its relation frame.")
+        return
+
+    print("OYÈLÁ — ÌTÚMỌ̀ ÀBÁJÁDE")
+    print("----------------------")
+
+    if "Y" in frame:
+        y = frame["Y"]
+        print(f"ÈSÌ / OYÈLÁ : {y['signed']}  (0x{y['hex']})")
+        if y.get("odu"):
+            print(f"ODÙ          : {y['odu']}")
+
+    print()
+    print("ÀWÒRÁN ÌBÁṢẸ̀PỌ̀")
+    print("----------------")
+    labels = {
+        "RA": "FARAPỌ̀",
+        "RD": "YÀTỌ̀",
+        "R0": "ÌPÌLẸ̀",
+        "T":  "GBÉ",
+    }
+    for k in ("RA", "RD", "R0", "T"):
+        if k in frame:
+            v = frame[k]
+            print(f"{labels[k]:<8}= 0x{v['hex']}  {v.get('odu','')}")
+
+    print()
+    print("OYÈLÁ ń ka ohun tí ODÙ ṣe, ó sì ń túmọ̀ rẹ̀ fún ènìyàn.")
+
+
+def add_history(cmd):
+    c = cmd.strip()
+    if not c:
+        return
+    skip = ("ITAN", "ÌTÀN", "TUN", "TÚN", "PADA", "PADÀ", "HELP", "OYELA", "OYÈLÁ", "OYELAA")
+    if c.upper().split()[0] in skip:
+        return
+    OHUN_HISTORY.append(c)
+
+def show_history():
+    if not OHUN_HISTORY:
+        print("KÒ SÍ ÌTÀN.")
+        return
+
+    print("ÌTÀN OHÙN")
+    print("---------")
+    for i, c in enumerate(OHUN_HISTORY, 1):
+        print(f"{i:03d}  {c}")
+
+def repeat_last():
+    if not OHUN_HISTORY:
+        print("KÒ SÍ Ọ̀RỌ̀ TÍ A LE TÚN ṢE.")
+        return
+    execute(OHUN_HISTORY[-1])
+
+def return_to_history(n):
+    try:
+        idx = int(n) - 1
+    except ValueError:
+        print("PADA nilo nọ́ńbà.")
+        return
+
+    if idx < 0 or idx >= len(OHUN_HISTORY):
+        print("KÒ SÍ ÌTÀN YẸN.")
+        return
+
+    execute(OHUN_HISTORY[idx])
+
+
+def oro_yara_mode(name):
+    key = name.strip().upper()
+    if key not in ODU_YARA:
+        print(f"KÒ WỌLÉ: {name}")
+        print("Lo: YARA OGBE, YARA IWORI, YARA ODI...")
+        return
+
+    addr = ODU_YARA[key]
+    lines = ["BERE\n"]
+
+    print(f"ODÙ Ń GBỌ́ nínú YÀRÁ {key} (0x{addr:02X}).")
+    print("DURO = Ó PARÍ")
+
+    cur = addr
+    while True:
+        try:
+            line = input(f"Ọ̀RỌ̀[{key} 0x{cur:02X}]> ")
+        except (EOFError, KeyboardInterrupt):
+            print()
+            return
+
+        command = line.strip()
+        command_upper = command.upper()
+        command_parts = command.split()
+
+        # Change YÀRÁ without leaving Ọ̀RỌ̀ mode.
+        if (
+            len(command_parts) == 2
+            and command_parts[0].upper()
+            in ("YARA", "YÀRÁ", "STATION", "STRAION")
+        ):
+            new_key = command_parts[1].upper()
+
+            if new_key not in ODU_YARA:
+                print(f"KÒ WỌLÉ: {command_parts[1]}")
+                continue
+
+            key = new_key
+            addr = ODU_YARA[key]
+            cur = addr
+
+            print(f"ODÙ Ń GBỌ́ nínú YÀRÁ {key} (0x{addr:02X}).")
+            continue
+
+        lines.append(line + "\n")
+
+        if command_upper in ("DURO", "DÚRÓ"):
+            break
+
+        cur += 1
+
+    tmp = Path("programs_v3/_ohun_oro_buffer.ifa3")
+    tmp.write_text("".join(lines), encoding="utf-8")
+
+    run_program(tmp)
+
+def execute(cmd):
+    c = cmd.strip()
+    if not c:
+        return
+
+    HISTORY_LOG.append(c)
+    u = c.upper()
+
+    if u in ("TAN", "BABALAWO TAN", "BABALÁWO TAN"):
+        globals()["BABALAWO_MODE"] = True
+        globals()["DISPLAY_MODE"] = "TRACE"
+        print("BABALÁWO TAN")
+        return
+
+    if u in ("PA", "BABALAWO PA", "BABALÁWO PA"):
+        globals()["BABALAWO_MODE"] = False
+        globals()["DISPLAY_MODE"] = "CLEAN"
+        print("BABALÁWO PA")
+        return
+
+    if u in ("BABALAWO", "BABALÁWO"):
+        print("BABALÁWO:", "TAN" if DISPLAY_MODE == "TRACE" else "PA")
+        return
+
+    parts = c.split()
+
+    if u in ("EXIT", "QUIT"):
+        raise SystemExit
+
+
+
+    if u in ("ITAN", "ÌTÀN", "HISTORY"):
+        show_history()
+        return
+
+    if u in ("TUN", "TÚN"):
+        repeat_last()
+        return
+
+    if u.startswith("PADA") or u.startswith("PADÀ"):
+        args = c.strip().split()
+        if len(args) == 1:
+            repeat_last()
+        elif len(args) == 2:
+            return_to_history(args[1])
+        else:
+            print("PADA n")
+        return
+
+    if u in ("OYELA", "OYÈLÁ"):
+        oyela(False)
+        return
+
+    if u == "OYELAA":
+        oyela(True)
+        return
+
+
+    # Wildcard developer commands
+    if u == "TAN":
+        globals()["BABALAWO_MODE"] = True
+        globals()["DISPLAY_MODE"] = "TRACE"
+        print("BABALÁWO TAN")
+        return
+
+    if u == "PA":
+        globals()["BABALAWO_MODE"] = False
+        globals()["DISPLAY_MODE"] = "CLEAN"
+        print("BABALÁWO PA")
+        return
+
+    if u == "HELP":
+        print(HELP)
+        return
+
+    if u == "VERSION":
+        print_version()
+        return
+
+    if u == "STATE":
+        print_state()
+        return
+
+    if u == "HISTORY":
+        print_history()
+        return
+
+    if u == "CLEAR":
+        clear_screen()
+        return
+
+    if u == "TIME":
+        print_time()
+        return
+
+    if u == "MODE CLEAN":
+        globals()["DISPLAY_MODE"] = "CLEAN"
+        print("Display mode: CLEAN")
+        return
+
+    if u == "MODE TRACE":
+        globals()["DISPLAY_MODE"] = "TRACE"
+        print("Display mode: TRACE")
+        return
+
+    if u in ("DÁIFÁ", "DAIFA"):
+        print_daifa()
+        return
+
+    if u == "PRINTODU":
+        run_macro_program("PRINTODU\nHALT\n", "_monitor_printodu.ifa")
+        return
+
+    if u == "PRINTODUALL":
+        run_macro_program("PRINTODUALL\nHALT\n", "_monitor_printoduall.ifa")
+        return
+
+    if u.startswith("RUN "):
+        args = shlex.split(c)
+        if len(args) == 2:
+            run_program(args[1])
+        return
+
+
+    if (
+        u.startswith("YARA ")
+        or u.startswith("YÀRÁ ")
+        or u.startswith("STATION ")
+        or u.startswith("STRAION ")
+    ):
+        args = shlex.split(c)
+        if len(args) == 2:
+            oro_yara_mode(args[1])
+        return
+
+    if u.startswith("BERE "):
+        args = shlex.split(c)
+        if len(args) == 2:
+            if args[1].lower().startswith("0x") or args[1].isdigit():
+                oro_address_mode(args[1])
+            else:
+                run_program(args[1])
+        return
+
+    if len(parts) == 4 and parts[0].upper() == "IFA":
+        op = parts[1].upper()
+        if op in ("ADD", "SUB", "MUL", "DIV", "MOD", "EXP"):
+            ifa_arithmetic(op, parts[2], parts[3])
+            return
+        if op in ("AGREE", "DISAGREE", "TOGGLE", "TRANSPORT", "PHI"):
+            ifa_relation(op, parts[2], parts[3])
+            return
+
+    if u.startswith("BENCHMARK ") or u.startswith("PCM "):
+        v3_placeholder(u)
+        return
+
+    # Natural Yorùbá V3 command inside IFÁ OS
+    first = parts[0].upper() if parts else ""
+    if first in ("PAPO", "PÀPỌ̀", "YO", "YỌ", "SEDA", "ṢẸ̀DÁ"):
+        add_history(c)
+        run_yoruba_line(normalize_symbolic_oro(c))
+        return
+
+    # IFÁ V3 natural Yorùbá / symbol expression inside IFÁ OS
+    v3_first = parts[0].upper() if parts else ""
+    v3_words = ("PAPO", "PÀPỌ̀", "YO", "YỌ", "SEDA", "ṢẸ̀DÁ", "GBA")
+    v3_symbols = ("+", "-", "*", "/", "%", "^")
+
+    if v3_first in v3_words or any(sym in c for sym in v3_symbols):
+        add_history(c)
+        run_yoruba_line(normalize_symbolic_oro(c))
+        return
+
+    if "+" in c or "-" in c:
+        run_expression(c)
+        return
+
+    print(f"{VOICE['unknown']}: {c}")
+
+def main():
+    boot()
+    while True:
+        try:
+            execute(input("OHÙN IFÁ> "))
+        except (EOFError, KeyboardInterrupt):
+            print()
+            break
+        except SystemExit:
+            break
+    print(VOICE["goodbye"])
+
+if __name__ == "__main__":
+    main()
+
+============================================================
+COMMAND REFERENCES
+============================================================
+monitor/ifa_monitor.py:32:    ("ÒTÚRÚPỌ̀N", "inheritance, burden, continuity"),
+monitor/ifa_monitor.py:35:    ("ÒṢÉ", "sweetness, renewal, cleansing, blessing"),
+monitor/ifa_monitor.py:40:DISPLAY_MODE = "CLEAN"
+monitor/ifa_monitor.py:43:globals()["BABALAWO_MODE"] = False
+monitor/ifa_monitor.py:47:HELP = """
+monitor/ifa_monitor.py:55:PAPO MEJI ATI META
+monitor/ifa_monitor.py:56:YO MARUN ATI MEJI
+monitor/ifa_monitor.py:57:SEDA 0xA5 ATI 0x11
+monitor/ifa_monitor.py:62:YARA OGBE
+monitor/ifa_monitor.py:65:YARA OGBE
+monitor/ifa_monitor.py:66:Ọ̀RỌ̀[OGBE 0x00]> PAPO META ATI MEJI
+monitor/ifa_monitor.py:80:PRINTODU
+monitor/ifa_monitor.py:81:PRINTODUALL
+monitor/ifa_monitor.py:85:BABALAWO        show mode
+monitor/ifa_monitor.py:86:BABALAWO TAN    trace/debug ON
+monitor/ifa_monitor.py:87:BABALAWO PA     trace/debug OFF
+monitor/ifa_monitor.py:91:HELP
+monitor/ifa_monitor.py:102:Àmì Yorùbá àti lai àmì mejeeji wọlé.
+monitor/ifa_monitor.py:105:PAPO MEJI ATI META
+monitor/ifa_monitor.py:122:• PRINTODU
+monitor/ifa_monitor.py:123:• PRINTODUALL
+monitor/ifa_monitor.py:125:Type HELP for available commands.
+monitor/ifa_monitor.py:181:    print("Use PRINTODUALL or RUN a program with PRINTODUALL for live CPU state.")
+monitor/ifa_monitor.py:295:    if BABALAWO_MODE:
+monitor/ifa_monitor.py:315:        program = f"LOADA 0x{av:02X}\nLOADB 0x{bv:02X}\nRPC_ADD\nPRINTODU\nHALT\n"
+monitor/ifa_monitor.py:317:        program = f"LOADA 0x{av:02X}\nLOADB 0x{bv:02X}\nRPC_SUB\nPRINTODU\nHALT\n"
+monitor/ifa_monitor.py:382:        return f"PAPO {m.group(1)} ATI {m.group(2)}"
+monitor/ifa_monitor.py:386:        return f"YO {m.group(1)} ATI {m.group(2)}"
+monitor/ifa_monitor.py:390:def run_yoruba_line(line):
+monitor/ifa_monitor.py:412:    if DISPLAY_MODE == "TRACE":
+monitor/ifa_monitor.py:451:ODU_YARA = {
+monitor/ifa_monitor.py:537:def oyela(english=False):
+monitor/ifa_monitor.py:549:        print("OYELAA — English Interpretation")
+monitor/ifa_monitor.py:574:        print("OYELAA reads the last IFÁ computation as a human-facing result plus its relation frame.")
+monitor/ifa_monitor.py:608:    skip = ("ITAN", "ÌTÀN", "TUN", "TÚN", "PADA", "PADÀ", "HELP", "OYELA", "OYÈLÁ", "OYELAA")
+monitor/ifa_monitor.py:633:        print("PADA nilo nọ́ńbà.")
+monitor/ifa_monitor.py:643:def oro_yara_mode(name):
+monitor/ifa_monitor.py:645:    if key not in ODU_YARA:
+monitor/ifa_monitor.py:647:        print("Lo: YARA OGBE, YARA IWORI, YARA ODI...")
+monitor/ifa_monitor.py:650:    addr = ODU_YARA[key]
+monitor/ifa_monitor.py:672:            in ("YARA", "YÀRÁ", "STATION", "STRAION")
+monitor/ifa_monitor.py:676:            if new_key not in ODU_YARA:
+monitor/ifa_monitor.py:681:            addr = ODU_YARA[key]
+monitor/ifa_monitor.py:707:    if u in ("TAN", "BABALAWO TAN", "BABALÁWO TAN"):
+monitor/ifa_monitor.py:708:        globals()["BABALAWO_MODE"] = True
+monitor/ifa_monitor.py:709:        globals()["DISPLAY_MODE"] = "TRACE"
+monitor/ifa_monitor.py:713:    if u in ("PA", "BABALAWO PA", "BABALÁWO PA"):
+monitor/ifa_monitor.py:714:        globals()["BABALAWO_MODE"] = False
+monitor/ifa_monitor.py:715:        globals()["DISPLAY_MODE"] = "CLEAN"
+monitor/ifa_monitor.py:719:    if u in ("BABALAWO", "BABALÁWO"):
+monitor/ifa_monitor.py:720:        print("BABALÁWO:", "TAN" if DISPLAY_MODE == "TRACE" else "PA")
+monitor/ifa_monitor.py:730:    if u in ("ITAN", "ÌTÀN", "HISTORY"):
+monitor/ifa_monitor.py:734:    if u in ("TUN", "TÚN"):
+monitor/ifa_monitor.py:738:    if u.startswith("PADA") or u.startswith("PADÀ"):
+monitor/ifa_monitor.py:745:            print("PADA n")
+monitor/ifa_monitor.py:748:    if u in ("OYELA", "OYÈLÁ"):
+monitor/ifa_monitor.py:749:        oyela(False)
+monitor/ifa_monitor.py:752:    if u == "OYELAA":
+monitor/ifa_monitor.py:753:        oyela(True)
+monitor/ifa_monitor.py:759:        globals()["BABALAWO_MODE"] = True
+monitor/ifa_monitor.py:760:        globals()["DISPLAY_MODE"] = "TRACE"
+monitor/ifa_monitor.py:765:        globals()["BABALAWO_MODE"] = False
+monitor/ifa_monitor.py:766:        globals()["DISPLAY_MODE"] = "CLEAN"
+monitor/ifa_monitor.py:770:    if u == "HELP":
+monitor/ifa_monitor.py:771:        print(HELP)
+monitor/ifa_monitor.py:794:    if u == "MODE CLEAN":
+monitor/ifa_monitor.py:795:        globals()["DISPLAY_MODE"] = "CLEAN"
+monitor/ifa_monitor.py:796:        print("Display mode: CLEAN")
+monitor/ifa_monitor.py:799:    if u == "MODE TRACE":
+monitor/ifa_monitor.py:800:        globals()["DISPLAY_MODE"] = "TRACE"
+monitor/ifa_monitor.py:801:        print("Display mode: TRACE")
+monitor/ifa_monitor.py:808:    if u == "PRINTODU":
+monitor/ifa_monitor.py:809:        run_macro_program("PRINTODU\nHALT\n", "_monitor_printodu.ifa")
+monitor/ifa_monitor.py:812:    if u == "PRINTODUALL":
+monitor/ifa_monitor.py:813:        run_macro_program("PRINTODUALL\nHALT\n", "_monitor_printoduall.ifa")
+monitor/ifa_monitor.py:824:        u.startswith("YARA ")
+monitor/ifa_monitor.py:831:            oro_yara_mode(args[1])
+monitor/ifa_monitor.py:856:    # Natural Yorùbá V3 command inside IFÁ OS
+monitor/ifa_monitor.py:858:    if first in ("PAPO", "PÀPỌ̀", "YO", "YỌ", "SEDA", "ṢẸ̀DÁ"):
+monitor/ifa_monitor.py:860:        run_yoruba_line(normalize_symbolic_oro(c))
+monitor/ifa_monitor.py:863:    # IFÁ V3 natural Yorùbá / symbol expression inside IFÁ OS
+monitor/ifa_monitor.py:865:    v3_words = ("PAPO", "PÀPỌ̀", "YO", "YỌ", "SEDA", "ṢẸ̀DÁ", "GBA")
+monitor/ifa_monitor.py:870:        run_yoruba_line(normalize_symbolic_oro(c))
+language_v3/spec/keywords.md:5:- Accented Yorùbá is the official form.
+language_v3/spec/keywords.md:6:- Plain Yorùbá is accepted as an alias.
+language_v3/spec/keywords.md:13:| Meaning | Official Yorùbá | Plain Alias | Canonical |
+language_v3/spec/keywords.md:15:| Add | PÀPỌ̀ | PAPO | PAPO |
+language_v3/spec/keywords.md:16:| Subtract | YỌ | YO | YO |
+language_v3/spec/keywords.md:19:| Modulo / remainder | ÌYÓKÙ | IYOKU | IYOKU |
+language_v3/spec/keywords.md:27:| Meaning | Official Yorùbá | Plain Alias | Canonical |
+language_v3/spec/keywords.md:29:| Create relation / phi | ṢẸ̀DÁ | SEDA | SEDA |
+language_v3/spec/keywords.md:34:| Inverse / return | PADÀ | PADA | PADA |
+language_v3/spec/keywords.md:40:| Meaning | Official Yorùbá | Plain Alias | Canonical |
+language_v3/spec/keywords.md:47:| History | ÌTÀN | ITAN | ITAN |
+language_v3/spec/keywords.md:54:| Meaning | Official Yorùbá | Plain Alias | Canonical |
+language_v3/spec/keywords.md:60:| Output | OYÈLÁ | OYELA | OYELA |
+language_v3/spec/keywords.md:66:| Meaning | Official Yorùbá | Plain Alias | Canonical |
+language_v3/spec/keywords.md:74:| Computing role | Official Yorùbá | Plain form | Compatibility alias |
+language_v3/spec/keywords.md:76:| Odù execution room | YÀRÁ | YARA | STATION |
+language_v3/spec/keywords.md:80:    YARA OGBE
+language_v3/spec/ontology.md:71:    YARA OGBE -> address 0x00
+language_v3/spec/operators.py:3:    "PAPO": {
+language_v3/spec/operators.py:4:        "opcode": "PAPO",
+language_v3/spec/operators.py:9:    "YO": {
+language_v3/spec/operators.py:10:        "opcode": "YO",
+language_v3/spec/operators.py:15:    "SEDA": {
+language_v3/spec/operators.py:16:        "opcode": "SEDA",
+language_v3/spec/operators.py:31:    "IYOKU": {
+language_v3/spec/isa.py:15:    "PAPO":     0x8000,
+language_v3/spec/isa.py:16:    "YO":       0x9000,
+language_v3/spec/isa.py:22:    "IYOKU":    None,
+language_v3/spec/isa.py:29:    "SEDA":     None,
+language_v3/spec/odu.py:27:            "PAPO 2 ATI 1",
+language_v3/spec/odu.py:28:            "YO 5 ATI 2",
+language_v3/spec/odu.py:29:            "SEDA 0xA5 ATI 0x11",
+language_v3/spec/odu.py:35:            "PAPO",
+language_v3/spec/odu.py:36:            "YO",
+language_v3/spec/odu.py:39:            "IYOKU",
+language_v3/spec/odu.py:44:            "SEDA",
+language_v3/spec/odu.py:49:            "PADA",
+language_v3/spec/odu.py:74:    "OYELA": {
+language_v3/spec/odu.py:78:            "OYELA",
+language_v3/spec/grammar.md:7:YO 5 ATI 2
+language_v3/spec/grammar.md:34:PAPO 2 ATI 1
+language_v3/spec/grammar.md:35:YO 5 ATI 2
+language_v3/spec/grammar.md:36:SEDA 0xA5 ATI 0x11
+language_v3/spec/grammar.md:42:PAPO
+language_v3/spec/grammar.md:43:YO
+language_v3/spec/grammar.md:46:IYOKU
+language_v3/spec/grammar.md:50:SEDA
+language_v3/spec/grammar.md:98:PAPO META ATI MEJI
+language_v3/spec/dictionary.py:2:    "YARA": "YARA",
+language_v3/spec/dictionary.py:3:    "YÀRÁ": "YARA",
+language_v3/spec/dictionary.py:4:    "STATION": "YARA",
+language_v3/spec/dictionary.py:8:    "PAPO":"PAPO",
+language_v3/spec/dictionary.py:9:    "PÀPỌ̀":"PAPO",
+language_v3/spec/dictionary.py:11:    "YO":"YO",
+language_v3/spec/dictionary.py:12:    "YỌ":"YO",
+language_v3/spec/dictionary.py:20:    "IYOKU":"IYOKU",
+language_v3/spec/dictionary.py:21:    "ÌYÓKÙ":"IYOKU",
+language_v3/spec/dictionary.py:30:    "SEDA":"SEDA",
+language_v3/spec/dictionary.py:31:    "ṢẸ̀DÁ":"SEDA",
+language_v3/spec/keywords.py:2:    "YARA": "YARA",
+language_v3/spec/keywords.py:3:    "YÀRÁ": "YARA",
+language_v3/spec/keywords.py:4:    "STATION": "YARA",
+language_v3/spec/keywords.py:7:    "PÀPỌ̀": "PAPO",
+language_v3/spec/keywords.py:8:    "PAPO": "PAPO",
+language_v3/spec/keywords.py:10:    "YỌ": "YO",
+language_v3/spec/keywords.py:11:    "YO": "YO",
+language_v3/spec/keywords.py:19:    "ÌYÓKÙ": "IYOKU",
+language_v3/spec/keywords.py:20:    "IYOKU": "IYOKU",
+language_v3/spec/keywords.py:29:    "ṢẸ̀DÁ": "SEDA",
+language_v3/spec/keywords.py:30:    "SEDA": "SEDA",
+language_v3/examples/_monitor_line.ifa3:3:PAPO META ATI MEJI
+language_v3/examples/add_sentence.ifa3:3:PAPO 2 ATI 1
+language_v3/examples/add_yoruba_native.ifa3:1:; IFÁ V3 direct Yorùbá assembly
+language_v3/examples/add_yoruba_native.ifa3:5:PAPO
+language_v3/examples/add_yoruba.ifa3:1:; IFÁ V3 direct Yorùbá assembly
+language_v3/examples/add_yoruba.ifa3:5:PAPO
+language_v3/examples/seda_sentence.ifa3:3:SEDA 0xA5 ATI 0x11
+language_v3/examples/sub_sentence.ifa3:3:YO 5 ATI 2
+language_v3/examples/ado_add.ifa3:6:PAPO ADO1 ATI ADO2
+tools/run_phase2_v2_benchmarks.sh:43:    trace=$(vvp sim/tb_odu_v2_cpu.out)
+tools/run_phase2_v2_benchmarks.sh:45:    cycles=$(echo "$trace" | grep "ODU V2 CPU halted after" | awk '{print $6}')
+tools/run_phase2_v2_benchmarks.sh:47:    final_line=$(echo "$trace" | grep -E "^[[:space:]]*[0-9]+ " | tail -1)
+tools/run_recursive_vs_raw_benchmark.sh:34:    trace=$(vvp sim/tb_odu_v2_cpu.out)
+tools/run_recursive_vs_raw_benchmark.sh:36:    echo "$trace" > "analysis/${name}_full_trace.txt"
+tools/run_recursive_vs_raw_benchmark.sh:38:    cycles=$(echo "$trace" | grep "ODU V2 CPU halted after" | awk '{print $6}')
+tools/run_recursive_vs_raw_benchmark.sh:39:    final_line=$(echo "$trace" | grep -E "^[[:space:]]*[0-9]+ " | tail -1)
+tools/ifaasm_odu_v3.py:15:# IFÁ V3 direct Yorùbá assembly aliases.
+tools/ifaasm_odu_v3.py:17:    "PAPO": "RPC_ADD",
+tools/ifaasm_odu_v3.py:20:    "YO": "RPC_SUB",
+tools/ifaasm_odu_v3.py:26:    "TEODU": "PRINTODU",
+tools/ifaasm_odu_v3.py:27:    "TẸ̀ODÙ": "PRINTODU",
+tools/ifaasm_odu_v3.py:29:    "SEDA": "ODU_RAW",
+tools/ifaasm_odu_v3.py:60:def clean(line):
+tools/ifaasm_odu_v3.py:67:        raw = clean(line)
+tools/ifaasm_odu_v3.py:86:        if m == "PRINTODU":
+tools/ifaasm_odu_v3.py:96:        if m == "PRINTODUALL":
+tools/ifaasm_odu_v3.py:125:    cleaned = []
+tools/ifaasm_odu_v3.py:129:        line = clean(line)
+tools/ifaasm_odu_v3.py:137:        cleaned.append((pc, line))
+tools/ifaasm_odu_v3.py:140:    return labels, cleaned
+tools/ifaasm_odu_v3.py:240:    labels, cleaned = first_pass(lines)
+tools/ifaasm_odu_v3.py:245:    for pc, line in cleaned:
+tools/run_phase1_relation_algorithms.sh:33:    vvp sim/tb_odu_v2_cpu.out | tee "analysis/${name}_trace.txt"
+tools/run_phase1_relation_algorithms.sh:35:    echo "Saved trace: analysis/${name}_trace.txt"
+tools/ifaasm_odu_v2.py:24:def clean(line):
+tools/ifaasm_odu_v2.py:30:        raw = clean(line)
+tools/ifaasm_odu_v2.py:34:        if raw.upper() == "PRINTODU":
+tools/ifaasm_odu_v2.py:54:        if raw.upper() == "PRINTODUALL":
+tools/ifaasm_odu_v2.py:92:    cleaned = []
+tools/ifaasm_odu_v2.py:96:        line = clean(line)
+tools/ifaasm_odu_v2.py:104:        cleaned.append((pc, line))
+tools/ifaasm_odu_v2.py:107:    return labels, cleaned
+tools/ifaasm_odu_v2.py:185:    labels, cleaned = first_pass(lines)
+tools/ifaasm_odu_v2.py:190:    for pc, line in cleaned:
+tools/ifa:33:def printodu(a, b):
+tools/ifa:49:    printodu(a, b)
+tools/ifa:88:def trace(a, b):
+tools/ifa:90:    print("IFA TRACE")
+tools/ifa:115:def help_msg():
+tools/ifa:119:    print("  ifa help")
+tools/ifa:124:    print("  ifa printodu A B")
+tools/ifa:126:    print("  ifa trace A B")
+tools/ifa:137:    print("  ifa printodu 13 6")
+tools/ifa:141:        help_msg()
+tools/ifa:146:    if cmd == "help":
+tools/ifa:147:        help_msg()
+tools/ifa:160:    elif cmd in ["printodu", "inspect", "phi", "trace"]:
+tools/ifa:167:        if cmd == "printodu":
+tools/ifa:168:            printodu(a, b)
+tools/ifa:173:        elif cmd == "trace":
+tools/ifa:174:            trace(a, b)
+tools/ifa:189:        help_msg()
+tools/ifa_yoruba_frontend.py:80:        print("usage: ifa_yoruba_frontend.py input.ifa3 output.ifa")
+tools/run_relation_benchmarks.sh:9:  "benchmarks/bench_direct_printodu.ifa"
+tools/run_relation_benchmarks.sh:10:  "benchmarks/bench_relation_agree_printodu.ifa"
+tools/run_relation_benchmarks.sh:11:  "benchmarks/bench_relation_flip_printodu.ifa"
+tools/run_relation_benchmarks.sh:12:  "benchmarks/bench_relation_disagree_printodu.ifa"
+tools/run_relation_benchmarks.sh:18:printf "%-42s %10s %10s %s\n" "program" "cycles" "final" "status"
+tools/run_relation_benchmarks.sh:45:        status="PASS"
+tools/run_relation_benchmarks.sh:47:        status="FAIL"
+tools/run_relation_benchmarks.sh:50:    printf "%-42s %10s %10s %s\n" "$prog" "$cycles" "$final" "$status"
+tools/ifaasm.py:23:def clean_line(line):
+tools/ifaasm.py:64:    if upper.startswith("PRINTODUALL"):
+tools/ifaasm.py:67:    if upper.startswith("PRINTODU "):
+tools/ifaasm.py:107:        line = clean_line(raw)
+tools/ifaasm.py:112:            ex = clean_line(ex)
+tools/ifaasm.py:132:    line = clean_line(line)
+
+============================================================
+BACKEND / EXECUTION REFERENCES
+============================================================
+monitor/ifa_monitor.py:14:import subprocess
+monitor/ifa_monitor.py:45:LAST_RUN_TIME = {"assemble": 0.0, "compile": 0.0, "execute": 0.0, "total": 0.0}
+monitor/ifa_monitor.py:56:YO MARUN ATI MEJI
+monitor/ifa_monitor.py:72:RUN file.ifa
+monitor/ifa_monitor.py:73:RUN file.ifa3
+monitor/ifa_monitor.py:140:        "Loading Assembler",
+monitor/ifa_monitor.py:181:    print("Use PRINTODUALL or RUN a program with PRINTODUALL for live CPU state.")
+monitor/ifa_monitor.py:191:    print("Last Run Timing")
+monitor/ifa_monitor.py:193:    print(f"Assemble : {LAST_RUN_TIME['assemble']:.3f} s")
+monitor/ifa_monitor.py:194:    print(f"Compile  : {LAST_RUN_TIME['compile']:.3f} s")
+monitor/ifa_monitor.py:195:    print(f"Execute  : {LAST_RUN_TIME['execute']:.3f} s")
+monitor/ifa_monitor.py:196:    print(f"Total    : {LAST_RUN_TIME['total']:.3f} s")
+monitor/ifa_monitor.py:255:def run_program(path):
+monitor/ifa_monitor.py:263:    print(f"[ASSEMBLE] {program}")
+monitor/ifa_monitor.py:267:        subprocess.run(["./ifa3", str(program)], check=True)
+monitor/ifa_monitor.py:269:        subprocess.run(["python3", "tools/ifaasm_odu_v2.py", str(program)], check=True)
+monitor/ifa_monitor.py:273:    print("[COMPILE]")
+monitor/ifa_monitor.py:275:    subprocess.run([
+monitor/ifa_monitor.py:276:        "iverilog", "-g2012",
+monitor/ifa_monitor.py:285:        "-o", "sim/ifa_monitor_run.out",
+monitor/ifa_monitor.py:289:    print("[RUN]")
+monitor/ifa_monitor.py:291:    result = subprocess.run(["vvp", "sim/ifa_monitor_run.out"],  capture_output=True)
+monitor/ifa_monitor.py:300:    LAST_RUN_TIME["assemble"] = a1 - a0
+monitor/ifa_monitor.py:301:    LAST_RUN_TIME["compile"] = c1 - c0
+monitor/ifa_monitor.py:302:    LAST_RUN_TIME["execute"] = e1 - e0
+monitor/ifa_monitor.py:303:    LAST_RUN_TIME["total"] = time.perf_counter() - t0
+monitor/ifa_monitor.py:305:def run_macro_program(text, name="_monitor_tmp.ifa"):
+monitor/ifa_monitor.py:308:    run_program(tmp)
+monitor/ifa_monitor.py:344:    run_macro_program(program, "_monitor_expr.ifa")
+monitor/ifa_monitor.py:390:def run_yoruba_line(line):
+monitor/ifa_monitor.py:401:    result = subprocess.run(
+monitor/ifa_monitor.py:402:        ["./ifarun", str(tmp)],
+monitor/ifa_monitor.py:438:def run_expression(expr):
+monitor/ifa_monitor.py:494:    run_program(tmp)
+monitor/ifa_monitor.py:516:                "hex": hx,
+monitor/ifa_monitor.py:528:                    "hex": hx,
+monitor/ifa_monitor.py:553:            print(f"Result        : {y['signed']}  (raw 0x{y['hex']}, unsigned {y['unsigned']})")
+monitor/ifa_monitor.py:569:                print(f"{labels[k]:<13}: 0x{v['hex']}  {v.get('odu','')}")
+monitor/ifa_monitor.py:582:        print(f"ÈSÌ / OYÈLÁ : {y['signed']}  (0x{y['hex']})")
+monitor/ifa_monitor.py:598:            print(f"{labels[k]:<8}= 0x{v['hex']}  {v.get('odu','')}")
+monitor/ifa_monitor.py:627:    execute(OHUN_HISTORY[-1])
+monitor/ifa_monitor.py:640:    execute(OHUN_HISTORY[idx])
+monitor/ifa_monitor.py:697:    run_program(tmp)
+monitor/ifa_monitor.py:699:def execute(cmd):
+monitor/ifa_monitor.py:809:        run_macro_program("PRINTODU\nHALT\n", "_monitor_printodu.ifa")
+monitor/ifa_monitor.py:813:        run_macro_program("PRINTODUALL\nHALT\n", "_monitor_printoduall.ifa")
+monitor/ifa_monitor.py:816:    if u.startswith("RUN "):
+monitor/ifa_monitor.py:819:            run_program(args[1])
+monitor/ifa_monitor.py:840:                run_program(args[1])
+monitor/ifa_monitor.py:860:        run_yoruba_line(normalize_symbolic_oro(c))
+monitor/ifa_monitor.py:870:        run_yoruba_line(normalize_symbolic_oro(c))
+monitor/ifa_monitor.py:874:        run_expression(c)
+monitor/ifa_monitor.py:883:            execute(input("OHÙN IFÁ> "))
+language_v3/spec/ontology.md:8:| Ọ̀RỌ̀ | Word / code / script | Source code, assembly, machine expression |
+language_v3/spec/ontology.md:57:The IFÁ processor does not execute "instructions."
+language_v3/spec/ontology.md:74:execute using its physical address.
+language_v3/spec/odu.py:3:# ODÙ is the kernel/activity space of the IFÁ machine.
+language_v3/spec/odu.py:56:            "HEX",
+language_v3/spec/odu.py:75:        "meaning": "Output/result expression of the machine.",
+language_v3/spec/odu.py:87:        "MARUN": 5,
+language_v3/spec/numbers.py:17:    "MARUN":5,
+language_v3/spec/grammar.md:62:  | HEX
+language_v3/spec/grammar.md:85:MARUN
+tools/run_phase2_v2_benchmarks.sh:35:    iverilog -g2012 \
+tools/run_phase2_v2_benchmarks.sh:43:    trace=$(vvp sim/tb_odu_v2_cpu.out)
+tools/run_cpu_vs_ifa.sh:12:echo "[1] IFÁ run"
+tools/run_cpu_vs_ifa.sh:13:./ifarun "$BENCH"
+tools/run_cpu_vs_ifa.sh:17:iverilog -g2012 rtl_v3/cpu_ref_v3.sv -o sim/cpu_ref_v3.out
+tools/run_cpu_vs_ifa.sh:18:vvp sim/cpu_ref_v3.out
+tools/run_recursive_vs_raw_benchmark.sh:26:    iverilog -g2012 \
+tools/run_recursive_vs_raw_benchmark.sh:34:    trace=$(vvp sim/tb_odu_v2_cpu.out)
+tools/run_ifa_v3_benchmark.sh:5:./ifarun programs_v3/ifa_v3_benchmark.ifa3
+tools/ifaasm_odu_v3.py:142:def assemble_line(line, labels):
+tools/ifaasm_odu_v3.py:246:        inst = assemble_line(line, labels)
+tools/ifaasm_odu_v3.py:250:    with open("odu_v2_program.hex", "w") as f:
+tools/ifaasm_odu_v3.py:265:    print(f"Assembled {len(program)} instructions -> odu_v2_program.hex")
+tools/compare_cpu_vs_ifa_cycles.py:3:import subprocess
+tools/compare_cpu_vs_ifa_cycles.py:9:def run(cmd):
+tools/compare_cpu_vs_ifa_cycles.py:10:    return subprocess.run(cmd, text=True, capture_output=True)
+tools/compare_cpu_vs_ifa_cycles.py:18:ifa = run(["./ifarun", bench])
+tools/compare_cpu_vs_ifa_cycles.py:25:# CPU ref uses the same odu_v2_program.hex produced by ifarun
+tools/compare_cpu_vs_ifa_cycles.py:26:subprocess.run(["iverilog", "-g2012", "rtl_v3/cpu_ref_v3.sv", "-o", "sim/cpu_ref_v3.out"], check=True)
+tools/compare_cpu_vs_ifa_cycles.py:27:cpu = run(["vvp", "sim/cpu_ref_v3.out"])
+tools/compare_cpu_vs_ifa_cycles.py:43:print(f"same_hex_stream        = yes")
+tools/compare_cpu_vs_ifa_cycles.py:54:print("- This compares both cores after assembling the exact same program hex.")
+tools/run_phase1_relation_algorithms.sh:25:    iverilog -g2012 \
+tools/run_phase1_relation_algorithms.sh:33:    vvp sim/tb_odu_v2_cpu.out | tee "analysis/${name}_trace.txt"
+tools/ifaasm_odu_v2.py:109:def assemble_line(line, labels):
+tools/ifaasm_odu_v2.py:191:        inst = assemble_line(line, labels)
+tools/ifaasm_odu_v2.py:195:    with open("odu_v2_program.hex", "w") as f:
+tools/ifaasm_odu_v2.py:210:    print(f"Assembled {len(program)} instructions -> odu_v2_program.hex")
+tools/ifa_yoruba_frontend.py:34:def compile_binary(op, a_raw, b_raw):
+tools/ifa_yoruba_frontend.py:56:def compile_line(line):
+tools/ifa_yoruba_frontend.py:74:        return compile_binary(parts[0], parts[1], parts[3])
+tools/ifa_yoruba_frontend.py:87:            out.extend(compile_line(line))
+tools/run_benchmarks.sh:11:    echo "Running: $f"
+tools/run_benchmarks.sh:12:    ./ifarun "$f"
+tools/run_relation_benchmarks.sh:26:    iverilog -g2012 \
+tools/run_relation_benchmarks.sh:40:    out=$(vvp sim/tb_cpu_rom_top.out)
+tools/ifaasm.py:131:def assemble_line(line, labels):
+tools/ifaasm.py:161:def assemble(source):
+tools/ifaasm.py:168:        inst = assemble_line(line, labels)
+tools/ifaasm.py:174:def write_hex(program, filename):
+tools/ifaasm.py:185:    program, expected, labels = assemble(source)
+tools/ifaasm.py:187:    write_hex(program, "program.hex")
+tools/ifaasm.py:190:        with open("expected.hex", "w") as f:
+tools/ifaasm.py:194:    print("IFÁ ASSEMBLER")
+tools/ifaasm.py:209:    print("program.hex")
+tools/ifaasm.py:211:        print("expected.hex")
+
+============================================================
+ODU TABLES
+============================================================
+monitor/ifa_monitor.py:20:OJU_ODU = [
+monitor/ifa_monitor.py:58:TE ODU
+monitor/ifa_monitor.py:62:YARA OGBE
+monitor/ifa_monitor.py:65:YARA OGBE
+monitor/ifa_monitor.py:66:Ọ̀RỌ̀[OGBE 0x00]> PAPO META ATI MEJI
+monitor/ifa_monitor.py:67:Ọ̀RỌ̀[OGBE 0x01]> TE ODU
+monitor/ifa_monitor.py:68:Ọ̀RỌ̀[OGBE 0x02]> DURO
+monitor/ifa_monitor.py:80:PRINTODU
+monitor/ifa_monitor.py:81:PRINTODUALL
+monitor/ifa_monitor.py:116:Architecture : ODU V2
+monitor/ifa_monitor.py:122:• PRINTODU
+monitor/ifa_monitor.py:123:• PRINTODUALL
+monitor/ifa_monitor.py:132:    print("Booting IFÁ ODU Processor...")
+monitor/ifa_monitor.py:162:    for i, (name, meaning) in enumerate(OJU_ODU):
+monitor/ifa_monitor.py:167:    print("IFÁ ODU Processor")
+monitor/ifa_monitor.py:170:    print("Core           : ODU V2 / RPC")
+monitor/ifa_monitor.py:181:    print("Use PRINTODUALL or RUN a program with PRINTODUALL for live CPU state.")
+monitor/ifa_monitor.py:269:        subprocess.run(["python3", "tools/ifaasm_odu_v2.py", str(program)], check=True)
+monitor/ifa_monitor.py:282:        "rtl_v2/ifa_odu_v2_core.sv",
+monitor/ifa_monitor.py:283:        "rtl_v2/ifa_odu_v2_cpu.sv",
+monitor/ifa_monitor.py:284:        "tb_v2/tb_odu_v2_cpu.sv",
+monitor/ifa_monitor.py:315:        program = f"LOADA 0x{av:02X}\nLOADB 0x{bv:02X}\nRPC_ADD\nPRINTODU\nHALT\n"
+monitor/ifa_monitor.py:317:        program = f"LOADA 0x{av:02X}\nLOADB 0x{bv:02X}\nRPC_SUB\nPRINTODU\nHALT\n"
+monitor/ifa_monitor.py:331:            print("Modulo by zero.")
+monitor/ifa_monitor.py:396:TE ODU
+monitor/ifa_monitor.py:399:""", encoding="utf-8")
+monitor/ifa_monitor.py:451:ODU_YARA = {
+monitor/ifa_monitor.py:452:    "OGBE": 0x00,
+monitor/ifa_monitor.py:453:    "OYEKU": 0x01,
+monitor/ifa_monitor.py:454:    "IWORI": 0x02,
+monitor/ifa_monitor.py:455:    "ODI": 0x03,
+monitor/ifa_monitor.py:456:    "IROSUN": 0x04,
+monitor/ifa_monitor.py:457:    "OWONRIN": 0x05,
+monitor/ifa_monitor.py:458:    "OBARA": 0x06,
+monitor/ifa_monitor.py:459:    "OKANRAN": 0x07,
+monitor/ifa_monitor.py:460:    "OGUNDA": 0x08,
+monitor/ifa_monitor.py:461:    "OSA": 0x09,
+monitor/ifa_monitor.py:462:    "IKA": 0x0A,
+monitor/ifa_monitor.py:463:    "OTURUPON": 0x0B,
+monitor/ifa_monitor.py:464:    "OTURA": 0x0C,
+monitor/ifa_monitor.py:465:    "IRETE": 0x0D,
+monitor/ifa_monitor.py:466:    "OSE": 0x0E,
+monitor/ifa_monitor.py:467:    "OFUN": 0x0F,
+monitor/ifa_monitor.py:492:    tmp.write_text("".join(lines), encoding="utf-8")
+monitor/ifa_monitor.py:519:                "odu": m0.group(2).strip(),
+monitor/ifa_monitor.py:531:                    "odu": tail,
+monitor/ifa_monitor.py:554:            if y.get("odu"):
+monitor/ifa_monitor.py:555:                print(f"Result Odù    : {y['odu']}")
+monitor/ifa_monitor.py:569:                print(f"{labels[k]:<13}: 0x{v['hex']}  {v.get('odu','')}")
+monitor/ifa_monitor.py:583:        if y.get("odu"):
+monitor/ifa_monitor.py:584:            print(f"ODÙ          : {y['odu']}")
+monitor/ifa_monitor.py:598:            print(f"{labels[k]:<8}= 0x{v['hex']}  {v.get('odu','')}")
+monitor/ifa_monitor.py:645:    if key not in ODU_YARA:
+monitor/ifa_monitor.py:647:        print("Lo: YARA OGBE, YARA IWORI, YARA ODI...")
+monitor/ifa_monitor.py:650:    addr = ODU_YARA[key]
+monitor/ifa_monitor.py:676:            if new_key not in ODU_YARA:
+monitor/ifa_monitor.py:681:            addr = ODU_YARA[key]
+monitor/ifa_monitor.py:695:    tmp.write_text("".join(lines), encoding="utf-8")
+monitor/ifa_monitor.py:808:    if u == "PRINTODU":
+monitor/ifa_monitor.py:809:        run_macro_program("PRINTODU\nHALT\n", "_monitor_printodu.ifa")
+monitor/ifa_monitor.py:812:    if u == "PRINTODUALL":
+monitor/ifa_monitor.py:813:        run_macro_program("PRINTODUALL\nHALT\n", "_monitor_printoduall.ifa")
+language_v3/spec/keywords.md:19:| Modulo / remainder | ÌYÓKÙ | IYOKU | IYOKU |
+language_v3/spec/keywords.md:56:| Odù / kernel space | ODÙ | ODU | ODU |
+language_v3/spec/keywords.md:80:    YARA OGBE
+language_v3/spec/keywords.md:84:    YÀRÁ OGBE
+language_v3/spec/ontology.md:31:ÌṢẸ́ produces ÀBÁJÁDE.
+language_v3/spec/ontology.md:59:It receives Ọ̀RỌ̀, interprets ÌTUMỌ̀ through ODÙ, performs ÌṢẸ́, and produces ÀBÁJÁDE.
+language_v3/spec/ontology.md:71:    YARA OGBE -> address 0x00
+language_v3/spec/isa.py:38:    "TEODU":    0xF700,
+language_v3/spec/odu.py:6:ODU_KERNEL = {
+language_v3/spec/odu.py:17:            "TE ODU",
+language_v3/spec/odu.py:96:        "TE ODU": "Print current Odù relation state.",
+language_v3/spec/grammar.md:23:  | TE ODU
+language_v3/spec/grammar.md:100:TE ODU
+language_v3/spec/dictionary.py:55:    "ODU":"ODU",
+language_v3/spec/dictionary.py:56:    "ODÙ":"ODU"
+language_v3/spec/keywords.py:54:    "ODÙ": "ODU",
+language_v3/spec/keywords.py:55:    "ODU": "ODU",
+language_v3/kernel.py:3:from language_v3.spec.odu import ODU_KERNEL
+language_v3/kernel.py:12:        self.odu = ODU_KERNEL
+language_v3/kernel.py:22:        print("Grammar     :", self.odu["PROGRAM"]["rule"])
+language_v3/examples/add_chain.ifa3:5:TE ODU
+language_v3/examples/_monitor_line.ifa3:5:TE ODU
+language_v3/examples/add_sentence.ifa3:5:TE ODU
+language_v3/examples/add_yoruba_native.ifa3:6:TEODU
+language_v3/examples/ado_symbol_add.ifa3:8:TE ODU
+language_v3/examples/add_yoruba.ifa3:6:TEODU
+language_v3/examples/seda_sentence.ifa3:5:TE ODU
+language_v3/examples/sub_sentence.ifa3:5:TE ODU
+language_v3/examples/add_symbol.ifa3:5:TE ODU
+language_v3/examples/mul_sentence.ifa3:5:TE ODU
+language_v3/examples/ado_add.ifa3:8:TE ODU
+tools/run_phase2_v2_benchmarks.sh:24:echo "IFÁ ODU V2 — PHASE 2 BENCHMARKS" | tee -a "$TXT"
+tools/run_phase2_v2_benchmarks.sh:33:    python3 tools/ifaasm_odu_v2.py "$prog" > /tmp/ifaasm_odu_v2.log
+tools/run_phase2_v2_benchmarks.sh:38:    rtl_v2/ifa_odu_v2_core.sv \
+tools/run_phase2_v2_benchmarks.sh:39:    rtl_v2/ifa_odu_v2_cpu.sv \
+tools/run_phase2_v2_benchmarks.sh:40:    tb_v2/tb_odu_v2_cpu.sv \
+tools/run_phase2_v2_benchmarks.sh:41:    -o sim/tb_odu_v2_cpu.out
+tools/run_phase2_v2_benchmarks.sh:43:    trace=$(vvp sim/tb_odu_v2_cpu.out)
+tools/run_phase2_v2_benchmarks.sh:45:    cycles=$(echo "$trace" | grep "ODU V2 CPU halted after" | awk '{print $6}')
+tools/run_cpu_vs_ifa.sh:22:echo "  IFÁ CPU       : sim/odu_v2_cpu.vcd"
+tools/run_cpu_vs_ifa.sh:26:echo "  gtkwave sim/odu_v2_cpu.vcd"
+tools/run_recursive_vs_raw_benchmark.sh:15:echo "IFÁ ODU V2 — RAW CHAIN vs RECURSIVE FEEDBACK" | tee -a "$TXT"
+tools/run_recursive_vs_raw_benchmark.sh:24:    python3 tools/ifaasm_odu_v2.py "$prog" > /tmp/ifaasm_odu_v2.log
+tools/run_recursive_vs_raw_benchmark.sh:29:    rtl_v2/ifa_odu_v2_core.sv \
+tools/run_recursive_vs_raw_benchmark.sh:30:    rtl_v2/ifa_odu_v2_cpu.sv \
+tools/run_recursive_vs_raw_benchmark.sh:31:    tb_v2/tb_odu_v2_cpu.sv \
+tools/run_recursive_vs_raw_benchmark.sh:32:    -o sim/tb_odu_v2_cpu.out
+tools/run_recursive_vs_raw_benchmark.sh:34:    trace=$(vvp sim/tb_odu_v2_cpu.out)
+tools/run_recursive_vs_raw_benchmark.sh:38:    cycles=$(echo "$trace" | grep "ODU V2 CPU halted after" | awk '{print $6}')
+tools/run_ifa_v3_benchmark.sh:9:echo "Waveform: sim/odu_v2_cpu.vcd"
+tools/run_ifa_v3_benchmark.sh:11:echo "  gtkwave sim/odu_v2_cpu.vcd"
+tools/ifaasm_odu_v3.py:26:    "TEODU": "PRINTODU",
+tools/ifaasm_odu_v3.py:27:    "TẸ̀ODÙ": "PRINTODU",
+tools/ifaasm_odu_v3.py:29:    "SEDA": "ODU_RAW",
+tools/ifaasm_odu_v3.py:30:    "ṢẸ̀DÁ": "ODU_RAW",
+tools/ifaasm_odu_v3.py:44:    "ODU_RAW": 0x4,
+tools/ifaasm_odu_v3.py:45:    "ODU_FEEDBACK": 0x5,
+tools/ifaasm_odu_v3.py:46:    "ODU_STORE": 0x6,
+tools/ifaasm_odu_v3.py:47:    "ODU_RECALL": 0x7,
+tools/ifaasm_odu_v3.py:86:        if m == "PRINTODU":
+tools/ifaasm_odu_v3.py:96:        if m == "PRINTODUALL":
+tools/ifaasm_odu_v3.py:233:        print("usage: ifaasm_odu_v2.py program.ifa")
+tools/ifaasm_odu_v3.py:250:    with open("odu_v2_program.hex", "w") as f:
+tools/ifaasm_odu_v3.py:254:    with open("odu_v2_program.lst", "w") as f:
+tools/ifaasm_odu_v3.py:255:        f.write("IFÁ ODU V2 PROGRAM ADDRESS MAP\n")
+tools/ifaasm_odu_v3.py:265:    print(f"Assembled {len(program)} instructions -> odu_v2_program.hex")
+tools/ifaasm_odu_v3.py:266:    print("Address map saved -> odu_v2_program.lst")
+tools/compare_cpu_vs_ifa_cycles.py:22:m = re.search(r"ODU V2 CPU halted after\s+(\d+)\s+cycles", ifa.stdout)
+tools/compare_cpu_vs_ifa_cycles.py:25:# CPU ref uses the same odu_v2_program.hex produced by ifarun
+tools/run_phase1_relation_algorithms.sh:12:echo "IFÁ ODU V2 — PHASE 1 RELATION ALGORITHMS"
+tools/run_phase1_relation_algorithms.sh:23:    python3 tools/ifaasm_odu_v2.py "$prog" > /tmp/ifaasm_odu_v2.log
+tools/run_phase1_relation_algorithms.sh:28:    rtl_v2/ifa_odu_v2_core.sv \
+tools/run_phase1_relation_algorithms.sh:29:    rtl_v2/ifa_odu_v2_cpu.sv \
+tools/run_phase1_relation_algorithms.sh:30:    tb_v2/tb_odu_v2_cpu.sv \
+tools/run_phase1_relation_algorithms.sh:31:    -o sim/tb_odu_v2_cpu.out
+tools/run_phase1_relation_algorithms.sh:33:    vvp sim/tb_odu_v2_cpu.out | tee "analysis/${name}_trace.txt"
+tools/ifaasm_odu_v2.py:8:    "ODU_RAW": 0x4,
+tools/ifaasm_odu_v2.py:9:    "ODU_FEEDBACK": 0x5,
+tools/ifaasm_odu_v2.py:10:    "ODU_STORE": 0x6,
+tools/ifaasm_odu_v2.py:11:    "ODU_RECALL": 0x7,
+tools/ifaasm_odu_v2.py:34:        if raw.upper() == "PRINTODU":
+tools/ifaasm_odu_v2.py:54:        if raw.upper() == "PRINTODUALL":
+tools/ifaasm_odu_v2.py:69:            # DAFA: print the 16 Oju Odu, 0x0 through 0xF.
+tools/ifaasm_odu_v2.py:178:        print("usage: ifaasm_odu_v2.py program.ifa")
+tools/ifaasm_odu_v2.py:195:    with open("odu_v2_program.hex", "w") as f:
+tools/ifaasm_odu_v2.py:199:    with open("odu_v2_program.lst", "w") as f:
+tools/ifaasm_odu_v2.py:200:        f.write("IFÁ ODU V2 PROGRAM ADDRESS MAP\n")
+tools/ifaasm_odu_v2.py:210:    print(f"Assembled {len(program)} instructions -> odu_v2_program.hex")
+tools/ifaasm_odu_v2.py:211:    print("Address map saved -> odu_v2_program.lst")
+tools/ifa:8:ODU_NAMES = [
+tools/ifa:9:    "Ogbe", "Ogunda", "Irete", "Irosun",
+tools/ifa:10:    "Otura", "Ose", "Odi", "Obara",
+tools/ifa:11:    "Osa", "Iwori", "Ofun", "Ika",
+tools/ifa:12:    "Owonrin", "Oturupon", "Okanran", "Oyeku"
+tools/ifa:30:def oduname(x):
+tools/ifa:31:    return ODU_NAMES[x & MASK]
+tools/ifa:33:def printodu(a, b):
+tools/ifa:36:    print("IFA ODU STATE")
+tools/ifa:38:    print(f"A   = {a:04b} ({a}) → {oduname(a)}")
+tools/ifa:39:    print(f"B   = {b:04b} ({b}) → {oduname(b)}")
+tools/ifa:40:    print(f"Y   = {y:04b} ({y}) → {oduname(y)}")
+tools/ifa:49:    printodu(a, b)
+tools/ifa:56:    print("P3 ODU")
+tools/ifa:84:def odulist():
+tools/ifa:85:    for i, name in enumerate(ODU_NAMES):
+tools/ifa:97:    print("P3 ODU")
+tools/ifa:123:    print("ODU:")
+tools/ifa:124:    print("  ifa printodu A B")
+tools/ifa:127:    print("  ifa odu-list")
+tools/ifa:137:    print("  ifa printodu 13 6")
+tools/ifa:154:        print("V1.1: Φ-P → ODU → RMU → RSM/PCM → feedback")
+tools/ifa:157:    elif cmd == "odu-list":
+tools/ifa:158:        odulist()
+tools/ifa:160:    elif cmd in ["printodu", "inspect", "phi", "trace"]:
+tools/ifa:167:        if cmd == "printodu":
+tools/ifa:168:            printodu(a, b)
+tools/ifa_yoruba_frontend.py:70:    if len(parts) == 2 and parts[0] == "TE" and parts[1] == "ODU":
+tools/ifa_yoruba_frontend.py:71:        return ["TEODU\n"]
+tools/ifa_yoruba_frontend.py:85:    with open(sys.argv[1], encoding="utf-8") as f:
+tools/ifa_yoruba_frontend.py:89:    with open(sys.argv[2], "w", encoding="utf-8") as f:
+tools/run_benchmarks.sh:21:echo "  sim/odu_v2_cpu.vcd"
+tools/run_benchmarks.sh:24:echo "  gtkwave sim/odu_v2_cpu.vcd"
+tools/run_relation_benchmarks.sh:9:  "benchmarks/bench_direct_printodu.ifa"
+tools/run_relation_benchmarks.sh:10:  "benchmarks/bench_relation_agree_printodu.ifa"
+tools/run_relation_benchmarks.sh:11:  "benchmarks/bench_relation_flip_printodu.ifa"
+tools/run_relation_benchmarks.sh:12:  "benchmarks/bench_relation_disagree_printodu.ifa"
+tools/ifaasm.py:19:    "PRINT_ODU":   0xE,
+tools/ifaasm.py:48:    # Native Odu print macros must be checked before generic PRINT
+tools/ifaasm.py:49:    if upper == "PRINT_ODU_ALL":
+tools/ifaasm.py:53:            out.append("PRINT_ODU")
+tools/ifaasm.py:56:    if upper.startswith("PRINT_ODU "):
+tools/ifaasm.py:58:        return [f"LOAD {value}", "PRINT_ODU"]
+tools/ifaasm.py:60:    if upper == "PRINT_ODU":
+tools/ifaasm.py:64:    if upper.startswith("PRINTODUALL"):
+tools/ifaasm.py:65:        return ["PRINT_ODU_ALL"]
+tools/ifaasm.py:67:    if upper.startswith("PRINTODU "):
+tools/ifaasm.py:69:        return [f"LOAD {value}", "PRINT_ODU"]
+tools/ifaasm.py:162:    lines = open(source, encoding="utf-8").read().splitlines()
+python/v4/bench_v4_vs_cpu_complex.py:21:def ogunda_shift(x):
+python/v4/bench_v4_vs_cpu_complex.py:25:def otura_shift(x):
+python/v4/bench_v4_vs_cpu_complex.py:86:        pairs.append((ogunda_shift(a), ogunda_shift(b)))
+python/v4/bench_v4_vs_cpu_complex.py:87:        pairs.append((otura_shift(a), otura_shift(b)))
+python/v4/bench_v4_vs_cpu_complex.py:93:        pairs.append((ogunda_shift(a), ogunda_shift(b)))
+python/v4/bench_v4_vs_cpu_complex.py:94:        pairs.append((otura_shift(a), otura_shift(b)))
+python/v4/verify_ifa_v4_rmu.py:8:# 4. Repeated workload produces reuse
+python/v4/verify_ifa_v4_rmu.py:69:    print("PASS: repeated relations produce reuse")
+python/v4/verify_v4_key_safety.py:8:# Can same KEY produce different FRAME?
+rtl/ifa_fpga_top.sv:1:module ifa_fpga_top (
+rtl/ifa_fpga_top.sv:52:endmodule
+rtl/ifa_p4.sv:1:module ifa_p4 (
+rtl/ifa_p4.sv:23:endmodule
+rtl/ifa_cpu_rom_top.sv:1:module ifa_cpu_rom_top (
+rtl/ifa_cpu_rom_top.sv:55:endmodule
+rtl/ifa_odu_printer.sv:1:module ifa_odu_printer (
+rtl/ifa_odu_printer.sv:16:    logic [7:0] odu_value;
+rtl/ifa_odu_printer.sv:19:    function automatic [3:0] odu_len(input logic [3:0] idx);
+rtl/ifa_odu_printer.sv:21:            4'h0: odu_len = 4'd6;  // Ògbè
+rtl/ifa_odu_printer.sv:22:            4'h1: odu_len = 4'd8;  // Ògúndá
+rtl/ifa_odu_printer.sv:23:            4'h2: odu_len = 4'd10; // Ìretẹ̀
+rtl/ifa_odu_printer.sv:24:            4'h3: odu_len = 4'd9;  // Ìròsùn
+rtl/ifa_odu_printer.sv:25:            4'h4: odu_len = 4'd8;  // Òtúrá
+rtl/ifa_odu_printer.sv:26:            4'h5: odu_len = 4'd5;  // Òsé
+rtl/ifa_odu_printer.sv:27:            4'h6: odu_len = 4'd5;  // Òdí
+rtl/ifa_odu_printer.sv:28:            4'h7: odu_len = 4'd8;  // Òbàrà
+rtl/ifa_odu_printer.sv:29:            4'h8: odu_len = 4'd5;  // Òsá
+rtl/ifa_odu_printer.sv:30:            4'h9: odu_len = 4'd8;  // Ìwòrì
+rtl/ifa_odu_printer.sv:31:            4'hA: odu_len = 4'd6;  // Òfún
+rtl/ifa_odu_printer.sv:32:            4'hB: odu_len = 4'd5;  // Ìká
+rtl/ifa_odu_printer.sv:33:            4'hC: odu_len = 4'd10; // Òwónrín
+rtl/ifa_odu_printer.sv:34:            4'hD: odu_len = 4'd12; // Òtúrúpọn
+rtl/ifa_odu_printer.sv:35:            4'hE: odu_len = 4'd10; // Òkànràn
+rtl/ifa_odu_printer.sv:36:            4'hF: odu_len = 4'd8;  // Òyèkú
+rtl/ifa_odu_printer.sv:37:            default: odu_len = 4'd0;
+rtl/ifa_odu_printer.sv:41:    function automatic [7:0] odu_char(input logic [3:0] idx, input logic [5:0] p);
+rtl/ifa_odu_printer.sv:45:            odu_char = 8'h00;
+rtl/ifa_odu_printer.sv:49:                10'd0: odu_char=8'hC3; 10'd1: odu_char=8'h92; 10'd2: odu_char=8'h67; 10'd3: odu_char=8'h62; 10'd4: odu_char=8'hC3; 10'd5: odu_char=8'hA8;
+rtl/ifa_odu_printer.sv:51:                10'd16: odu_char=8'hC3; 10'd17: odu_char=8'h92; 10'd18: odu_char=8'h67; 10'd19: odu_char=8'hC3; 10'd20: odu_char=8'hBA; 10'd21: odu_char=8'h6E; 10'd22: odu_char=8'h64; 10'd23: odu_char=8'hC3; 10'd24: odu_char=8'hA1;
+rtl/ifa_odu_printer.sv:53:                10'd32: odu_char=8'hC3; 10'd33: odu_char=8'h8C; 10'd34: odu_char=8'h72; 10'd35: odu_char=8'h65; 10'd36: odu_char=8'h74; 10'd37: odu_char=8'hE1; 10'd38: odu_char=8'hBA; 10'd39: odu_char=8'hB9; 10'd40: odu_char=8'hCC; 10'd41: odu_char=8'h80;
+rtl/ifa_odu_printer.sv:55:                10'd48: odu_char=8'hC3; 10'd49: odu_char=8'h8C; 10'd50: odu_char=8'h72; 10'd51: odu_char=8'hC3; 10'd52: odu_char=8'hB2; 10'd53: odu_char=8'h73; 10'd54: odu_char=8'hC3; 10'd55: odu_char=8'hB9; 10'd56: odu_char=8'h6E;
+rtl/ifa_odu_printer.sv:57:                10'd64: odu_char=8'hC3; 10'd65: odu_char=8'h92; 10'd66: odu_char=8'h74; 10'd67: odu_char=8'hC3; 10'd68: odu_char=8'hBA; 10'd69: odu_char=8'h72; 10'd70: odu_char=8'hC3; 10'd71: odu_char=8'hA1;
+rtl/ifa_odu_printer.sv:59:                10'd80: odu_char=8'hC3; 10'd81: odu_char=8'h92; 10'd82: odu_char=8'h73; 10'd83: odu_char=8'hC3; 10'd84: odu_char=8'hA9;
+rtl/ifa_odu_printer.sv:61:                10'd96: odu_char=8'hC3; 10'd97: odu_char=8'h92; 10'd98: odu_char=8'h64; 10'd99: odu_char=8'hC3; 10'd100: odu_char=8'hAD;
+rtl/ifa_odu_printer.sv:63:                10'd112: odu_char=8'hC3; 10'd113: odu_char=8'h92; 10'd114: odu_char=8'h62; 10'd115: odu_char=8'hC3; 10'd116: odu_char=8'hA0; 10'd117: odu_char=8'h72; 10'd118: odu_char=8'hC3; 10'd119: odu_char=8'hA0;
+rtl/ifa_odu_printer.sv:65:                10'd128: odu_char=8'hC3; 10'd129: odu_char=8'h92; 10'd130: odu_char=8'h73; 10'd131: odu_char=8'hC3; 10'd132: odu_char=8'hA1;
+rtl/ifa_odu_printer.sv:67:                10'd144: odu_char=8'hC3; 10'd145: odu_char=8'h8C; 10'd146: odu_char=8'h77; 10'd147: odu_char=8'hC3; 10'd148: odu_char=8'hB2; 10'd149: odu_char=8'h72; 10'd150: odu_char=8'hC3; 10'd151: odu_char=8'hAC;
+rtl/ifa_odu_printer.sv:69:                10'd160: odu_char=8'hC3; 10'd161: odu_char=8'h92; 10'd162: odu_char=8'h66; 10'd163: odu_char=8'hC3; 10'd164: odu_char=8'hBA; 10'd165: odu_char=8'h6E;
+rtl/ifa_odu_printer.sv:71:                10'd176: odu_char=8'hC3; 10'd177: odu_char=8'h8C; 10'd178: odu_char=8'h6B; 10'd179: odu_char=8'hC3; 10'd180: odu_char=8'hA1;
+rtl/ifa_odu_printer.sv:73:                10'd192: odu_char=8'hC3; 10'd193: odu_char=8'h92; 10'd194: odu_char=8'h77; 10'd195: odu_char=8'hC3; 10'd196: odu_char=8'hB3; 10'd197: odu_char=8'h6E; 10'd198: odu_char=8'h72; 10'd199: odu_char=8'hC3; 10'd200: odu_char=8'hAD; 10'd201: odu_char=8'h6E;
+rtl/ifa_odu_printer.sv:75:                10'd208: odu_char=8'hC3; 10'd209: odu_char=8'h92; 10'd210: odu_char=8'h74; 10'd211: odu_char=8'hC3; 10'd212: odu_char=8'hBA; 10'd213: odu_char=8'h72; 10'd214: odu_char=8'hC3; 10'd215: odu_char=8'hBA; 10'd216: odu_char=8'h70; 10'd217: odu_char=8'hE1; 10'd218: odu_char=8'hBB; 10'd219: odu_char=8'h8D; 10'd220: odu_char=8'h6E;
+rtl/ifa_odu_printer.sv:77:                10'd224: odu_char=8'hC3; 10'd225: odu_char=8'h92; 10'd226: odu_char=8'h6B; 10'd227: odu_char=8'hC3; 10'd228: odu_char=8'hA0; 10'd229: odu_char=8'h6E; 10'd230: odu_char=8'h72; 10'd231: odu_char=8'hC3; 10'd232: odu_char=8'hA0; 10'd233: odu_char=8'h6E;
+rtl/ifa_odu_printer.sv:79:                10'd240: odu_char=8'hC3; 10'd241: odu_char=8'h92; 10'd242: odu_char=8'h79; 10'd243: odu_char=8'hC3; 10'd244: odu_char=8'hA8; 10'd245: odu_char=8'h6B; 10'd246: odu_char=8'hC3; 10'd247: odu_char=8'hBA;
+rtl/ifa_odu_printer.sv:80:                default: odu_char=8'h00;
+rtl/ifa_odu_printer.sv:86:        stream_len = odu_len(v[7:4]) + 6'd1 + odu_len(v[3:0]) + 6'd1;
+rtl/ifa_odu_printer.sv:93:            hlen = odu_len(v[7:4]);
+rtl/ifa_odu_printer.sv:94:            llen = odu_len(v[3:0]);
+rtl/ifa_odu_printer.sv:97:                stream_byte = odu_char(v[7:4], p);
+rtl/ifa_odu_printer.sv:101:                stream_byte = odu_char(v[3:0], p - hlen - 1);
+rtl/ifa_odu_printer.sv:107:    always_ff @(posedge clk) begin
+rtl/ifa_odu_printer.sv:114:            odu_value <= 0;
+rtl/ifa_odu_printer.sv:121:                odu_value <= value;
+rtl/ifa_odu_printer.sv:125:                if (pos == stream_len(odu_value) - 1) begin
+rtl/ifa_odu_printer.sv:132:                    out_byte <= stream_byte(odu_value, pos + 1);
+rtl/ifa_odu_printer.sv:139:endmodule
+rtl/v4/ifa_v4_yara_system_top.sv:15:// Those remain verified standalone blocks and will be connected next.
+rtl/v4/ifa_v4_yara_system_top.sv:18:module ifa_v4_yara_system_top #(
+rtl/v4/ifa_v4_yara_system_top.sv:239:endmodule
+rtl/v4/ifa_v4_end_to_end_core.sv:7:module ifa_v4_end_to_end_core #(
+rtl/v4/ifa_v4_end_to_end_core.sv:82:endmodule
+rtl/v4/ifa_relation_memory_controller_admin.sv:12:module ifa_relation_memory_controller_admin #(
+rtl/v4/ifa_relation_memory_controller_admin.sv:110:    always_ff @(posedge clk) begin
+rtl/v4/ifa_relation_memory_controller_admin.sv:209:endmodule
+rtl/v4/ifa_v4_onile_delegation_top.sv:15:module ifa_v4_onile_delegation_top #(
+rtl/v4/ifa_v4_onile_delegation_top.sv:151:endmodule
+rtl/v4/ifa_rpc_stub.sv:9:// Produces Relation Frame:
+rtl/v4/ifa_rpc_stub.sv:19:module ifa_rpc_stub #(
+rtl/v4/ifa_rpc_stub.sv:43:endmodule
+rtl/v4/ifa_yara_v4_core.sv:18:module ifa_yara_v4_core #(
+rtl/v4/ifa_yara_v4_core.sv:218:endmodule
+rtl/v4/ifa_relation_memory_controller.sv:14:module ifa_relation_memory_controller #(
+rtl/v4/ifa_relation_memory_controller.sv:90:    always_ff @(posedge clk) begin
+rtl/v4/ifa_relation_memory_controller.sv:169:endmodule
+rtl/v4/ifa_v4_core.sv:19:module ifa_v4_core #(
+rtl/v4/ifa_v4_core.sv:79:endmodule
+rtl/v4/ifa_general_memory_guard.sv:20:module ifa_general_memory_guard #(
+rtl/v4/ifa_general_memory_guard.sv:115:    always_ff @(posedge clk) begin
+rtl/v4/ifa_general_memory_guard.sv:196:endmodule
+rtl/v4/ifa_yara_manager.sv:17:module ifa_yara_manager #(
+rtl/v4/ifa_yara_manager.sv:53:    always_ff @(posedge clk) begin
+rtl/v4/ifa_yara_manager.sv:161:endmodule
+rtl/v4/ifa_yara_frame_share_core.sv:9:module ifa_yara_frame_share_core #(
+rtl/v4/ifa_yara_frame_share_core.sv:246:endmodule
+rtl/v4/ifa_relation_frame_ram.sv:12:module ifa_relation_frame_ram #(
+rtl/v4/ifa_relation_frame_ram.sv:45:    always_ff @(posedge clk) begin
+rtl/v4/ifa_relation_frame_ram.sv:71:endmodule
+rtl/v4/ifa_yara_context_bank.sv:19:module ifa_yara_context_bank #(
+rtl/v4/ifa_yara_context_bank.sv:62:    always_ff @(posedge clk) begin
+rtl/v4/ifa_yara_context_bank.sv:104:endmodule
+rtl/v4/ifa_relation_cam.sv:15:module ifa_relation_cam #(
+rtl/v4/ifa_relation_cam.sv:49:    always_ff @(posedge clk) begin
+rtl/v4/ifa_relation_cam.sv:114:endmodule
+rtl/v4/ifa_v4_yara_secure_system_top.sv:14:module ifa_v4_yara_secure_system_top #(
+rtl/v4/ifa_v4_yara_secure_system_top.sv:282:endmodule
+rtl/v4/ifa_onile_supervisor.sv:19:module ifa_onile_supervisor #(
+rtl/v4/ifa_onile_supervisor.sv:69:    always_ff @(posedge clk) begin
+rtl/v4/ifa_onile_supervisor.sv:148:endmodule
+rtl/ifa_corrector.sv:1:module ifa_corrector (
+rtl/ifa_corrector.sv:17:endmodule
+rtl/ifa_p8_inv.sv:1:module ifa_p8_inv (
+rtl/ifa_p8_inv.sv:16:endmodule
+rtl/ifa_rom.sv:1:module ifa_rom (
+rtl/ifa_rom.sv:16:endmodule
+rtl/ifa_t8.sv:1:module ifa_t8 (
+rtl/ifa_t8.sv:22:endmodule
+rtl/ifa_p2_inv.sv:1:module ifa_p2_inv (
+rtl/ifa_p2_inv.sv:19:endmodule
+rtl/ifa_cpu.sv:1:module ifa_cpu (
+rtl/ifa_cpu.sv:93:    always_ff @(posedge clk) begin
+rtl/ifa_cpu.sv:162:endmodule
+rtl/ifa_p2.sv:1:module ifa_p2 (
+rtl/ifa_p2.sv:14:endmodule
+rtl/ifa_cpu_core.sv:1:module ifa_cpu_core (
+rtl/ifa_cpu_core.sv:39:    localparam OP_PRINT_ODU   = 4'hE;
+rtl/ifa_cpu_core.sv:50:    logic printing_odu;
+rtl/ifa_cpu_core.sv:51:    logic [7:0] odu_value;
+rtl/ifa_cpu_core.sv:52:    logic [5:0] odu_pos;
+rtl/ifa_cpu_core.sv:95:    function automatic [3:0] odu_len(input logic [3:0] idx);
+rtl/ifa_cpu_core.sv:97:            4'h0: odu_len = 4'd6; // Ògbè
+rtl/ifa_cpu_core.sv:98:            4'h1: odu_len = 4'd9; // Ògúndá
+rtl/ifa_cpu_core.sv:99:            4'h2: odu_len = 4'd10; // Ìretẹ̀
+rtl/ifa_cpu_core.sv:100:            4'h3: odu_len = 4'd9; // Ìròsùn
+rtl/ifa_cpu_core.sv:101:            4'h4: odu_len = 4'd8; // Òtúrá
+rtl/ifa_cpu_core.sv:102:            4'h5: odu_len = 4'd5; // Òsé
+rtl/ifa_cpu_core.sv:103:            4'h6: odu_len = 4'd5; // Òdí
+rtl/ifa_cpu_core.sv:104:            4'h7: odu_len = 4'd8; // Òbàrà
+rtl/ifa_cpu_core.sv:105:            4'h8: odu_len = 4'd5; // Òsá
+rtl/ifa_cpu_core.sv:106:            4'h9: odu_len = 4'd8; // Ìwòrì
+rtl/ifa_cpu_core.sv:107:            4'hA: odu_len = 4'd6; // Òfún
+rtl/ifa_cpu_core.sv:108:            4'hB: odu_len = 4'd5; // Ìká
+rtl/ifa_cpu_core.sv:109:            4'hC: odu_len = 4'd10; // Òwónrín
+rtl/ifa_cpu_core.sv:110:            4'hD: odu_len = 4'd13; // Òtúrúpọn
+rtl/ifa_cpu_core.sv:111:            4'hE: odu_len = 4'd10; // Òkànràn
+rtl/ifa_cpu_core.sv:112:            4'hF: odu_len = 4'd8; // Òyèkú
+rtl/ifa_cpu_core.sv:113:            default: odu_len = 4'd0;
+rtl/ifa_cpu_core.sv:117:    function automatic [7:0] odu_char(input logic [3:0] idx, input logic [5:0] pos);
+rtl/ifa_cpu_core.sv:121:            odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:124:                10'd0: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:125:                10'd1: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:126:                10'd2: odu_char = 8'h67;
+rtl/ifa_cpu_core.sv:127:                10'd3: odu_char = 8'h62;
+rtl/ifa_cpu_core.sv:128:                10'd4: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:129:                10'd5: odu_char = 8'hA8;
+rtl/ifa_cpu_core.sv:130:                10'd6: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:131:                10'd7: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:132:                10'd8: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:133:                10'd9: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:134:                10'd10: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:135:                10'd11: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:136:                10'd12: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:137:                10'd13: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:138:                10'd14: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:139:                10'd15: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:140:                10'd16: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:141:                10'd17: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:142:                10'd18: odu_char = 8'h67;
+rtl/ifa_cpu_core.sv:143:                10'd19: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:144:                10'd20: odu_char = 8'hBA;
+rtl/ifa_cpu_core.sv:145:                10'd21: odu_char = 8'h6E;
+rtl/ifa_cpu_core.sv:146:                10'd22: odu_char = 8'h64;
+rtl/ifa_cpu_core.sv:147:                10'd23: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:148:                10'd24: odu_char = 8'hA1;
+rtl/ifa_cpu_core.sv:149:                10'd25: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:150:                10'd26: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:151:                10'd27: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:152:                10'd28: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:153:                10'd29: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:154:                10'd30: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:155:                10'd31: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:156:                10'd32: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:157:                10'd33: odu_char = 8'h8C;
+rtl/ifa_cpu_core.sv:158:                10'd34: odu_char = 8'h72;
+rtl/ifa_cpu_core.sv:159:                10'd35: odu_char = 8'h65;
+rtl/ifa_cpu_core.sv:160:                10'd36: odu_char = 8'h74;
+rtl/ifa_cpu_core.sv:161:                10'd37: odu_char = 8'hE1;
+rtl/ifa_cpu_core.sv:162:                10'd38: odu_char = 8'hBA;
+rtl/ifa_cpu_core.sv:163:                10'd39: odu_char = 8'hB9;
+rtl/ifa_cpu_core.sv:164:                10'd40: odu_char = 8'hCC;
+rtl/ifa_cpu_core.sv:165:                10'd41: odu_char = 8'h80;
+rtl/ifa_cpu_core.sv:166:                10'd42: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:167:                10'd43: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:168:                10'd44: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:169:                10'd45: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:170:                10'd46: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:171:                10'd47: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:172:                10'd48: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:173:                10'd49: odu_char = 8'h8C;
+rtl/ifa_cpu_core.sv:174:                10'd50: odu_char = 8'h72;
+rtl/ifa_cpu_core.sv:175:                10'd51: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:176:                10'd52: odu_char = 8'hB2;
+rtl/ifa_cpu_core.sv:177:                10'd53: odu_char = 8'h73;
+rtl/ifa_cpu_core.sv:178:                10'd54: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:179:                10'd55: odu_char = 8'hB9;
+rtl/ifa_cpu_core.sv:180:                10'd56: odu_char = 8'h6E;
+rtl/ifa_cpu_core.sv:181:                10'd57: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:182:                10'd58: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:183:                10'd59: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:184:                10'd60: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:185:                10'd61: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:186:                10'd62: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:187:                10'd63: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:188:                10'd64: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:189:                10'd65: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:190:                10'd66: odu_char = 8'h74;
+rtl/ifa_cpu_core.sv:191:                10'd67: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:192:                10'd68: odu_char = 8'hBA;
+rtl/ifa_cpu_core.sv:193:                10'd69: odu_char = 8'h72;
+rtl/ifa_cpu_core.sv:194:                10'd70: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:195:                10'd71: odu_char = 8'hA1;
+rtl/ifa_cpu_core.sv:196:                10'd72: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:197:                10'd73: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:198:                10'd74: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:199:                10'd75: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:200:                10'd76: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:201:                10'd77: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:202:                10'd78: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:203:                10'd79: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:204:                10'd80: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:205:                10'd81: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:206:                10'd82: odu_char = 8'h73;
+rtl/ifa_cpu_core.sv:207:                10'd83: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:208:                10'd84: odu_char = 8'hA9;
+rtl/ifa_cpu_core.sv:209:                10'd85: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:210:                10'd86: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:211:                10'd87: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:212:                10'd88: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:213:                10'd89: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:214:                10'd90: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:215:                10'd91: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:216:                10'd92: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:217:                10'd93: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:218:                10'd94: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:219:                10'd95: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:220:                10'd96: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:221:                10'd97: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:222:                10'd98: odu_char = 8'h64;
+rtl/ifa_cpu_core.sv:223:                10'd99: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:224:                10'd100: odu_char = 8'hAD;
+rtl/ifa_cpu_core.sv:225:                10'd101: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:226:                10'd102: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:227:                10'd103: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:228:                10'd104: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:229:                10'd105: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:230:                10'd106: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:231:                10'd107: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:232:                10'd108: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:233:                10'd109: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:234:                10'd110: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:235:                10'd111: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:236:                10'd112: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:237:                10'd113: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:238:                10'd114: odu_char = 8'h62;
+rtl/ifa_cpu_core.sv:239:                10'd115: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:240:                10'd116: odu_char = 8'hA0;
+rtl/ifa_cpu_core.sv:241:                10'd117: odu_char = 8'h72;
+rtl/ifa_cpu_core.sv:242:                10'd118: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:243:                10'd119: odu_char = 8'hA0;
+rtl/ifa_cpu_core.sv:244:                10'd120: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:245:                10'd121: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:246:                10'd122: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:247:                10'd123: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:248:                10'd124: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:249:                10'd125: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:250:                10'd126: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:251:                10'd127: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:252:                10'd128: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:253:                10'd129: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:254:                10'd130: odu_char = 8'h73;
+rtl/ifa_cpu_core.sv:255:                10'd131: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:256:                10'd132: odu_char = 8'hA1;
+rtl/ifa_cpu_core.sv:257:                10'd133: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:258:                10'd134: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:259:                10'd135: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:260:                10'd136: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:261:                10'd137: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:262:                10'd138: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:263:                10'd139: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:264:                10'd140: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:265:                10'd141: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:266:                10'd142: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:267:                10'd143: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:268:                10'd144: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:269:                10'd145: odu_char = 8'h8C;
+rtl/ifa_cpu_core.sv:270:                10'd146: odu_char = 8'h77;
+rtl/ifa_cpu_core.sv:271:                10'd147: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:272:                10'd148: odu_char = 8'hB2;
+rtl/ifa_cpu_core.sv:273:                10'd149: odu_char = 8'h72;
+rtl/ifa_cpu_core.sv:274:                10'd150: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:275:                10'd151: odu_char = 8'hAC;
+rtl/ifa_cpu_core.sv:276:                10'd152: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:277:                10'd153: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:278:                10'd154: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:279:                10'd155: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:280:                10'd156: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:281:                10'd157: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:282:                10'd158: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:283:                10'd159: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:284:                10'd160: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:285:                10'd161: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:286:                10'd162: odu_char = 8'h66;
+rtl/ifa_cpu_core.sv:287:                10'd163: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:288:                10'd164: odu_char = 8'hBA;
+rtl/ifa_cpu_core.sv:289:                10'd165: odu_char = 8'h6E;
+rtl/ifa_cpu_core.sv:290:                10'd166: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:291:                10'd167: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:292:                10'd168: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:293:                10'd169: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:294:                10'd170: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:295:                10'd171: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:296:                10'd172: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:297:                10'd173: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:298:                10'd174: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:299:                10'd175: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:300:                10'd176: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:301:                10'd177: odu_char = 8'h8C;
+rtl/ifa_cpu_core.sv:302:                10'd178: odu_char = 8'h6B;
+rtl/ifa_cpu_core.sv:303:                10'd179: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:304:                10'd180: odu_char = 8'hA1;
+rtl/ifa_cpu_core.sv:305:                10'd181: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:306:                10'd182: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:307:                10'd183: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:308:                10'd184: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:309:                10'd185: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:310:                10'd186: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:311:                10'd187: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:312:                10'd188: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:313:                10'd189: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:314:                10'd190: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:315:                10'd191: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:316:                10'd192: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:317:                10'd193: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:318:                10'd194: odu_char = 8'h77;
+rtl/ifa_cpu_core.sv:319:                10'd195: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:320:                10'd196: odu_char = 8'hB3;
+rtl/ifa_cpu_core.sv:321:                10'd197: odu_char = 8'h6E;
+rtl/ifa_cpu_core.sv:322:                10'd198: odu_char = 8'h72;
+rtl/ifa_cpu_core.sv:323:                10'd199: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:324:                10'd200: odu_char = 8'hAD;
+rtl/ifa_cpu_core.sv:325:                10'd201: odu_char = 8'h6E;
+rtl/ifa_cpu_core.sv:326:                10'd202: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:327:                10'd203: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:328:                10'd204: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:329:                10'd205: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:330:                10'd206: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:331:                10'd207: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:332:                10'd208: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:333:                10'd209: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:334:                10'd210: odu_char = 8'h74;
+rtl/ifa_cpu_core.sv:335:                10'd211: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:336:                10'd212: odu_char = 8'hBA;
+rtl/ifa_cpu_core.sv:337:                10'd213: odu_char = 8'h72;
+rtl/ifa_cpu_core.sv:338:                10'd214: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:339:                10'd215: odu_char = 8'hBA;
+rtl/ifa_cpu_core.sv:340:                10'd216: odu_char = 8'h70;
+rtl/ifa_cpu_core.sv:341:                10'd217: odu_char = 8'hE1;
+rtl/ifa_cpu_core.sv:342:                10'd218: odu_char = 8'hBB;
+rtl/ifa_cpu_core.sv:343:                10'd219: odu_char = 8'h8D;
+rtl/ifa_cpu_core.sv:344:                10'd220: odu_char = 8'h6E;
+rtl/ifa_cpu_core.sv:345:                10'd221: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:346:                10'd222: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:347:                10'd223: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:348:                10'd224: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:349:                10'd225: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:350:                10'd226: odu_char = 8'h6B;
+rtl/ifa_cpu_core.sv:351:                10'd227: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:352:                10'd228: odu_char = 8'hA0;
+rtl/ifa_cpu_core.sv:353:                10'd229: odu_char = 8'h6E;
+rtl/ifa_cpu_core.sv:354:                10'd230: odu_char = 8'h72;
+rtl/ifa_cpu_core.sv:355:                10'd231: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:356:                10'd232: odu_char = 8'hA0;
+rtl/ifa_cpu_core.sv:357:                10'd233: odu_char = 8'h6E;
+rtl/ifa_cpu_core.sv:358:                10'd234: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:359:                10'd235: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:360:                10'd236: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:361:                10'd237: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:362:                10'd238: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:363:                10'd239: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:364:                10'd240: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:365:                10'd241: odu_char = 8'h92;
+rtl/ifa_cpu_core.sv:366:                10'd242: odu_char = 8'h79;
+rtl/ifa_cpu_core.sv:367:                10'd243: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:368:                10'd244: odu_char = 8'hA8;
+rtl/ifa_cpu_core.sv:369:                10'd245: odu_char = 8'h6B;
+rtl/ifa_cpu_core.sv:370:                10'd246: odu_char = 8'hC3;
+rtl/ifa_cpu_core.sv:371:                10'd247: odu_char = 8'hBA;
+rtl/ifa_cpu_core.sv:372:                10'd248: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:373:                10'd249: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:374:                10'd250: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:375:                10'd251: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:376:                10'd252: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:377:                10'd253: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:378:                10'd254: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:379:                10'd255: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:380:                default: odu_char = 8'h00;
+rtl/ifa_cpu_core.sv:385:    function automatic [5:0] odu_stream_len(input logic [7:0] value);
+rtl/ifa_cpu_core.sv:386:        odu_stream_len = odu_len(value[7:4]) + 6'd1 + odu_len(value[3:0]) + 6'd1;
+rtl/ifa_cpu_core.sv:389:    function automatic [7:0] odu_stream_byte(input logic [7:0] value, input logic [5:0] pos);
+rtl/ifa_cpu_core.sv:393:            hlen = odu_len(value[7:4]);
+rtl/ifa_cpu_core.sv:394:            llen = odu_len(value[3:0]);
+rtl/ifa_cpu_core.sv:397:                odu_stream_byte = odu_char(value[7:4], pos[3:0]);
+rtl/ifa_cpu_core.sv:399:                odu_stream_byte = " ";
+rtl/ifa_cpu_core.sv:401:                odu_stream_byte = odu_char(value[3:0], pos - hlen - 1);
+rtl/ifa_cpu_core.sv:403:                odu_stream_byte = 8'h0A;
+rtl/ifa_cpu_core.sv:407:    always_ff @(posedge clk) begin
+rtl/ifa_cpu_core.sv:426:            printing_odu <= 1'b0;
+rtl/ifa_cpu_core.sv:427:            odu_value <= 8'h00;
+rtl/ifa_cpu_core.sv:428:            odu_pos <= 6'h00;
+rtl/ifa_cpu_core.sv:432:            if (printing_odu) begin
+rtl/ifa_cpu_core.sv:434:                out_byte <= odu_stream_byte(odu_value, odu_pos);
+rtl/ifa_cpu_core.sv:435:                output_reg <= odu_stream_byte(odu_value, odu_pos);
+rtl/ifa_cpu_core.sv:438:                    output_buffer_flat[output_index*8 +: 8] <= odu_stream_byte(odu_value, odu_pos);
+rtl/ifa_cpu_core.sv:442:                if (odu_pos == odu_stream_len(odu_value) - 1) begin
+rtl/ifa_cpu_core.sv:443:                    printing_odu <= 1'b0;
+rtl/ifa_cpu_core.sv:444:                    odu_pos <= 6'h00;
+rtl/ifa_cpu_core.sv:447:                    odu_pos <= odu_pos + 1;
+rtl/ifa_cpu_core.sv:543:                    OP_PRINT_ODU: begin
+rtl/ifa_cpu_core.sv:544:                        printing_odu <= 1'b1;
+rtl/ifa_cpu_core.sv:545:                        odu_value <= data_reg;
+rtl/ifa_cpu_core.sv:546:                        odu_pos <= 6'h00;
+rtl/ifa_cpu_core.sv:561:endmodule
+rtl/uart_tx.sv:1:module uart_tx #(
+rtl/uart_tx.sv:29:    always_ff @(posedge clk) begin
+rtl/uart_tx.sv:105:endmodule
+rtl/ifa_rm4.sv:1:module ifa_rm4 (
+rtl/ifa_rm4.sv:59:endmodule
+rtl/ifa_p8.sv:1:module ifa_p8 (
+rtl/ifa_p8.sv:16:endmodule
+rtl/uart_rx.sv:1:module uart_rx #(
+rtl/uart_rx.sv:26:    always_ff @(posedge clk) begin
+rtl/uart_rx.sv:95:endmodule
+rtl/ifa_monitor_uart_top.sv:1:module ifa_monitor_uart_top #(
+rtl/ifa_monitor_uart_top.sv:17:    logic printodu_start;
+rtl/ifa_monitor_uart_top.sv:18:    logic [7:0] printodu_value;
+rtl/ifa_monitor_uart_top.sv:42:        .printodu_start(printodu_start),
+rtl/ifa_monitor_uart_top.sv:43:        .printodu_value(printodu_value)
+rtl/ifa_monitor_uart_top.sv:46:    ifa_odu_printer printer0 (
+rtl/ifa_monitor_uart_top.sv:49:        .start(printodu_start),
+rtl/ifa_monitor_uart_top.sv:50:        .value(printodu_value),
+rtl/ifa_monitor_uart_top.sv:74:endmodule
+rtl/ifa_cpu_uart_top.sv:1:module ifa_cpu_uart_top #(
+rtl/ifa_cpu_uart_top.sv:69:    always_ff @(posedge clk) begin
+rtl/ifa_cpu_uart_top.sv:89:endmodule
+rtl/ifa_p4_inv.sv:1:module ifa_p4_inv (
+rtl/ifa_p4_inv.sv:20:endmodule
+rtl/ifa_top.sv:1:module ifa_top (
+rtl/ifa_top.sv:57:endmodule
+rtl/ifa_monitor.sv:1:module ifa_monitor (
+rtl/ifa_monitor.sv:8:    output logic printodu_start,
+rtl/ifa_monitor.sv:9:    output logic [7:0] printodu_value
+rtl/ifa_monitor.sv:22:    function automatic logic match_printodu;
+rtl/ifa_monitor.sv:24:            match_printodu =
+rtl/ifa_monitor.sv:30:    always_ff @(posedge clk) begin
+rtl/ifa_monitor.sv:33:            printodu_start <= 0;
+rtl/ifa_monitor.sv:34:            printodu_value <= 0;
+rtl/ifa_monitor.sv:36:            printodu_start <= 0;
+rtl/ifa_monitor.sv:40:                    if (len >= 10 && match_printodu()) begin
+rtl/ifa_monitor.sv:41:                        printodu_value <= {hexval(buffer[len-2]), hexval(buffer[len-1])};
+rtl/ifa_monitor.sv:42:                        printodu_start <= 1'b1;
+rtl/ifa_monitor.sv:55:endmodule
+rtl_v2/ifa_transport_min_distance.sv:1:module ifa_transport_min_distance #(
+rtl_v2/ifa_transport_min_distance.sv:26:endmodule
+rtl_v2/ifa_pipelined_core.sv:1:module ifa_pipelined_core #(
+rtl_v2/ifa_pipelined_core.sv:26:    localparam OP_ODU       = 2'b10;
+rtl_v2/ifa_pipelined_core.sv:35:        rom[1] = OP_ODU;
+rtl_v2/ifa_pipelined_core.sv:40:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core.sv:62:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core.sv:83:    // P2 — ODU
+rtl_v2/ifa_pipelined_core.sv:109:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core.sv:159:    assign rmu_load_en  = (p2_instr == OP_ODU) || (p2_instr == OP_WRITE_REL);
+rtl_v2/ifa_pipelined_core.sv:177:        .odu_new_ra(p2_R_A),
+rtl_v2/ifa_pipelined_core.sv:191:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core.sv:218:    assign rsm_we = (p3_instr == OP_WRITE_REL) || (p3_instr == OP_ODU);
+rtl_v2/ifa_pipelined_core.sv:240:endmodule
+rtl_v2/ifa_add_param.sv:1:module ifa_add_param #(
+rtl_v2/ifa_add_param.sv:32:endmodule
+rtl_v2/ifa_naive_relation_mux.sv:1:module ifa_naive_relation_mux #(
+rtl_v2/ifa_naive_relation_mux.sv:24:endmodule
+rtl_v2/ifa_phi_p_inverse_reconstruct.sv:16:module ifa_phi_p_inverse_reconstruct #(
+rtl_v2/ifa_phi_p_inverse_reconstruct.sv:83:endmodule
+rtl_v2/ifa_prime_small_filter.sv:1:module ifa_prime_small_filter (
+rtl_v2/ifa_prime_small_filter.sv:24:endmodule
+rtl_v2/ifa_relation_feedback_unit.sv:1:module ifa_relation_feedback_unit #(
+rtl_v2/ifa_relation_feedback_unit.sv:31:endmodule
+rtl_v2/ifa_odu_v2_core.sv:1:module ifa_odu_v2_core #(
+rtl_v2/ifa_odu_v2_core.sv:57:    // ODU relation computation
+rtl_v2/ifa_odu_v2_core.sv:178:    always_ff @(posedge clk) begin
+rtl_v2/ifa_odu_v2_core.sv:195:endmodule
+rtl_v2/ifa_alu_4.sv:1:module ifa_alu_4 (
+rtl_v2/ifa_alu_4.sv:130:endmodule
+rtl_v2/ifa_core_with_relation_memory.sv:1:module ifa_core_with_relation_memory #(
+rtl_v2/ifa_core_with_relation_memory.sv:41:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_core_with_relation_memory.sv:51:    // ODU relation outputs
+rtl_v2/ifa_core_with_relation_memory.sv:114:        .odu_new_ra(R_A),
+rtl_v2/ifa_core_with_relation_memory.sv:157:endmodule
+rtl_v2/ifa_rmu_compression_logic_only.sv:1:module ifa_rmu_compression_logic_only #(
+rtl_v2/ifa_rmu_compression_logic_only.sv:43:endmodule
+rtl_v2/ifa_odu_v2_cpu.sv:1:module ifa_odu_v2_cpu (
+rtl_v2/ifa_odu_v2_cpu.sv:23:        $readmemh("odu_v2_program.hex", imem);
+rtl_v2/ifa_odu_v2_cpu.sv:29:    logic start_odu;
+rtl_v2/ifa_odu_v2_cpu.sv:30:    logic done_odu;
+rtl_v2/ifa_odu_v2_cpu.sv:63:        WAIT_ODU,
+rtl_v2/ifa_odu_v2_cpu.sv:69:    ifa_odu_v2_core core (
+rtl_v2/ifa_odu_v2_cpu.sv:72:        .start(start_odu),
+rtl_v2/ifa_odu_v2_cpu.sv:77:        .done(done_odu),
+rtl_v2/ifa_odu_v2_cpu.sv:159:    always_ff @(posedge clk) begin
+rtl_v2/ifa_odu_v2_cpu.sv:170:            start_odu <= 0;
+rtl_v2/ifa_odu_v2_cpu.sv:185:            start_odu <= 0;
+rtl_v2/ifa_odu_v2_cpu.sv:254:                            start_odu <= 1;
+rtl_v2/ifa_odu_v2_cpu.sv:255:                            state <= WAIT_ODU;
+rtl_v2/ifa_odu_v2_cpu.sv:260:                            start_odu <= 1;
+rtl_v2/ifa_odu_v2_cpu.sv:261:                            state <= WAIT_ODU;
+rtl_v2/ifa_odu_v2_cpu.sv:266:                            start_odu <= 1;
+rtl_v2/ifa_odu_v2_cpu.sv:267:                            state <= WAIT_ODU;
+rtl_v2/ifa_odu_v2_cpu.sv:272:                            start_odu <= 1;
+rtl_v2/ifa_odu_v2_cpu.sv:273:                            state <= WAIT_ODU;
+rtl_v2/ifa_odu_v2_cpu.sv:419:                WAIT_ODU: begin
+rtl_v2/ifa_odu_v2_cpu.sv:438:endmodule
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:1:module ifa_pipelined_core_v1_closed_loop #(
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:22:    localparam OP_ODU       = 2'b10;
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:32:        rom[1] = OP_ODU;
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:37:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:55:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:63:            // Closed loop:
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:76:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:95:    // P3 ODU
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:109:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:129:    assign rmu_load_en  = (p3_instr == OP_ODU) || (p3_instr == OP_WRITE_REL);
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:149:        .odu_new_ra(p3_R_A),
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:165:    assign rsm_we = (p3_instr == OP_ODU) || (p3_instr == OP_WRITE_REL);
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:188:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_closed_loop.sv:196:endmodule
+rtl_v2/ifa_relation_pattern_encoder.sv:1:module ifa_relation_pattern_encoder #(
+rtl_v2/ifa_relation_pattern_encoder.sv:53:        // Mode 3: Delta encoding is useful when relation delta is sparse
+rtl_v2/ifa_relation_pattern_encoder.sv:64:endmodule
+rtl_v2/ifa_phi_p_coordinate_memory.sv:13:module ifa_phi_p_coordinate_memory #(
+rtl_v2/ifa_phi_p_coordinate_memory.sv:35:    always_ff @(posedge clk) begin
+rtl_v2/ifa_phi_p_coordinate_memory.sv:47:endmodule
+rtl_v2/ifa_relation_state_memory.sv:1:module ifa_relation_state_memory #(
+rtl_v2/ifa_relation_state_memory.sv:44:    always_ff @(posedge clk) begin
+rtl_v2/ifa_relation_state_memory.sv:118:endmodule
+rtl_v2/ifa_pipelined_core_v1_debug.sv:1:module ifa_pipelined_core_v1_debug #(
+rtl_v2/ifa_pipelined_core_v1_debug.sv:36:    // P3 ODU
+rtl_v2/ifa_pipelined_core_v1_debug.sv:65:    localparam OP_ODU       = 2'b10;
+rtl_v2/ifa_pipelined_core_v1_debug.sv:75:        rom[1] = OP_ODU;
+rtl_v2/ifa_pipelined_core_v1_debug.sv:80:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_debug.sv:98:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_debug.sv:115:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_debug.sv:133:    // P3 ODU
+rtl_v2/ifa_pipelined_core_v1_debug.sv:150:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_debug.sv:170:    assign rmu_load_en  = (p3_instr == OP_ODU) || (p3_instr == OP_WRITE_REL);
+rtl_v2/ifa_pipelined_core_v1_debug.sv:190:        .odu_new_ra(p3_R_A),
+rtl_v2/ifa_pipelined_core_v1_debug.sv:206:    assign rsm_we = (p3_instr == OP_ODU) || (p3_instr == OP_WRITE_REL);
+rtl_v2/ifa_pipelined_core_v1_debug.sv:229:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_pipelined_core_v1_debug.sv:272:endmodule
+rtl_v2/ifa_call_stack.sv:1:module ifa_call_stack #(
+rtl_v2/ifa_call_stack.sv:30:always_ff @(posedge clk) begin
+rtl_v2/ifa_call_stack.sv:54:endmodule
+rtl_v2/ifa_big_prime_candidate.sv:1:module ifa_big_prime_candidate #(
+rtl_v2/ifa_big_prime_candidate.sv:35:endmodule
+rtl_v2/ifa_relation_barrel_loop.sv:1:module ifa_relation_barrel_loop #(
+rtl_v2/ifa_relation_barrel_loop.sv:8:    // Fresh relation from ODU
+rtl_v2/ifa_relation_barrel_loop.sv:9:    input  logic [WIDTH-1:0]     odu_new_ra,
+rtl_v2/ifa_relation_barrel_loop.sv:31:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_relation_barrel_loop.sv:46:            next_RA = R_D_mem ^ odu_new_ra;
+rtl_v2/ifa_relation_barrel_loop.sv:57:endmodule
+rtl_v2/ifa_compare_4.sv:1:module ifa_compare_4 (
+rtl_v2/ifa_compare_4.sv:40:endmodule
+rtl_v2/ifa_sub_4.sv:1:module ifa_sub_4 (
+rtl_v2/ifa_sub_4.sv:5:    output logic [3:0] D,        // difference / output Odu
+rtl_v2/ifa_sub_4.sv:39:endmodule
+rtl_v2/ifa_state_memory.sv:1:module ifa_state_memory #(
+rtl_v2/ifa_state_memory.sv:30:    always_ff @(posedge clk) begin
+rtl_v2/ifa_state_memory.sv:46:endmodule
+rtl_v2/ifa_prime_relation_engine.sv:1:module ifa_prime_relation_engine #(
+rtl_v2/ifa_prime_relation_engine.sv:26:endmodule
+rtl_v2/ifa_relation_ram.sv:1:module ifa_relation_ram #(
+rtl_v2/ifa_relation_ram.sv:29:    always_ff @(posedge clk) begin
+rtl_v2/ifa_relation_ram.sv:43:endmodule
+rtl_v2/ifa_relation_compressor.sv:1:module ifa_relation_compressor #(
+rtl_v2/ifa_relation_compressor.sv:41:endmodule
+rtl_v2/ifa_relation_memory_unit.sv:1:module ifa_relation_memory_unit #(
+rtl_v2/ifa_relation_memory_unit.sv:15:    input  logic [WIDTH-1:0] odu_new_ra,
+rtl_v2/ifa_relation_memory_unit.sv:45:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/ifa_relation_memory_unit.sv:61:            R_A_mem <= R_D_mem ^ odu_new_ra;
+rtl_v2/ifa_relation_memory_unit.sv:68:endmodule
+rtl_v2/ifa_relation_4.sv:1:module ifa_relation_4 (
+rtl_v2/ifa_relation_4.sv:22:endmodule
+rtl_v2/ifa_relation_execute.sv:1:module ifa_relation_execute (
+rtl_v2/ifa_relation_execute.sv:27:endmodule
+rtl_v2/cpu_relation_sequential_ref.sv:1:module cpu_relation_sequential_ref #(
+rtl_v2/cpu_relation_sequential_ref.sv:50:    always_ff @(posedge clk or negedge rst_n) begin
+rtl_v2/cpu_relation_sequential_ref.sv:109:endmodule
+rtl_v2/ifa_prime_relation_signature.sv:1:module ifa_prime_relation_signature (
+rtl_v2/ifa_prime_relation_signature.sv:26:endmodule
+rtl_v2/ifa_add_4.sv:1:module ifa_add_4 (
+rtl_v2/ifa_add_4.sv:5:    output logic [3:0] C,      // result / output Odu
+rtl_v2/ifa_add_4.sv:30:endmodule
+rtl_v2/ifa_relation_frame_stack.sv:1:module ifa_relation_frame_stack #(
+rtl_v2/ifa_relation_frame_stack.sv:46:    always_ff @(posedge clk) begin
+rtl_v2/ifa_relation_frame_stack.sv:72:endmodule
+rtl_v3/cpu_ref_v3.sv.bak:1:module cpu_ref_v3;
+rtl_v3/cpu_ref_v3.sv.bak:19:        $readmemh("odu_v2_program.hex", imem);
+rtl_v3/cpu_ref_v3.sv.bak:27:            @(posedge clk);
+rtl_v3/cpu_ref_v3.sv.bak:81:endmodule
+rtl_v3/ifa_rau.sv:1:module ifa_rau #(
+rtl_v3/ifa_rau.sv:66:endmodule
+rtl_v3/ifa_rpc.sv:1:module ifa_rpc #(
+rtl_v3/ifa_rpc.sv:33:                                // once you've confirmed no other module
+rtl_v3/ifa_rpc.sv:46:endmodule
+rtl_v3/cpu_ref_v3.sv:1:module cpu_ref_v3;
+rtl_v3/cpu_ref_v3.sv:21:        $readmemh("odu_v2_program.hex", imem);
+rtl_v3/cpu_ref_v3.sv:29:            @(posedge clk);
+rtl_v3/cpu_ref_v3.sv:138:endmodule
+rtl/v4/ifa_v4_yara_system_top.sv:15:// Those remain verified standalone blocks and will be connected next.
+rtl/v4/ifa_v4_yara_system_top.sv:18:module ifa_v4_yara_system_top #(
+rtl/v4/ifa_v4_yara_system_top.sv:239:endmodule
+rtl/v4/ifa_v4_end_to_end_core.sv:7:module ifa_v4_end_to_end_core #(
+rtl/v4/ifa_v4_end_to_end_core.sv:82:endmodule
+rtl/v4/ifa_relation_memory_controller_admin.sv:12:module ifa_relation_memory_controller_admin #(
+rtl/v4/ifa_relation_memory_controller_admin.sv:110:    always_ff @(posedge clk) begin
+rtl/v4/ifa_relation_memory_controller_admin.sv:209:endmodule
+rtl/v4/ifa_v4_onile_delegation_top.sv:15:module ifa_v4_onile_delegation_top #(
+rtl/v4/ifa_v4_onile_delegation_top.sv:151:endmodule
+rtl/v4/ifa_rpc_stub.sv:9:// Produces Relation Frame:
+rtl/v4/ifa_rpc_stub.sv:19:module ifa_rpc_stub #(
+rtl/v4/ifa_rpc_stub.sv:43:endmodule
+rtl/v4/ifa_yara_v4_core.sv:18:module ifa_yara_v4_core #(
+rtl/v4/ifa_yara_v4_core.sv:218:endmodule
+rtl/v4/ifa_relation_memory_controller.sv:14:module ifa_relation_memory_controller #(
+rtl/v4/ifa_relation_memory_controller.sv:90:    always_ff @(posedge clk) begin
+rtl/v4/ifa_relation_memory_controller.sv:169:endmodule
+rtl/v4/ifa_v4_core.sv:19:module ifa_v4_core #(
+rtl/v4/ifa_v4_core.sv:79:endmodule
+rtl/v4/ifa_general_memory_guard.sv:20:module ifa_general_memory_guard #(
+rtl/v4/ifa_general_memory_guard.sv:115:    always_ff @(posedge clk) begin
+rtl/v4/ifa_general_memory_guard.sv:196:endmodule
+rtl/v4/ifa_yara_manager.sv:17:module ifa_yara_manager #(
+rtl/v4/ifa_yara_manager.sv:53:    always_ff @(posedge clk) begin
+rtl/v4/ifa_yara_manager.sv:161:endmodule
+rtl/v4/ifa_yara_frame_share_core.sv:9:module ifa_yara_frame_share_core #(
+rtl/v4/ifa_yara_frame_share_core.sv:246:endmodule
+rtl/v4/ifa_relation_frame_ram.sv:12:module ifa_relation_frame_ram #(
+rtl/v4/ifa_relation_frame_ram.sv:45:    always_ff @(posedge clk) begin
+rtl/v4/ifa_relation_frame_ram.sv:71:endmodule
+rtl/v4/ifa_yara_context_bank.sv:19:module ifa_yara_context_bank #(
+rtl/v4/ifa_yara_context_bank.sv:62:    always_ff @(posedge clk) begin
+rtl/v4/ifa_yara_context_bank.sv:104:endmodule
+rtl/v4/ifa_relation_cam.sv:15:module ifa_relation_cam #(
+rtl/v4/ifa_relation_cam.sv:49:    always_ff @(posedge clk) begin
+rtl/v4/ifa_relation_cam.sv:114:endmodule
+rtl/v4/ifa_v4_yara_secure_system_top.sv:14:module ifa_v4_yara_secure_system_top #(
+rtl/v4/ifa_v4_yara_secure_system_top.sv:282:endmodule
+rtl/v4/ifa_onile_supervisor.sv:19:module ifa_onile_supervisor #(
+rtl/v4/ifa_onile_supervisor.sv:69:    always_ff @(posedge clk) begin
+rtl/v4/ifa_onile_supervisor.sv:148:endmodule
+
+============================================================
+BABALAWO / SECURITY
+============================================================
+monitor/ifa_monitor.py:43:globals()["BABALAWO_MODE"] = False
+monitor/ifa_monitor.py:62:YARA OGBE
+monitor/ifa_monitor.py:65:YARA OGBE
+monitor/ifa_monitor.py:85:BABALAWO        show mode
+monitor/ifa_monitor.py:86:BABALAWO TAN    trace/debug ON
+monitor/ifa_monitor.py:87:BABALAWO PA     trace/debug OFF
+monitor/ifa_monitor.py:295:    if BABALAWO_MODE:
+monitor/ifa_monitor.py:451:ODU_YARA = {
+monitor/ifa_monitor.py:643:def oro_yara_mode(name):
+monitor/ifa_monitor.py:645:    if key not in ODU_YARA:
+monitor/ifa_monitor.py:647:        print("Lo: YARA OGBE, YARA IWORI, YARA ODI...")
+monitor/ifa_monitor.py:650:    addr = ODU_YARA[key]
+monitor/ifa_monitor.py:672:            in ("YARA", "YÀRÁ", "STATION", "STRAION")
+monitor/ifa_monitor.py:676:            if new_key not in ODU_YARA:
+monitor/ifa_monitor.py:681:            addr = ODU_YARA[key]
+monitor/ifa_monitor.py:707:    if u in ("TAN", "BABALAWO TAN", "BABALÁWO TAN"):
+monitor/ifa_monitor.py:708:        globals()["BABALAWO_MODE"] = True
+monitor/ifa_monitor.py:713:    if u in ("PA", "BABALAWO PA", "BABALÁWO PA"):
+monitor/ifa_monitor.py:714:        globals()["BABALAWO_MODE"] = False
+monitor/ifa_monitor.py:719:    if u in ("BABALAWO", "BABALÁWO"):
+monitor/ifa_monitor.py:759:        globals()["BABALAWO_MODE"] = True
+monitor/ifa_monitor.py:765:        globals()["BABALAWO_MODE"] = False
+monitor/ifa_monitor.py:824:        u.startswith("YARA ")
+monitor/ifa_monitor.py:831:            oro_yara_mode(args[1])
+language_v3/spec/keywords.md:76:| Odù execution room | YÀRÁ | YARA | STATION |
+language_v3/spec/keywords.md:80:    YARA OGBE
+language_v3/spec/ontology.md:67:contain relation memory, security context, frame state, and reversible state.
+language_v3/spec/ontology.md:71:    YARA OGBE -> address 0x00
+language_v3/spec/dictionary.py:2:    "YARA": "YARA",
+language_v3/spec/dictionary.py:3:    "YÀRÁ": "YARA",
+language_v3/spec/dictionary.py:4:    "STATION": "YARA",
+language_v3/spec/keywords.py:2:    "YARA": "YARA",
+language_v3/spec/keywords.py:3:    "YÀRÁ": "YARA",
+language_v3/spec/keywords.py:4:    "STATION": "YARA",
+tools/ifa:43:    print(f"R_0 = {r0:04b} Shared-zero / Toggle")
+rtl/v4/ifa_v4_yara_system_top.sv:18:module ifa_v4_yara_system_top #(
+rtl/v4/ifa_v4_yara_system_top.sv:22:    parameter integer YARA_COUNT = 2,
+rtl/v4/ifa_v4_yara_system_top.sv:23:    parameter integer YARA_W =
+rtl/v4/ifa_v4_yara_system_top.sv:24:        (YARA_COUNT <= 1) ? 1 : $clog2(YARA_COUNT)
+rtl/v4/ifa_v4_yara_system_top.sv:33:    input  logic                      babalawo_mode,
+rtl/v4/ifa_v4_yara_system_top.sv:41:    input  logic [YARA_W-1:0]         command_yara,
+rtl/v4/ifa_v4_yara_system_top.sv:68:    output logic [YARA_W-1:0]         active_yara,
+rtl/v4/ifa_v4_yara_system_top.sv:72:    output logic [YARA_COUNT-1:0]     yara_valid,
+rtl/v4/ifa_v4_yara_system_top.sv:73:    output logic [YARA_COUNT-1:0]     yara_running,
+rtl/v4/ifa_v4_yara_system_top.sv:111:    output logic [31:0]               yara0_hit_count,
+rtl/v4/ifa_v4_yara_system_top.sv:112:    output logic [31:0]               yara0_miss_count,
+rtl/v4/ifa_v4_yara_system_top.sv:113:    output logic [31:0]               yara1_hit_count,
+rtl/v4/ifa_v4_yara_system_top.sv:114:    output logic [31:0]               yara1_miss_count
+rtl/v4/ifa_v4_yara_system_top.sv:117:    logic [YARA_COUNT-1:0] clear_yara;
+rtl/v4/ifa_v4_yara_system_top.sv:125:    ifa_yara_manager #(
+rtl/v4/ifa_v4_yara_system_top.sv:126:        .YARA_COUNT(YARA_COUNT)
+rtl/v4/ifa_v4_yara_system_top.sv:131:        .babalawo_mode(babalawo_mode),
+rtl/v4/ifa_v4_yara_system_top.sv:139:        .command_yara(command_yara),
+rtl/v4/ifa_v4_yara_system_top.sv:141:        .active_yara(active_yara),
+rtl/v4/ifa_v4_yara_system_top.sv:145:        .yara_valid(yara_valid),
+rtl/v4/ifa_v4_yara_system_top.sv:146:        .yara_running(yara_running),
+rtl/v4/ifa_v4_yara_system_top.sv:148:        .clear_yara(clear_yara),
+rtl/v4/ifa_v4_yara_system_top.sv:161:    ifa_yara_context_bank #(
+rtl/v4/ifa_v4_yara_system_top.sv:164:        .YARA_COUNT(YARA_COUNT)
+rtl/v4/ifa_v4_yara_system_top.sv:169:        .active_yara(active_yara),
+rtl/v4/ifa_v4_yara_system_top.sv:180:        .clear_yara(clear_yara),
+rtl/v4/ifa_v4_yara_system_top.sv:203:    ifa_yara_v4_core #(
+rtl/v4/ifa_v4_yara_system_top.sv:206:        .YARA_COUNT(YARA_COUNT)
+rtl/v4/ifa_v4_yara_system_top.sv:211:        .active_yara(active_yara),
+rtl/v4/ifa_v4_yara_system_top.sv:217:        .clear_yara(clear_yara),
+rtl/v4/ifa_v4_yara_system_top.sv:233:        .yara0_hit_count(yara0_hit_count),
+rtl/v4/ifa_v4_yara_system_top.sv:234:        .yara0_miss_count(yara0_miss_count),
+rtl/v4/ifa_v4_yara_system_top.sv:235:        .yara1_hit_count(yara1_hit_count),
+rtl/v4/ifa_v4_yara_system_top.sv:236:        .yara1_miss_count(yara1_miss_count)
+rtl/v4/ifa_v4_onile_delegation_top.sv:6://   - Onílẹ̀ permission supervisor
+rtl/v4/ifa_v4_onile_delegation_top.sv:12://   AND explicit directional permission.
+rtl/v4/ifa_v4_onile_delegation_top.sv:15:module ifa_v4_onile_delegation_top #(
+rtl/v4/ifa_v4_onile_delegation_top.sv:23:    input  logic                     active_yara,
+rtl/v4/ifa_v4_onile_delegation_top.sv:28:    // Privilege
+rtl/v4/ifa_v4_onile_delegation_top.sv:29:    input  logic                     babalawo_mode,
+rtl/v4/ifa_v4_onile_delegation_top.sv:31:    // Onílẹ̀ permission administration
+rtl/v4/ifa_v4_onile_delegation_top.sv:32:    input  logic                     grant_valid,
+rtl/v4/ifa_v4_onile_delegation_top.sv:33:    input  logic                     revoke_valid,
+rtl/v4/ifa_v4_onile_delegation_top.sv:34:    input  logic                     admin_source_yara,
+rtl/v4/ifa_v4_onile_delegation_top.sv:35:    input  logic                     admin_destination_yara,
+rtl/v4/ifa_v4_onile_delegation_top.sv:38:    input  logic                     share_commit,
+rtl/v4/ifa_v4_onile_delegation_top.sv:39:    input  logic                     share_source_yara,
+rtl/v4/ifa_v4_onile_delegation_top.sv:40:    input  logic                     share_destination_yara,
+rtl/v4/ifa_v4_onile_delegation_top.sv:53:    output logic                     share_allowed,
+rtl/v4/ifa_v4_onile_delegation_top.sv:54:    output logic                     share_denied,
+rtl/v4/ifa_v4_onile_delegation_top.sv:55:    output logic                     share_done,
+rtl/v4/ifa_v4_onile_delegation_top.sv:56:    output logic                     explicit_permission,
+rtl/v4/ifa_v4_onile_delegation_top.sv:59:    output logic [31:0]              allowed_share_count,
+rtl/v4/ifa_v4_onile_delegation_top.sv:60:    output logic [31:0]              denied_share_count,
+rtl/v4/ifa_v4_onile_delegation_top.sv:62:    output logic [31:0]              yara0_hits,
+rtl/v4/ifa_v4_onile_delegation_top.sv:63:    output logic [31:0]              yara0_misses,
+rtl/v4/ifa_v4_onile_delegation_top.sv:64:    output logic [31:0]              yara0_imports,
+rtl/v4/ifa_v4_onile_delegation_top.sv:66:    output logic [31:0]              yara1_hits,
+rtl/v4/ifa_v4_onile_delegation_top.sv:67:    output logic [31:0]              yara1_misses,
+rtl/v4/ifa_v4_onile_delegation_top.sv:68:    output logic [31:0]              yara1_imports
+rtl/v4/ifa_v4_onile_delegation_top.sv:71:    logic authorized_share_commit;
+rtl/v4/ifa_v4_onile_delegation_top.sv:72:    logic internal_share_denied;
+rtl/v4/ifa_v4_onile_delegation_top.sv:75:    // Onílẹ̀ permission decision
+rtl/v4/ifa_v4_onile_delegation_top.sv:78:    ifa_onile_supervisor #(
+rtl/v4/ifa_v4_onile_delegation_top.sv:79:        .YARA_COUNT(2)
+rtl/v4/ifa_v4_onile_delegation_top.sv:80:    ) onile (
+rtl/v4/ifa_v4_onile_delegation_top.sv:84:        .babalawo_mode(babalawo_mode),
+rtl/v4/ifa_v4_onile_delegation_top.sv:86:        .grant_valid(grant_valid),
+rtl/v4/ifa_v4_onile_delegation_top.sv:87:        .revoke_valid(revoke_valid),
+rtl/v4/ifa_v4_onile_delegation_top.sv:89:        .admin_source_yara(admin_source_yara),
+rtl/v4/ifa_v4_onile_delegation_top.sv:90:        .admin_destination_yara(admin_destination_yara),
+rtl/v4/ifa_v4_onile_delegation_top.sv:92:        .share_request(share_commit),
+rtl/v4/ifa_v4_onile_delegation_top.sv:93:        .request_source_yara(share_source_yara),
+rtl/v4/ifa_v4_onile_delegation_top.sv:94:        .request_destination_yara(share_destination_yara),
+rtl/v4/ifa_v4_onile_delegation_top.sv:96:        .share_allowed(share_allowed),
+rtl/v4/ifa_v4_onile_delegation_top.sv:97:        .share_denied(share_denied),
+rtl/v4/ifa_v4_onile_delegation_top.sv:99:        .explicit_permission(explicit_permission),
+rtl/v4/ifa_v4_onile_delegation_top.sv:101:        .allowed_count(allowed_share_count),
+rtl/v4/ifa_v4_onile_delegation_top.sv:102:        .denied_count(denied_share_count)
+rtl/v4/ifa_v4_onile_delegation_top.sv:105:    assign authorized_share_commit =
+rtl/v4/ifa_v4_onile_delegation_top.sv:106:        share_commit && share_allowed;
+rtl/v4/ifa_v4_onile_delegation_top.sv:112:    ifa_yara_frame_share_core #(
+rtl/v4/ifa_v4_onile_delegation_top.sv:119:        .active_yara(active_yara),
+rtl/v4/ifa_v4_onile_delegation_top.sv:125:        .share_commit(authorized_share_commit),
+rtl/v4/ifa_v4_onile_delegation_top.sv:126:        .share_source_yara(share_source_yara),
+rtl/v4/ifa_v4_onile_delegation_top.sv:127:        .share_destination_yara(share_destination_yara),
+rtl/v4/ifa_v4_onile_delegation_top.sv:128:        .share_authorized(share_allowed),
+rtl/v4/ifa_v4_onile_delegation_top.sv:133:        .share_done(share_done),
+rtl/v4/ifa_v4_onile_delegation_top.sv:134:        .share_denied(internal_share_denied),
+rtl/v4/ifa_v4_onile_delegation_top.sv:142:        .yara0_hits(yara0_hits),
+rtl/v4/ifa_v4_onile_delegation_top.sv:143:        .yara0_misses(yara0_misses),
+rtl/v4/ifa_v4_onile_delegation_top.sv:144:        .yara0_imports(yara0_imports),
+rtl/v4/ifa_v4_onile_delegation_top.sv:146:        .yara1_hits(yara1_hits),
+rtl/v4/ifa_v4_onile_delegation_top.sv:147:        .yara1_misses(yara1_misses),
+rtl/v4/ifa_v4_onile_delegation_top.sv:148:        .yara1_imports(yara1_imports)
+rtl/v4/ifa_yara_v4_core.sv:14:// YARA_ID is NOT part of the relation key.
+rtl/v4/ifa_yara_v4_core.sv:18:module ifa_yara_v4_core #(
+rtl/v4/ifa_yara_v4_core.sv:21:    parameter YARA_COUNT = 2
+rtl/v4/ifa_yara_v4_core.sv:27:    input  logic [$clog2(YARA_COUNT)-1:0] active_yara,
+rtl/v4/ifa_yara_v4_core.sv:34:    // Per-room security clear
+rtl/v4/ifa_yara_v4_core.sv:35:    input  logic [YARA_COUNT-1:0]         clear_yara,
+rtl/v4/ifa_yara_v4_core.sv:53:    output logic [31:0]                  yara0_hit_count,
+rtl/v4/ifa_yara_v4_core.sv:54:    output logic [31:0]                  yara0_miss_count,
+rtl/v4/ifa_yara_v4_core.sv:55:    output logic [31:0]                  yara1_hit_count,
+rtl/v4/ifa_yara_v4_core.sv:56:    output logic [31:0]                  yara1_miss_count
+rtl/v4/ifa_yara_v4_core.sv:63:    logic yara0_rst;
+rtl/v4/ifa_yara_v4_core.sv:64:    logic yara1_rst;
+rtl/v4/ifa_yara_v4_core.sv:66:    assign yara0_rst = rst | clear_yara[0];
+rtl/v4/ifa_yara_v4_core.sv:67:    assign yara1_rst = rst | clear_yara[1];
+rtl/v4/ifa_yara_v4_core.sv:70:    logic yara0_valid;
+rtl/v4/ifa_yara_v4_core.sv:71:    logic yara1_valid;
+rtl/v4/ifa_yara_v4_core.sv:73:    assign yara0_valid = in_valid && (active_yara == 0);
+rtl/v4/ifa_yara_v4_core.sv:74:    assign yara1_valid = in_valid && (active_yara == 1);
+rtl/v4/ifa_yara_v4_core.sv:80:    logic yara0_hit;
+rtl/v4/ifa_yara_v4_core.sv:81:    logic yara0_miss;
+rtl/v4/ifa_yara_v4_core.sv:83:    logic [WIDTH-1:0] yara0_y;
+rtl/v4/ifa_yara_v4_core.sv:84:    logic [WIDTH-1:0] yara0_ra;
+rtl/v4/ifa_yara_v4_core.sv:85:    logic [WIDTH-1:0] yara0_rd;
+rtl/v4/ifa_yara_v4_core.sv:86:    logic [WIDTH-1:0] yara0_r0;
+rtl/v4/ifa_yara_v4_core.sv:87:    logic [WIDTH-1:0] yara0_t;
+rtl/v4/ifa_yara_v4_core.sv:89:    logic [31:0] yara0_store_count;
+rtl/v4/ifa_yara_v4_core.sv:90:    logic [31:0] yara0_evict_count;
+rtl/v4/ifa_yara_v4_core.sv:95:    ) yara0 (
+rtl/v4/ifa_yara_v4_core.sv:97:        .rst(yara0_rst),
+rtl/v4/ifa_yara_v4_core.sv:99:        .in_valid(yara0_valid),
+rtl/v4/ifa_yara_v4_core.sv:103:        .rmu_hit(yara0_hit),
+rtl/v4/ifa_yara_v4_core.sv:104:        .rmu_miss(yara0_miss),
+rtl/v4/ifa_yara_v4_core.sv:106:        .out_y(yara0_y),
+rtl/v4/ifa_yara_v4_core.sv:107:        .out_ra(yara0_ra),
+rtl/v4/ifa_yara_v4_core.sv:108:        .out_rd(yara0_rd),
+rtl/v4/ifa_yara_v4_core.sv:109:        .out_r0(yara0_r0),
+rtl/v4/ifa_yara_v4_core.sv:110:        .out_t(yara0_t),
+rtl/v4/ifa_yara_v4_core.sv:112:        .hit_count(yara0_hit_count),
+rtl/v4/ifa_yara_v4_core.sv:113:        .miss_count(yara0_miss_count),
+rtl/v4/ifa_yara_v4_core.sv:114:        .store_count(yara0_store_count),
+rtl/v4/ifa_yara_v4_core.sv:115:        .evict_count(yara0_evict_count)
+rtl/v4/ifa_yara_v4_core.sv:122:    logic yara1_hit;
+rtl/v4/ifa_yara_v4_core.sv:123:    logic yara1_miss;
+rtl/v4/ifa_yara_v4_core.sv:125:    logic [WIDTH-1:0] yara1_y;
+rtl/v4/ifa_yara_v4_core.sv:126:    logic [WIDTH-1:0] yara1_ra;
+rtl/v4/ifa_yara_v4_core.sv:127:    logic [WIDTH-1:0] yara1_rd;
+rtl/v4/ifa_yara_v4_core.sv:128:    logic [WIDTH-1:0] yara1_r0;
+rtl/v4/ifa_yara_v4_core.sv:129:    logic [WIDTH-1:0] yara1_t;
+rtl/v4/ifa_yara_v4_core.sv:131:    logic [31:0] yara1_store_count;
+rtl/v4/ifa_yara_v4_core.sv:132:    logic [31:0] yara1_evict_count;
+rtl/v4/ifa_yara_v4_core.sv:137:    ) yara1 (
+rtl/v4/ifa_yara_v4_core.sv:139:        .rst(yara1_rst),
+rtl/v4/ifa_yara_v4_core.sv:141:        .in_valid(yara1_valid),
+rtl/v4/ifa_yara_v4_core.sv:145:        .rmu_hit(yara1_hit),
+rtl/v4/ifa_yara_v4_core.sv:146:        .rmu_miss(yara1_miss),
+rtl/v4/ifa_yara_v4_core.sv:148:        .out_y(yara1_y),
+rtl/v4/ifa_yara_v4_core.sv:149:        .out_ra(yara1_ra),
+rtl/v4/ifa_yara_v4_core.sv:150:        .out_rd(yara1_rd),
+rtl/v4/ifa_yara_v4_core.sv:151:        .out_r0(yara1_r0),
+rtl/v4/ifa_yara_v4_core.sv:152:        .out_t(yara1_t),
+rtl/v4/ifa_yara_v4_core.sv:154:        .hit_count(yara1_hit_count),
+rtl/v4/ifa_yara_v4_core.sv:155:        .miss_count(yara1_miss_count),
+rtl/v4/ifa_yara_v4_core.sv:156:        .store_count(yara1_store_count),
+rtl/v4/ifa_yara_v4_core.sv:157:        .evict_count(yara1_evict_count)
+rtl/v4/ifa_yara_v4_core.sv:179:        case (active_yara)
+rtl/v4/ifa_yara_v4_core.sv:181:                rmu_hit     = yara0_hit;
+rtl/v4/ifa_yara_v4_core.sv:182:                rmu_miss    = yara0_miss;
+rtl/v4/ifa_yara_v4_core.sv:184:                out_y       = yara0_y;
+rtl/v4/ifa_yara_v4_core.sv:185:                out_ra      = yara0_ra;
+rtl/v4/ifa_yara_v4_core.sv:186:                out_rd      = yara0_rd;
+rtl/v4/ifa_yara_v4_core.sv:187:                out_r0      = yara0_r0;
+rtl/v4/ifa_yara_v4_core.sv:188:                out_t       = yara0_t;
+rtl/v4/ifa_yara_v4_core.sv:190:                hit_count   = yara0_hit_count;
+rtl/v4/ifa_yara_v4_core.sv:191:                miss_count  = yara0_miss_count;
+rtl/v4/ifa_yara_v4_core.sv:192:                store_count = yara0_store_count;
+rtl/v4/ifa_yara_v4_core.sv:193:                evict_count = yara0_evict_count;
+rtl/v4/ifa_yara_v4_core.sv:197:                rmu_hit     = yara1_hit;
+rtl/v4/ifa_yara_v4_core.sv:198:                rmu_miss    = yara1_miss;
+rtl/v4/ifa_yara_v4_core.sv:200:                out_y       = yara1_y;
+rtl/v4/ifa_yara_v4_core.sv:201:                out_ra      = yara1_ra;
+rtl/v4/ifa_yara_v4_core.sv:202:                out_rd      = yara1_rd;
+rtl/v4/ifa_yara_v4_core.sv:203:                out_r0      = yara1_r0;
+rtl/v4/ifa_yara_v4_core.sv:204:                out_t       = yara1_t;
+rtl/v4/ifa_yara_v4_core.sv:206:                hit_count   = yara1_hit_count;
+rtl/v4/ifa_yara_v4_core.sv:207:                miss_count  = yara1_miss_count;
+rtl/v4/ifa_yara_v4_core.sv:208:                store_count = yara1_store_count;
+rtl/v4/ifa_yara_v4_core.sv:209:                evict_count = yara1_evict_count;
+rtl/v4/ifa_general_memory_guard.sv:3:// Shared General Memory Guard
+rtl/v4/ifa_general_memory_guard.sv:5:// General memory is shared physically, but every address has:
+rtl/v4/ifa_general_memory_guard.sv:8://   - per-YÀRÁ read permission
+rtl/v4/ifa_general_memory_guard.sv:9://   - per-YÀRÁ write permission
+rtl/v4/ifa_general_memory_guard.sv:13://   1. First write to an unowned address claims it for active_yara.
+rtl/v4/ifa_general_memory_guard.sv:15://   3. Another YÀRÁ requires explicit permission.
+rtl/v4/ifa_general_memory_guard.sv:16://   4. Only Babaláwo mode may grant/revoke permissions.
+rtl/v4/ifa_general_memory_guard.sv:17://   5. Once granted, normal-mode execution may use the permission.
+rtl/v4/ifa_general_memory_guard.sv:23:    parameter integer YARA_COUNT = 2,
+rtl/v4/ifa_general_memory_guard.sv:24:    parameter integer YARA_W =
+rtl/v4/ifa_general_memory_guard.sv:25:        (YARA_COUNT <= 1) ? 1 : $clog2(YARA_COUNT),
+rtl/v4/ifa_general_memory_guard.sv:32:    input  logic [YARA_W-1:0]        active_yara,
+rtl/v4/ifa_general_memory_guard.sv:43:    // Privileged Onílẹ̀ administration
+rtl/v4/ifa_general_memory_guard.sv:44:    input  logic                     babalawo_mode,
+rtl/v4/ifa_general_memory_guard.sv:46:    input  logic                     grant_read_valid,
+rtl/v4/ifa_general_memory_guard.sv:47:    input  logic                     grant_write_valid,
+rtl/v4/ifa_general_memory_guard.sv:48:    input  logic                     revoke_read_valid,
+rtl/v4/ifa_general_memory_guard.sv:49:    input  logic                     revoke_write_valid,
+rtl/v4/ifa_general_memory_guard.sv:52:    input  logic [YARA_W-1:0]        admin_yara,
+rtl/v4/ifa_general_memory_guard.sv:56:    output logic [YARA_W-1:0]        address_owner,
+rtl/v4/ifa_general_memory_guard.sv:57:    output logic                     active_read_permission,
+rtl/v4/ifa_general_memory_guard.sv:58:    output logic                     active_write_permission,
+rtl/v4/ifa_general_memory_guard.sv:68:    logic [YARA_W-1:0] owner [0:DEPTH-1];
+rtl/v4/ifa_general_memory_guard.sv:70:    logic read_permission  [0:DEPTH-1][0:YARA_COUNT-1];
+rtl/v4/ifa_general_memory_guard.sv:71:    logic write_permission [0:DEPTH-1][0:YARA_COUNT-1];
+rtl/v4/ifa_general_memory_guard.sv:88:        active_read_permission =
+rtl/v4/ifa_general_memory_guard.sv:89:            read_permission[mem_address][active_yara];
+rtl/v4/ifa_general_memory_guard.sv:91:        active_write_permission =
+rtl/v4/ifa_general_memory_guard.sv:92:            write_permission[mem_address][active_yara];
+rtl/v4/ifa_general_memory_guard.sv:96:            (owner[mem_address] == active_yara);
+rtl/v4/ifa_general_memory_guard.sv:102:            read_permission[mem_address][active_yara];
+rtl/v4/ifa_general_memory_guard.sv:108:            write_permission[mem_address][active_yara];
+rtl/v4/ifa_general_memory_guard.sv:112:    // Memory, ownership and permission state
+rtl/v4/ifa_general_memory_guard.sv:130:                for (j = 0; j < YARA_COUNT; j = j + 1) begin
+rtl/v4/ifa_general_memory_guard.sv:131:                    read_permission[i][j]  <= 1'b0;
+rtl/v4/ifa_general_memory_guard.sv:132:                    write_permission[i][j] <= 1'b0;
+rtl/v4/ifa_general_memory_guard.sv:140:            // Onílẹ̀ permission administration
+rtl/v4/ifa_general_memory_guard.sv:143:            if (babalawo_mode && grant_read_valid) begin
+rtl/v4/ifa_general_memory_guard.sv:144:                read_permission[admin_address][admin_yara] <= 1'b1;
+rtl/v4/ifa_general_memory_guard.sv:147:            if (babalawo_mode && grant_write_valid) begin
+rtl/v4/ifa_general_memory_guard.sv:148:                write_permission[admin_address][admin_yara] <= 1'b1;
+rtl/v4/ifa_general_memory_guard.sv:151:            if (babalawo_mode && revoke_read_valid) begin
+rtl/v4/ifa_general_memory_guard.sv:152:                read_permission[admin_address][admin_yara] <= 1'b0;
+rtl/v4/ifa_general_memory_guard.sv:155:            if (babalawo_mode && revoke_write_valid) begin
+rtl/v4/ifa_general_memory_guard.sv:156:                write_permission[admin_address][admin_yara] <= 1'b0;
+rtl/v4/ifa_general_memory_guard.sv:169:                            owner[mem_address]       <= active_yara;
+rtl/v4/ifa_yara_manager.sv:7:// Operations require Babaláwo privilege:
+rtl/v4/ifa_yara_manager.sv:17:module ifa_yara_manager #(
+rtl/v4/ifa_yara_manager.sv:18:    parameter integer YARA_COUNT = 2,
+rtl/v4/ifa_yara_manager.sv:19:    parameter integer YARA_W =
+rtl/v4/ifa_yara_manager.sv:20:        (YARA_COUNT <= 1) ? 1 : $clog2(YARA_COUNT)
+rtl/v4/ifa_yara_manager.sv:25:    input  logic                      babalawo_mode,
+rtl/v4/ifa_yara_manager.sv:33:    input  logic [YARA_W-1:0]         command_yara,
+rtl/v4/ifa_yara_manager.sv:35:    output logic [YARA_W-1:0]         active_yara,
+rtl/v4/ifa_yara_manager.sv:39:    output logic [YARA_COUNT-1:0]      yara_valid,
+rtl/v4/ifa_yara_manager.sv:40:    output logic [YARA_COUNT-1:0]      yara_running,
+rtl/v4/ifa_yara_manager.sv:42:    output logic [YARA_COUNT-1:0]      clear_yara,
+rtl/v4/ifa_yara_manager.sv:55:            active_yara    <= '0;
+rtl/v4/ifa_yara_manager.sv:56:            yara_valid     <= '0;
+rtl/v4/ifa_yara_manager.sv:57:            yara_running   <= '0;
+rtl/v4/ifa_yara_manager.sv:58:            clear_yara     <= '0;
+rtl/v4/ifa_yara_manager.sv:67:            clear_yara      <= '0;
+rtl/v4/ifa_yara_manager.sv:75:                if (babalawo_mode) begin
+rtl/v4/ifa_yara_manager.sv:76:                    yara_valid[command_yara]   <= 1'b1;
+rtl/v4/ifa_yara_manager.sv:77:                    yara_running[command_yara] <= 1'b1;
+rtl/v4/ifa_yara_manager.sv:78:                    clear_yara[command_yara]   <= 1'b1;
+rtl/v4/ifa_yara_manager.sv:91:                    babalawo_mode &&
+rtl/v4/ifa_yara_manager.sv:92:                    yara_valid[command_yara] &&
+rtl/v4/ifa_yara_manager.sv:93:                    yara_running[command_yara]
+rtl/v4/ifa_yara_manager.sv:95:                    active_yara     <= command_yara;
+rtl/v4/ifa_yara_manager.sv:109:                    babalawo_mode &&
+rtl/v4/ifa_yara_manager.sv:110:                    yara_valid[command_yara]
+rtl/v4/ifa_yara_manager.sv:112:                    yara_running[command_yara] <= 1'b0;
+rtl/v4/ifa_yara_manager.sv:125:                    babalawo_mode &&
+rtl/v4/ifa_yara_manager.sv:126:                    yara_valid[command_yara]
+rtl/v4/ifa_yara_manager.sv:128:                    yara_running[command_yara] <= 1'b1;
+rtl/v4/ifa_yara_manager.sv:141:                    babalawo_mode &&
+rtl/v4/ifa_yara_manager.sv:142:                    yara_valid[command_yara]
+rtl/v4/ifa_yara_manager.sv:144:                    yara_valid[command_yara]   <= 1'b0;
+rtl/v4/ifa_yara_manager.sv:145:                    yara_running[command_yara] <= 1'b0;
+rtl/v4/ifa_yara_manager.sv:146:                    clear_yara[command_yara]   <= 1'b1;
+rtl/v4/ifa_yara_manager.sv:157:        active_valid   = yara_valid[active_yara];
+rtl/v4/ifa_yara_manager.sv:158:        active_running = yara_running[active_yara];
+rtl/v4/ifa_yara_frame_share_core.sv:6:// A frame is copied only when share_authorized is asserted.
+rtl/v4/ifa_yara_frame_share_core.sv:9:module ifa_yara_frame_share_core #(
+rtl/v4/ifa_yara_frame_share_core.sv:16:    input  logic                     active_yara,
+rtl/v4/ifa_yara_frame_share_core.sv:23:    input  logic                     share_commit,
+rtl/v4/ifa_yara_frame_share_core.sv:24:    input  logic                     share_source_yara,
+rtl/v4/ifa_yara_frame_share_core.sv:25:    input  logic                     share_destination_yara,
+rtl/v4/ifa_yara_frame_share_core.sv:26:    input  logic                     share_authorized,
+rtl/v4/ifa_yara_frame_share_core.sv:30:    output logic                     share_done,
+rtl/v4/ifa_yara_frame_share_core.sv:31:    output logic                     share_denied,
+rtl/v4/ifa_yara_frame_share_core.sv:39:    output logic [31:0]              yara0_hits,
+rtl/v4/ifa_yara_frame_share_core.sv:40:    output logic [31:0]              yara0_misses,
+rtl/v4/ifa_yara_frame_share_core.sv:41:    output logic [31:0]              yara0_imports,
+rtl/v4/ifa_yara_frame_share_core.sv:43:    output logic [31:0]              yara1_hits,
+rtl/v4/ifa_yara_frame_share_core.sv:44:    output logic [31:0]              yara1_misses,
+rtl/v4/ifa_yara_frame_share_core.sv:45:    output logic [31:0]              yara1_imports
+rtl/v4/ifa_yara_frame_share_core.sv:48:    // RPC outputs shared by the currently selected room.
+rtl/v4/ifa_yara_frame_share_core.sv:67:    logic yara0_valid;
+rtl/v4/ifa_yara_frame_share_core.sv:68:    logic yara1_valid;
+rtl/v4/ifa_yara_frame_share_core.sv:70:    assign yara0_valid = in_valid && (active_yara == 1'b0);
+rtl/v4/ifa_yara_frame_share_core.sv:71:    assign yara1_valid = in_valid && (active_yara == 1'b1);
+rtl/v4/ifa_yara_frame_share_core.sv:74:    logic [WIDTH-1:0] yara0_y;
+rtl/v4/ifa_yara_frame_share_core.sv:75:    logic [WIDTH-1:0] yara0_ra;
+rtl/v4/ifa_yara_frame_share_core.sv:76:    logic [WIDTH-1:0] yara0_rd;
+rtl/v4/ifa_yara_frame_share_core.sv:77:    logic [WIDTH-1:0] yara0_r0;
+rtl/v4/ifa_yara_frame_share_core.sv:78:    logic [WIDTH-1:0] yara0_t;
+rtl/v4/ifa_yara_frame_share_core.sv:80:    logic [WIDTH-1:0] yara1_y;
+rtl/v4/ifa_yara_frame_share_core.sv:81:    logic [WIDTH-1:0] yara1_ra;
+rtl/v4/ifa_yara_frame_share_core.sv:82:    logic [WIDTH-1:0] yara1_rd;
+rtl/v4/ifa_yara_frame_share_core.sv:83:    logic [WIDTH-1:0] yara1_r0;
+rtl/v4/ifa_yara_frame_share_core.sv:84:    logic [WIDTH-1:0] yara1_t;
+rtl/v4/ifa_yara_frame_share_core.sv:86:    logic yara0_hit;
+rtl/v4/ifa_yara_frame_share_core.sv:87:    logic yara0_miss;
+rtl/v4/ifa_yara_frame_share_core.sv:88:    logic yara1_hit;
+rtl/v4/ifa_yara_frame_share_core.sv:89:    logic yara1_miss;
+rtl/v4/ifa_yara_frame_share_core.sv:91:    logic yara0_import_done;
+rtl/v4/ifa_yara_frame_share_core.sv:92:    logic yara1_import_done;
+rtl/v4/ifa_yara_frame_share_core.sv:94:    logic yara0_admin_import;
+rtl/v4/ifa_yara_frame_share_core.sv:95:    logic yara1_admin_import;
+rtl/v4/ifa_yara_frame_share_core.sv:98:    logic [WIDTH-1:0] share_y;
+rtl/v4/ifa_yara_frame_share_core.sv:99:    logic [WIDTH-1:0] share_ra;
+rtl/v4/ifa_yara_frame_share_core.sv:100:    logic [WIDTH-1:0] share_rd;
+rtl/v4/ifa_yara_frame_share_core.sv:101:    logic [WIDTH-1:0] share_r0;
+rtl/v4/ifa_yara_frame_share_core.sv:102:    logic [WIDTH-1:0] share_t;
+rtl/v4/ifa_yara_frame_share_core.sv:105:        if (share_source_yara == 1'b0) begin
+rtl/v4/ifa_yara_frame_share_core.sv:106:            share_y  = yara0_y;
+rtl/v4/ifa_yara_frame_share_core.sv:107:            share_ra = yara0_ra;
+rtl/v4/ifa_yara_frame_share_core.sv:108:            share_rd = yara0_rd;
+rtl/v4/ifa_yara_frame_share_core.sv:109:            share_r0 = yara0_r0;
+rtl/v4/ifa_yara_frame_share_core.sv:110:            share_t  = yara0_t;
+rtl/v4/ifa_yara_frame_share_core.sv:112:            share_y  = yara1_y;
+rtl/v4/ifa_yara_frame_share_core.sv:113:            share_ra = yara1_ra;
+rtl/v4/ifa_yara_frame_share_core.sv:114:            share_rd = yara1_rd;
+rtl/v4/ifa_yara_frame_share_core.sv:115:            share_r0 = yara1_r0;
+rtl/v4/ifa_yara_frame_share_core.sv:116:            share_t  = yara1_t;
+rtl/v4/ifa_yara_frame_share_core.sv:120:    assign yara0_admin_import =
+rtl/v4/ifa_yara_frame_share_core.sv:121:        share_commit &&
+rtl/v4/ifa_yara_frame_share_core.sv:122:        share_authorized &&
+rtl/v4/ifa_yara_frame_share_core.sv:123:        (share_source_yara != share_destination_yara) &&
+rtl/v4/ifa_yara_frame_share_core.sv:124:        (share_destination_yara == 1'b0);
+rtl/v4/ifa_yara_frame_share_core.sv:126:    assign yara1_admin_import =
+rtl/v4/ifa_yara_frame_share_core.sv:127:        share_commit &&
+rtl/v4/ifa_yara_frame_share_core.sv:128:        share_authorized &&
+rtl/v4/ifa_yara_frame_share_core.sv:129:        (share_source_yara != share_destination_yara) &&
+rtl/v4/ifa_yara_frame_share_core.sv:130:        (share_destination_yara == 1'b1);
+rtl/v4/ifa_yara_frame_share_core.sv:132:    assign share_denied =
+rtl/v4/ifa_yara_frame_share_core.sv:133:        share_commit &&
+rtl/v4/ifa_yara_frame_share_core.sv:135:            !share_authorized ||
+rtl/v4/ifa_yara_frame_share_core.sv:136:            (share_source_yara == share_destination_yara)
+rtl/v4/ifa_yara_frame_share_core.sv:139:    assign share_done = yara0_import_done | yara1_import_done;
+rtl/v4/ifa_yara_frame_share_core.sv:141:    logic [31:0] yara0_stores;
+rtl/v4/ifa_yara_frame_share_core.sv:142:    logic [31:0] yara0_evicts;
+rtl/v4/ifa_yara_frame_share_core.sv:143:    logic [31:0] yara1_stores;
+rtl/v4/ifa_yara_frame_share_core.sv:144:    logic [31:0] yara1_evicts;
+rtl/v4/ifa_yara_frame_share_core.sv:149:    ) yara0_rmu (
+rtl/v4/ifa_yara_frame_share_core.sv:153:        .req_valid(yara0_valid),
+rtl/v4/ifa_yara_frame_share_core.sv:161:        .admin_import_valid(yara0_admin_import),
+rtl/v4/ifa_yara_frame_share_core.sv:162:        .admin_y(share_y),
+rtl/v4/ifa_yara_frame_share_core.sv:163:        .admin_ra(share_ra),
+rtl/v4/ifa_yara_frame_share_core.sv:164:        .admin_rd(share_rd),
+rtl/v4/ifa_yara_frame_share_core.sv:165:        .admin_r0(share_r0),
+rtl/v4/ifa_yara_frame_share_core.sv:166:        .admin_t(share_t),
+rtl/v4/ifa_yara_frame_share_core.sv:168:        .hit(yara0_hit),
+rtl/v4/ifa_yara_frame_share_core.sv:169:        .miss(yara0_miss),
+rtl/v4/ifa_yara_frame_share_core.sv:170:        .import_done(yara0_import_done),
+rtl/v4/ifa_yara_frame_share_core.sv:172:        .out_y(yara0_y),
+rtl/v4/ifa_yara_frame_share_core.sv:173:        .out_ra(yara0_ra),
+rtl/v4/ifa_yara_frame_share_core.sv:174:        .out_rd(yara0_rd),
+rtl/v4/ifa_yara_frame_share_core.sv:175:        .out_r0(yara0_r0),
+rtl/v4/ifa_yara_frame_share_core.sv:176:        .out_t(yara0_t),
+rtl/v4/ifa_yara_frame_share_core.sv:178:        .hit_count(yara0_hits),
+rtl/v4/ifa_yara_frame_share_core.sv:179:        .miss_count(yara0_misses),
+rtl/v4/ifa_yara_frame_share_core.sv:180:        .store_count(yara0_stores),
+rtl/v4/ifa_yara_frame_share_core.sv:181:        .evict_count(yara0_evicts),
+rtl/v4/ifa_yara_frame_share_core.sv:182:        .import_count(yara0_imports)
+rtl/v4/ifa_yara_frame_share_core.sv:188:    ) yara1_rmu (
+rtl/v4/ifa_yara_frame_share_core.sv:192:        .req_valid(yara1_valid),
+rtl/v4/ifa_yara_frame_share_core.sv:200:        .admin_import_valid(yara1_admin_import),
+rtl/v4/ifa_yara_frame_share_core.sv:201:        .admin_y(share_y),
+rtl/v4/ifa_yara_frame_share_core.sv:202:        .admin_ra(share_ra),
+rtl/v4/ifa_yara_frame_share_core.sv:203:        .admin_rd(share_rd),
+rtl/v4/ifa_yara_frame_share_core.sv:204:        .admin_r0(share_r0),
+rtl/v4/ifa_yara_frame_share_core.sv:205:        .admin_t(share_t),
+rtl/v4/ifa_yara_frame_share_core.sv:207:        .hit(yara1_hit),
+rtl/v4/ifa_yara_frame_share_core.sv:208:        .miss(yara1_miss),
+rtl/v4/ifa_yara_frame_share_core.sv:209:        .import_done(yara1_import_done),
+rtl/v4/ifa_yara_frame_share_core.sv:211:        .out_y(yara1_y),
+rtl/v4/ifa_yara_frame_share_core.sv:212:        .out_ra(yara1_ra),
+rtl/v4/ifa_yara_frame_share_core.sv:213:        .out_rd(yara1_rd),
+rtl/v4/ifa_yara_frame_share_core.sv:214:        .out_r0(yara1_r0),
+rtl/v4/ifa_yara_frame_share_core.sv:215:        .out_t(yara1_t),
+rtl/v4/ifa_yara_frame_share_core.sv:217:        .hit_count(yara1_hits),
+rtl/v4/ifa_yara_frame_share_core.sv:218:        .miss_count(yara1_misses),
+rtl/v4/ifa_yara_frame_share_core.sv:219:        .store_count(yara1_stores),
+rtl/v4/ifa_yara_frame_share_core.sv:220:        .evict_count(yara1_evicts),
+rtl/v4/ifa_yara_frame_share_core.sv:221:        .import_count(yara1_imports)
+rtl/v4/ifa_yara_frame_share_core.sv:225:        if (active_yara == 1'b0) begin
+rtl/v4/ifa_yara_frame_share_core.sv:226:            rmu_hit  = yara0_hit;
+rtl/v4/ifa_yara_frame_share_core.sv:227:            rmu_miss = yara0_miss;
+rtl/v4/ifa_yara_frame_share_core.sv:229:            out_y  = yara0_y;
+rtl/v4/ifa_yara_frame_share_core.sv:230:            out_ra = yara0_ra;
+rtl/v4/ifa_yara_frame_share_core.sv:231:            out_rd = yara0_rd;
+rtl/v4/ifa_yara_frame_share_core.sv:232:            out_r0 = yara0_r0;
+rtl/v4/ifa_yara_frame_share_core.sv:233:            out_t  = yara0_t;
+rtl/v4/ifa_yara_frame_share_core.sv:235:            rmu_hit  = yara1_hit;
+rtl/v4/ifa_yara_frame_share_core.sv:236:            rmu_miss = yara1_miss;
+rtl/v4/ifa_yara_frame_share_core.sv:238:            out_y  = yara1_y;
+rtl/v4/ifa_yara_frame_share_core.sv:239:            out_ra = yara1_ra;
+rtl/v4/ifa_yara_frame_share_core.sv:240:            out_rd = yara1_rd;
+rtl/v4/ifa_yara_frame_share_core.sv:241:            out_r0 = yara1_r0;
+rtl/v4/ifa_yara_frame_share_core.sv:242:            out_t  = yara1_t;
+rtl/v4/ifa_yara_context_bank.sv:19:module ifa_yara_context_bank #(
+rtl/v4/ifa_yara_context_bank.sv:22:    parameter integer YARA_COUNT = 2,
+rtl/v4/ifa_yara_context_bank.sv:23:    parameter integer YARA_W =
+rtl/v4/ifa_yara_context_bank.sv:24:        (YARA_COUNT <= 1) ? 1 : $clog2(YARA_COUNT)
+rtl/v4/ifa_yara_context_bank.sv:29:    input  logic [YARA_W-1:0]         active_yara,
+rtl/v4/ifa_yara_context_bank.sv:42:    input  logic [YARA_COUNT-1:0]      clear_yara,
+rtl/v4/ifa_yara_context_bank.sv:53:    logic [WIDTH-1:0]    pc_mem      [0:YARA_COUNT-1];
+rtl/v4/ifa_yara_context_bank.sv:54:    logic [IR_WIDTH-1:0] ir_mem      [0:YARA_COUNT-1];
+rtl/v4/ifa_yara_context_bank.sv:55:    logic [WIDTH-1:0]    a_mem       [0:YARA_COUNT-1];
+rtl/v4/ifa_yara_context_bank.sv:56:    logic [WIDTH-1:0]    b_mem       [0:YARA_COUNT-1];
+rtl/v4/ifa_yara_context_bank.sv:57:    logic [WIDTH-1:0]    address_mem [0:YARA_COUNT-1];
+rtl/v4/ifa_yara_context_bank.sv:58:    logic [WIDTH-1:0]    flags_mem   [0:YARA_COUNT-1];
+rtl/v4/ifa_yara_context_bank.sv:64:            for (i = 0; i < YARA_COUNT; i = i + 1) begin
+rtl/v4/ifa_yara_context_bank.sv:73:            for (i = 0; i < YARA_COUNT; i = i + 1) begin
+rtl/v4/ifa_yara_context_bank.sv:74:                if (clear_yara[i]) begin
+rtl/v4/ifa_yara_context_bank.sv:84:            if (context_write && !clear_yara[active_yara]) begin
+rtl/v4/ifa_yara_context_bank.sv:85:                pc_mem[active_yara]      <= write_pc;
+rtl/v4/ifa_yara_context_bank.sv:86:                ir_mem[active_yara]      <= write_ir;
+rtl/v4/ifa_yara_context_bank.sv:87:                a_mem[active_yara]       <= write_a;
+rtl/v4/ifa_yara_context_bank.sv:88:                b_mem[active_yara]       <= write_b;
+rtl/v4/ifa_yara_context_bank.sv:89:                address_mem[active_yara] <= write_address;
+rtl/v4/ifa_yara_context_bank.sv:90:                flags_mem[active_yara]   <= write_flags;
+rtl/v4/ifa_yara_context_bank.sv:96:        read_pc      = pc_mem[active_yara];
+rtl/v4/ifa_yara_context_bank.sv:97:        read_ir      = ir_mem[active_yara];
+rtl/v4/ifa_yara_context_bank.sv:98:        read_a       = a_mem[active_yara];
+rtl/v4/ifa_yara_context_bank.sv:99:        read_b       = b_mem[active_yara];
+rtl/v4/ifa_yara_context_bank.sv:100:        read_address = address_mem[active_yara];
+rtl/v4/ifa_yara_context_bank.sv:101:        read_flags   = flags_mem[active_yara];
+rtl/v4/ifa_v4_yara_secure_system_top.sv:9://   - guarded shared General Memory
+rtl/v4/ifa_v4_yara_secure_system_top.sv:14:module ifa_v4_yara_secure_system_top #(
+rtl/v4/ifa_v4_yara_secure_system_top.sv:19:    parameter integer YARA_COUNT = 2,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:20:    parameter integer YARA_W =
+rtl/v4/ifa_v4_yara_secure_system_top.sv:21:        (YARA_COUNT <= 1) ? 1 : $clog2(YARA_COUNT)
+rtl/v4/ifa_v4_yara_secure_system_top.sv:30:    input  logic                      babalawo_mode,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:38:    input  logic [YARA_W-1:0]         command_yara,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:62:    // Shared General Memory request
+rtl/v4/ifa_v4_yara_secure_system_top.sv:75:    // Onílẹ̀ General Memory permission administration
+rtl/v4/ifa_v4_yara_secure_system_top.sv:78:    input  logic                      grant_read_valid,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:79:    input  logic                      grant_write_valid,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:80:    input  logic                      revoke_read_valid,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:81:    input  logic                      revoke_write_valid,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:84:    input  logic [YARA_W-1:0]         admin_yara,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:90:    output logic [YARA_W-1:0]         active_yara,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:94:    output logic [YARA_COUNT-1:0]     yara_valid,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:95:    output logic [YARA_COUNT-1:0]     yara_running,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:130:    output logic [31:0]               yara0_hit_count,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:131:    output logic [31:0]               yara0_miss_count,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:132:    output logic [31:0]               yara1_hit_count,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:133:    output logic [31:0]               yara1_miss_count,
+rtl/v4/ifa_v4_yara_secure_system_top.sv:148:    logic [YARA_W-1:0] address_owner;
+rtl/v4/ifa_v4_yara_secure_system_top.sv:149:    logic active_read_permission;
+rtl/v4/ifa_v4_yara_secure_system_top.sv:150:    logic active_write_permission;
+rtl/v4/ifa_v4_yara_secure_system_top.sv:158:    ifa_v4_yara_system_top #(
+rtl/v4/ifa_v4_yara_secure_system_top.sv:162:        .YARA_COUNT(YARA_COUNT)
+rtl/v4/ifa_v4_yara_secure_system_top.sv:163:    ) yara_system (
+rtl/v4/ifa_v4_yara_secure_system_top.sv:167:        .babalawo_mode(babalawo_mode),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:175:        .command_yara(command_yara),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:190:        .active_yara(active_yara),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:194:        .yara_valid(yara_valid),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:195:        .yara_running(yara_running),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:224:        .yara0_hit_count(yara0_hit_count),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:225:        .yara0_miss_count(yara0_miss_count),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:226:        .yara1_hit_count(yara1_hit_count),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:227:        .yara1_miss_count(yara1_miss_count)
+rtl/v4/ifa_v4_yara_secure_system_top.sv:240:    // Shared General Memory Guard
+rtl/v4/ifa_v4_yara_secure_system_top.sv:246:        .YARA_COUNT(YARA_COUNT)
+rtl/v4/ifa_v4_yara_secure_system_top.sv:251:        .active_yara(active_yara),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:262:        .babalawo_mode(babalawo_mode),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:264:        .grant_read_valid(grant_read_valid),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:265:        .grant_write_valid(grant_write_valid),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:266:        .revoke_read_valid(revoke_read_valid),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:267:        .revoke_write_valid(revoke_write_valid),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:270:        .admin_yara(admin_yara),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:274:        .active_read_permission(active_read_permission),
+rtl/v4/ifa_v4_yara_secure_system_top.sv:275:        .active_write_permission(active_write_permission),
+rtl/v4/ifa_onile_supervisor.sv:3:// ONÍLẸ̀ Supervisor — Cross-YÀRÁ Permission Controller
+rtl/v4/ifa_onile_supervisor.sv:13://       and an explicit ONÍLẸ̀ grant.
+rtl/v4/ifa_onile_supervisor.sv:15:// Onílẹ̀ manages permissions only.
+rtl/v4/ifa_onile_supervisor.sv:19:module ifa_onile_supervisor #(
+rtl/v4/ifa_onile_supervisor.sv:20:    parameter integer YARA_COUNT = 2,
+rtl/v4/ifa_onile_supervisor.sv:21:    parameter integer YARA_W =
+rtl/v4/ifa_onile_supervisor.sv:22:        (YARA_COUNT <= 1) ? 1 : $clog2(YARA_COUNT)
+rtl/v4/ifa_onile_supervisor.sv:27:    // Privileged administration mode
+rtl/v4/ifa_onile_supervisor.sv:28:    input  logic                     babalawo_mode,
+rtl/v4/ifa_onile_supervisor.sv:30:    // Permission administration
+rtl/v4/ifa_onile_supervisor.sv:31:    input  logic                     grant_valid,
+rtl/v4/ifa_onile_supervisor.sv:32:    input  logic                     revoke_valid,
+rtl/v4/ifa_onile_supervisor.sv:34:    input  logic [YARA_W-1:0]        admin_source_yara,
+rtl/v4/ifa_onile_supervisor.sv:35:    input  logic [YARA_W-1:0]        admin_destination_yara,
+rtl/v4/ifa_onile_supervisor.sv:38:    input  logic                     share_request,
+rtl/v4/ifa_onile_supervisor.sv:39:    input  logic [YARA_W-1:0]        request_source_yara,
+rtl/v4/ifa_onile_supervisor.sv:40:    input  logic [YARA_W-1:0]        request_destination_yara,
+rtl/v4/ifa_onile_supervisor.sv:42:    output logic                     share_allowed,
+rtl/v4/ifa_onile_supervisor.sv:43:    output logic                     share_denied,
+rtl/v4/ifa_onile_supervisor.sv:46:    output logic                     explicit_permission,
+rtl/v4/ifa_onile_supervisor.sv:52:    // Permission matrix
+rtl/v4/ifa_onile_supervisor.sv:54:    // share_permission[src][dst] = 1
+rtl/v4/ifa_onile_supervisor.sv:55:    // means src may explicitly share a frame with dst.
+rtl/v4/ifa_onile_supervisor.sv:58:    logic share_permission [0:YARA_COUNT-1][0:YARA_COUNT-1];
+rtl/v4/ifa_onile_supervisor.sv:64:    // Permission administration
+rtl/v4/ifa_onile_supervisor.sv:66:    // Grants and revocations are accepted only in Babaláwo mode.
+rtl/v4/ifa_onile_supervisor.sv:74:            for (i = 0; i < YARA_COUNT; i = i + 1) begin
+rtl/v4/ifa_onile_supervisor.sv:75:                for (j = 0; j < YARA_COUNT; j = j + 1) begin
+rtl/v4/ifa_onile_supervisor.sv:76:                    share_permission[i][j] <= 1'b0;
+rtl/v4/ifa_onile_supervisor.sv:81:            if (babalawo_mode && grant_valid) begin
+rtl/v4/ifa_onile_supervisor.sv:82:                share_permission
+rtl/v4/ifa_onile_supervisor.sv:83:                    [admin_source_yara]
+rtl/v4/ifa_onile_supervisor.sv:84:                    [admin_destination_yara] <= 1'b1;
+rtl/v4/ifa_onile_supervisor.sv:87:            if (babalawo_mode && revoke_valid) begin
+rtl/v4/ifa_onile_supervisor.sv:88:                share_permission
+rtl/v4/ifa_onile_supervisor.sv:89:                    [admin_source_yara]
+rtl/v4/ifa_onile_supervisor.sv:90:                    [admin_destination_yara] <= 1'b0;
+rtl/v4/ifa_onile_supervisor.sv:93:            if (share_request) begin
+rtl/v4/ifa_onile_supervisor.sv:95:                    request_source_yara == request_destination_yara
+rtl/v4/ifa_onile_supervisor.sv:98:                        babalawo_mode
+rtl/v4/ifa_onile_supervisor.sv:100:                        share_permission
+rtl/v4/ifa_onile_supervisor.sv:101:                            [request_source_yara]
+rtl/v4/ifa_onile_supervisor.sv:102:                            [request_destination_yara]
+rtl/v4/ifa_onile_supervisor.sv:118:        explicit_permission =
+rtl/v4/ifa_onile_supervisor.sv:119:            share_permission
+rtl/v4/ifa_onile_supervisor.sv:120:                [request_source_yara]
+rtl/v4/ifa_onile_supervisor.sv:121:                [request_destination_yara];
+rtl/v4/ifa_onile_supervisor.sv:123:        share_allowed = 1'b0;
+rtl/v4/ifa_onile_supervisor.sv:124:        share_denied  = 1'b0;
+rtl/v4/ifa_onile_supervisor.sv:126:        if (share_request) begin
+rtl/v4/ifa_onile_supervisor.sv:129:            if (request_source_yara == request_destination_yara) begin
+rtl/v4/ifa_onile_supervisor.sv:130:                share_allowed = 1'b1;
+rtl/v4/ifa_onile_supervisor.sv:133:            // Cross-room sharing requires privilege + explicit grant.
+rtl/v4/ifa_onile_supervisor.sv:135:                babalawo_mode
+rtl/v4/ifa_onile_supervisor.sv:137:                explicit_permission
+rtl/v4/ifa_onile_supervisor.sv:139:                share_allowed = 1'b1;
+rtl/v4/ifa_onile_supervisor.sv:143:                share_denied = 1'b1;
+
+============================================================
+END OF REPORT

@@ -1,0 +1,1393 @@
+$date
+	Fri Jul 10 16:44:08 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_ifa_v4_yara_secure_system_top $end
+$var wire 2 ! yara_valid [1:0] $end
+$var wire 2 " yara_running [1:0] $end
+$var wire 32 # yara1_miss_count [31:0] $end
+$var wire 32 $ yara1_hit_count [31:0] $end
+$var wire 32 % yara0_miss_count [31:0] $end
+$var wire 32 & yara0_hit_count [31:0] $end
+$var wire 32 ' switch_count [31:0] $end
+$var wire 1 ( rmu_miss $end
+$var wire 1 ) rmu_hit $end
+$var wire 8 * out_y [7:0] $end
+$var wire 8 + out_t [7:0] $end
+$var wire 8 , out_rd [7:0] $end
+$var wire 8 - out_ra [7:0] $end
+$var wire 8 . out_r0 [7:0] $end
+$var wire 32 / memory_write_count [31:0] $end
+$var wire 32 0 memory_read_count [31:0] $end
+$var wire 32 1 memory_denied_count [31:0] $end
+$var wire 8 2 mem_read_data [7:0] $end
+$var wire 1 3 mem_denied $end
+$var wire 1 4 mem_allowed $end
+$var wire 32 5 manager_denied_count [31:0] $end
+$var wire 1 6 command_denied $end
+$var wire 1 7 command_allowed $end
+$var wire 1 8 active_yara $end
+$var wire 1 9 active_valid $end
+$var wire 1 : active_running $end
+$var wire 8 ; active_pc [7:0] $end
+$var wire 32 < active_miss_count [31:0] $end
+$var wire 16 = active_ir [15:0] $end
+$var wire 32 > active_hit_count [31:0] $end
+$var wire 8 ? active_flags [7:0] $end
+$var wire 8 @ active_b [7:0] $end
+$var wire 8 A active_address [7:0] $end
+$var wire 8 B active_a [7:0] $end
+$var parameter 32 C IR_WIDTH $end
+$var parameter 32 D MEM_ADDR_W $end
+$var parameter 32 E RMU_DEPTH $end
+$var parameter 32 F WIDTH $end
+$var parameter 32 G YARA_COUNT $end
+$var reg 4 H admin_address [3:0] $end
+$var reg 1 I admin_yara $end
+$var reg 1 J babalawo_mode $end
+$var reg 1 K clk $end
+$var reg 1 L command_yara $end
+$var reg 1 M context_write $end
+$var reg 1 N create_valid $end
+$var reg 1 O destroy_valid $end
+$var reg 8 P execute_a [7:0] $end
+$var reg 8 Q execute_b [7:0] $end
+$var reg 1 R execute_valid $end
+$var reg 1 S grant_read_valid $end
+$var reg 1 T grant_write_valid $end
+$var reg 4 U mem_address [3:0] $end
+$var reg 1 V mem_request $end
+$var reg 1 W mem_write $end
+$var reg 8 X mem_write_data [7:0] $end
+$var reg 1 Y pause_valid $end
+$var reg 1 Z resume_valid $end
+$var reg 1 [ revoke_read_valid $end
+$var reg 1 \ revoke_write_valid $end
+$var reg 1 ] rst $end
+$var reg 1 ^ select_valid $end
+$var reg 8 _ write_a [7:0] $end
+$var reg 8 ` write_address [7:0] $end
+$var reg 8 a write_b [7:0] $end
+$var reg 8 b write_flags [7:0] $end
+$var reg 16 c write_ir [15:0] $end
+$var reg 8 d write_pc [7:0] $end
+$scope module dut $end
+$var wire 4 e admin_address [3:0] $end
+$var wire 1 I admin_yara $end
+$var wire 1 J babalawo_mode $end
+$var wire 1 K clk $end
+$var wire 1 L command_yara $end
+$var wire 1 M context_write $end
+$var wire 1 N create_valid $end
+$var wire 1 O destroy_valid $end
+$var wire 8 f execute_a [7:0] $end
+$var wire 8 g execute_b [7:0] $end
+$var wire 1 R execute_valid $end
+$var wire 1 S grant_read_valid $end
+$var wire 1 T grant_write_valid $end
+$var wire 1 h guarded_mem_request $end
+$var wire 4 i mem_address [3:0] $end
+$var wire 1 V mem_request $end
+$var wire 1 W mem_write $end
+$var wire 8 j mem_write_data [7:0] $end
+$var wire 1 Y pause_valid $end
+$var wire 1 Z resume_valid $end
+$var wire 1 [ revoke_read_valid $end
+$var wire 1 \ revoke_write_valid $end
+$var wire 1 ] rst $end
+$var wire 1 ^ select_valid $end
+$var wire 8 k write_a [7:0] $end
+$var wire 8 l write_address [7:0] $end
+$var wire 8 m write_b [7:0] $end
+$var wire 8 n write_flags [7:0] $end
+$var wire 16 o write_ir [15:0] $end
+$var wire 8 p write_pc [7:0] $end
+$var wire 2 q yara_valid [1:0] $end
+$var wire 2 r yara_running [1:0] $end
+$var wire 32 s yara1_miss_count [31:0] $end
+$var wire 32 t yara1_hit_count [31:0] $end
+$var wire 32 u yara0_miss_count [31:0] $end
+$var wire 32 v yara0_hit_count [31:0] $end
+$var wire 32 w switch_count [31:0] $end
+$var wire 1 ( rmu_miss $end
+$var wire 1 ) rmu_hit $end
+$var wire 8 x out_y [7:0] $end
+$var wire 8 y out_t [7:0] $end
+$var wire 8 z out_rd [7:0] $end
+$var wire 8 { out_ra [7:0] $end
+$var wire 8 | out_r0 [7:0] $end
+$var wire 32 } memory_write_count [31:0] $end
+$var wire 32 ~ memory_read_count [31:0] $end
+$var wire 32 !" memory_denied_count [31:0] $end
+$var wire 8 "" mem_read_data [7:0] $end
+$var wire 1 3 mem_denied $end
+$var wire 1 4 mem_allowed $end
+$var wire 32 #" manager_denied_count [31:0] $end
+$var wire 1 6 command_denied $end
+$var wire 1 7 command_allowed $end
+$var wire 1 $" address_owner $end
+$var wire 1 %" address_owned $end
+$var wire 1 8 active_yara $end
+$var wire 1 &" active_write_permission $end
+$var wire 1 9 active_valid $end
+$var wire 32 '" active_store_count [31:0] $end
+$var wire 1 : active_running $end
+$var wire 1 (" active_read_permission $end
+$var wire 8 )" active_pc [7:0] $end
+$var wire 32 *" active_miss_count [31:0] $end
+$var wire 16 +" active_ir [15:0] $end
+$var wire 32 ," active_hit_count [31:0] $end
+$var wire 8 -" active_flags [7:0] $end
+$var wire 32 ." active_evict_count [31:0] $end
+$var wire 8 /" active_b [7:0] $end
+$var wire 8 0" active_address [7:0] $end
+$var wire 8 1" active_a [7:0] $end
+$var parameter 32 2" IR_WIDTH $end
+$var parameter 32 3" MEM_ADDR_W $end
+$var parameter 32 4" RMU_DEPTH $end
+$var parameter 32 5" WIDTH $end
+$var parameter 32 6" YARA_COUNT $end
+$var parameter 32 7" YARA_W $end
+$scope module memory_guard $end
+$var wire 4 8" admin_address [3:0] $end
+$var wire 1 I admin_yara $end
+$var wire 1 J babalawo_mode $end
+$var wire 1 K clk $end
+$var wire 1 S grant_read_valid $end
+$var wire 1 T grant_write_valid $end
+$var wire 4 9" mem_address [3:0] $end
+$var wire 1 h mem_request $end
+$var wire 1 W mem_write $end
+$var wire 8 :" mem_write_data [7:0] $end
+$var wire 1 [ revoke_read_valid $end
+$var wire 1 \ revoke_write_valid $end
+$var wire 1 ] rst $end
+$var wire 1 8 active_yara $end
+$var parameter 32 ;" ADDR_W $end
+$var parameter 32 <" DEPTH $end
+$var parameter 32 =" WIDTH $end
+$var parameter 32 >" YARA_COUNT $end
+$var parameter 32 ?" YARA_W $end
+$var reg 1 (" active_read_permission $end
+$var reg 1 &" active_write_permission $end
+$var reg 1 %" address_owned $end
+$var reg 1 $" address_owner $end
+$var reg 32 @" denied_count [31:0] $end
+$var reg 1 4 mem_allowed $end
+$var reg 1 3 mem_denied $end
+$var reg 8 A" mem_read_data [7:0] $end
+$var reg 32 B" read_count [31:0] $end
+$var reg 1 C" request_can_read $end
+$var reg 1 D" request_can_write $end
+$var reg 1 E" request_is_owner $end
+$var reg 32 F" write_count [31:0] $end
+$var integer 32 G" i [31:0] $end
+$var integer 32 H" j [31:0] $end
+$upscope $end
+$scope module yara_system $end
+$var wire 1 J babalawo_mode $end
+$var wire 1 K clk $end
+$var wire 1 L command_yara $end
+$var wire 1 M context_write $end
+$var wire 1 N create_valid $end
+$var wire 1 O destroy_valid $end
+$var wire 8 I" execute_a [7:0] $end
+$var wire 1 J" execute_allowed $end
+$var wire 8 K" execute_b [7:0] $end
+$var wire 1 R execute_valid $end
+$var wire 1 Y pause_valid $end
+$var wire 1 Z resume_valid $end
+$var wire 1 ] rst $end
+$var wire 1 ^ select_valid $end
+$var wire 8 L" write_a [7:0] $end
+$var wire 8 M" write_address [7:0] $end
+$var wire 8 N" write_b [7:0] $end
+$var wire 8 O" write_flags [7:0] $end
+$var wire 16 P" write_ir [15:0] $end
+$var wire 8 Q" write_pc [7:0] $end
+$var wire 2 R" yara_valid [1:0] $end
+$var wire 2 S" yara_running [1:0] $end
+$var wire 32 T" yara1_miss_count [31:0] $end
+$var wire 32 U" yara1_hit_count [31:0] $end
+$var wire 32 V" yara0_miss_count [31:0] $end
+$var wire 32 W" yara0_hit_count [31:0] $end
+$var wire 32 X" switch_count [31:0] $end
+$var wire 1 ( rmu_miss $end
+$var wire 1 ) rmu_hit $end
+$var wire 8 Y" out_y [7:0] $end
+$var wire 8 Z" out_t [7:0] $end
+$var wire 8 [" out_rd [7:0] $end
+$var wire 8 \" out_ra [7:0] $end
+$var wire 8 ]" out_r0 [7:0] $end
+$var wire 32 ^" manager_denied_count [31:0] $end
+$var wire 1 6 command_denied $end
+$var wire 1 7 command_allowed $end
+$var wire 2 _" clear_yara [1:0] $end
+$var wire 1 8 active_yara $end
+$var wire 1 9 active_valid $end
+$var wire 32 `" active_store_count [31:0] $end
+$var wire 1 : active_running $end
+$var wire 8 a" active_pc [7:0] $end
+$var wire 32 b" active_miss_count [31:0] $end
+$var wire 16 c" active_ir [15:0] $end
+$var wire 32 d" active_hit_count [31:0] $end
+$var wire 8 e" active_flags [7:0] $end
+$var wire 32 f" active_evict_count [31:0] $end
+$var wire 8 g" active_b [7:0] $end
+$var wire 8 h" active_address [7:0] $end
+$var wire 8 i" active_a [7:0] $end
+$var parameter 32 j" DEPTH $end
+$var parameter 32 k" IR_WIDTH $end
+$var parameter 32 l" WIDTH $end
+$var parameter 32 m" YARA_COUNT $end
+$var parameter 32 n" YARA_W $end
+$scope module context_bank $end
+$var wire 1 K clk $end
+$var wire 1 M context_write $end
+$var wire 1 ] rst $end
+$var wire 8 o" write_a [7:0] $end
+$var wire 8 p" write_address [7:0] $end
+$var wire 8 q" write_b [7:0] $end
+$var wire 8 r" write_flags [7:0] $end
+$var wire 16 s" write_ir [15:0] $end
+$var wire 8 t" write_pc [7:0] $end
+$var wire 2 u" clear_yara [1:0] $end
+$var wire 1 8 active_yara $end
+$var parameter 32 v" IR_WIDTH $end
+$var parameter 32 w" WIDTH $end
+$var parameter 32 x" YARA_COUNT $end
+$var parameter 32 y" YARA_W $end
+$var reg 8 z" read_a [7:0] $end
+$var reg 8 {" read_address [7:0] $end
+$var reg 8 |" read_b [7:0] $end
+$var reg 8 }" read_flags [7:0] $end
+$var reg 16 ~" read_ir [15:0] $end
+$var reg 8 !# read_pc [7:0] $end
+$var integer 32 "# i [31:0] $end
+$upscope $end
+$scope module execution_rooms $end
+$var wire 8 ## A [7:0] $end
+$var wire 8 $# B [7:0] $end
+$var wire 1 K clk $end
+$var wire 1 J" in_valid $end
+$var wire 1 ] rst $end
+$var wire 1 %# yara0_rst $end
+$var wire 1 &# yara0_valid $end
+$var wire 1 '# yara1_rst $end
+$var wire 1 (# yara1_valid $end
+$var wire 8 )# yara1_y [7:0] $end
+$var wire 8 *# yara1_t [7:0] $end
+$var wire 32 +# yara1_store_count [31:0] $end
+$var wire 8 ,# yara1_rd [7:0] $end
+$var wire 8 -# yara1_ra [7:0] $end
+$var wire 8 .# yara1_r0 [7:0] $end
+$var wire 32 /# yara1_miss_count [31:0] $end
+$var wire 1 0# yara1_miss $end
+$var wire 32 1# yara1_hit_count [31:0] $end
+$var wire 1 2# yara1_hit $end
+$var wire 32 3# yara1_evict_count [31:0] $end
+$var wire 8 4# yara0_y [7:0] $end
+$var wire 8 5# yara0_t [7:0] $end
+$var wire 32 6# yara0_store_count [31:0] $end
+$var wire 8 7# yara0_rd [7:0] $end
+$var wire 8 8# yara0_ra [7:0] $end
+$var wire 8 9# yara0_r0 [7:0] $end
+$var wire 32 :# yara0_miss_count [31:0] $end
+$var wire 1 ;# yara0_miss $end
+$var wire 32 <# yara0_hit_count [31:0] $end
+$var wire 1 =# yara0_hit $end
+$var wire 32 ># yara0_evict_count [31:0] $end
+$var wire 2 ?# clear_yara [1:0] $end
+$var wire 1 8 active_yara $end
+$var parameter 32 @# DEPTH $end
+$var parameter 32 A# WIDTH $end
+$var parameter 32 B# YARA_COUNT $end
+$var reg 32 C# evict_count [31:0] $end
+$var reg 32 D# hit_count [31:0] $end
+$var reg 32 E# miss_count [31:0] $end
+$var reg 8 F# out_r0 [7:0] $end
+$var reg 8 G# out_ra [7:0] $end
+$var reg 8 H# out_rd [7:0] $end
+$var reg 8 I# out_t [7:0] $end
+$var reg 8 J# out_y [7:0] $end
+$var reg 1 ) rmu_hit $end
+$var reg 1 ( rmu_miss $end
+$var reg 32 K# store_count [31:0] $end
+$scope module yara0 $end
+$var wire 8 L# A [7:0] $end
+$var wire 8 M# B [7:0] $end
+$var wire 1 K clk $end
+$var wire 1 &# in_valid $end
+$var wire 1 %# rst $end
+$var wire 32 N# store_count [31:0] $end
+$var wire 8 O# rpc_y [7:0] $end
+$var wire 8 P# rpc_t [7:0] $end
+$var wire 8 Q# rpc_rd [7:0] $end
+$var wire 8 R# rpc_ra [7:0] $end
+$var wire 8 S# rpc_r0 [7:0] $end
+$var wire 1 ;# rmu_miss $end
+$var wire 1 =# rmu_hit $end
+$var wire 8 T# out_y [7:0] $end
+$var wire 8 U# out_t [7:0] $end
+$var wire 8 V# out_rd [7:0] $end
+$var wire 8 W# out_ra [7:0] $end
+$var wire 8 X# out_r0 [7:0] $end
+$var wire 32 Y# miss_count [31:0] $end
+$var wire 32 Z# hit_count [31:0] $end
+$var wire 32 [# evict_count [31:0] $end
+$var parameter 32 \# DEPTH $end
+$var parameter 32 ]# WIDTH $end
+$scope module core $end
+$var wire 1 K clk $end
+$var wire 1 &# rpc_valid $end
+$var wire 1 %# rst $end
+$var wire 32 ^# store_count [31:0] $end
+$var wire 8 _# rpc_y [7:0] $end
+$var wire 8 `# rpc_t [7:0] $end
+$var wire 8 a# rpc_rd [7:0] $end
+$var wire 8 b# rpc_ra [7:0] $end
+$var wire 8 c# rpc_r0 [7:0] $end
+$var wire 1 ;# rmu_miss $end
+$var wire 1 =# rmu_hit $end
+$var wire 8 d# out_y [7:0] $end
+$var wire 8 e# out_t [7:0] $end
+$var wire 8 f# out_rd [7:0] $end
+$var wire 8 g# out_ra [7:0] $end
+$var wire 8 h# out_r0 [7:0] $end
+$var wire 32 i# miss_count [31:0] $end
+$var wire 32 j# hit_count [31:0] $end
+$var wire 32 k# evict_count [31:0] $end
+$var parameter 32 l# DEPTH $end
+$var parameter 32 m# WIDTH $end
+$scope module rmc $end
+$var wire 1 K clk $end
+$var wire 1 &# req_valid $end
+$var wire 1 %# rst $end
+$var wire 8 n# in_y [7:0] $end
+$var wire 8 o# in_t [7:0] $end
+$var wire 8 p# in_rd [7:0] $end
+$var wire 8 q# in_ra [7:0] $end
+$var wire 8 r# in_r0 [7:0] $end
+$var parameter 32 s# DEPTH $end
+$var parameter 32 t# INDEX_W $end
+$var parameter 32 u# WIDTH $end
+$var reg 32 v# evict_count [31:0] $end
+$var reg 4 w# fifo_ptr [3:0] $end
+$var reg 1 =# hit $end
+$var reg 32 x# hit_count [31:0] $end
+$var reg 1 y# lookup_hit $end
+$var reg 4 z# lookup_index [3:0] $end
+$var reg 1 ;# miss $end
+$var reg 32 {# miss_count [31:0] $end
+$var reg 8 |# out_r0 [7:0] $end
+$var reg 8 }# out_ra [7:0] $end
+$var reg 8 ~# out_rd [7:0] $end
+$var reg 8 !$ out_t [7:0] $end
+$var reg 8 "$ out_y [7:0] $end
+$var reg 32 #$ store_count [31:0] $end
+$var integer 32 $$ i [31:0] $end
+$scope begin $ivl_for_loop0 $end
+$var integer 32 %$ j [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module rpc $end
+$var wire 8 &$ A [7:0] $end
+$var wire 8 '$ B [7:0] $end
+$var parameter 32 ($ WIDTH $end
+$var reg 8 )$ R0 [7:0] $end
+$var reg 8 *$ RA [7:0] $end
+$var reg 8 +$ RD [7:0] $end
+$var reg 8 ,$ T [7:0] $end
+$var reg 8 -$ Y [7:0] $end
+$upscope $end
+$upscope $end
+$scope module yara1 $end
+$var wire 8 .$ A [7:0] $end
+$var wire 8 /$ B [7:0] $end
+$var wire 1 K clk $end
+$var wire 1 (# in_valid $end
+$var wire 1 '# rst $end
+$var wire 32 0$ store_count [31:0] $end
+$var wire 8 1$ rpc_y [7:0] $end
+$var wire 8 2$ rpc_t [7:0] $end
+$var wire 8 3$ rpc_rd [7:0] $end
+$var wire 8 4$ rpc_ra [7:0] $end
+$var wire 8 5$ rpc_r0 [7:0] $end
+$var wire 1 0# rmu_miss $end
+$var wire 1 2# rmu_hit $end
+$var wire 8 6$ out_y [7:0] $end
+$var wire 8 7$ out_t [7:0] $end
+$var wire 8 8$ out_rd [7:0] $end
+$var wire 8 9$ out_ra [7:0] $end
+$var wire 8 :$ out_r0 [7:0] $end
+$var wire 32 ;$ miss_count [31:0] $end
+$var wire 32 <$ hit_count [31:0] $end
+$var wire 32 =$ evict_count [31:0] $end
+$var parameter 32 >$ DEPTH $end
+$var parameter 32 ?$ WIDTH $end
+$scope module core $end
+$var wire 1 K clk $end
+$var wire 1 (# rpc_valid $end
+$var wire 1 '# rst $end
+$var wire 32 @$ store_count [31:0] $end
+$var wire 8 A$ rpc_y [7:0] $end
+$var wire 8 B$ rpc_t [7:0] $end
+$var wire 8 C$ rpc_rd [7:0] $end
+$var wire 8 D$ rpc_ra [7:0] $end
+$var wire 8 E$ rpc_r0 [7:0] $end
+$var wire 1 0# rmu_miss $end
+$var wire 1 2# rmu_hit $end
+$var wire 8 F$ out_y [7:0] $end
+$var wire 8 G$ out_t [7:0] $end
+$var wire 8 H$ out_rd [7:0] $end
+$var wire 8 I$ out_ra [7:0] $end
+$var wire 8 J$ out_r0 [7:0] $end
+$var wire 32 K$ miss_count [31:0] $end
+$var wire 32 L$ hit_count [31:0] $end
+$var wire 32 M$ evict_count [31:0] $end
+$var parameter 32 N$ DEPTH $end
+$var parameter 32 O$ WIDTH $end
+$scope module rmc $end
+$var wire 1 K clk $end
+$var wire 1 (# req_valid $end
+$var wire 1 '# rst $end
+$var wire 8 P$ in_y [7:0] $end
+$var wire 8 Q$ in_t [7:0] $end
+$var wire 8 R$ in_rd [7:0] $end
+$var wire 8 S$ in_ra [7:0] $end
+$var wire 8 T$ in_r0 [7:0] $end
+$var parameter 32 U$ DEPTH $end
+$var parameter 32 V$ INDEX_W $end
+$var parameter 32 W$ WIDTH $end
+$var reg 32 X$ evict_count [31:0] $end
+$var reg 4 Y$ fifo_ptr [3:0] $end
+$var reg 1 2# hit $end
+$var reg 32 Z$ hit_count [31:0] $end
+$var reg 1 [$ lookup_hit $end
+$var reg 4 \$ lookup_index [3:0] $end
+$var reg 1 0# miss $end
+$var reg 32 ]$ miss_count [31:0] $end
+$var reg 8 ^$ out_r0 [7:0] $end
+$var reg 8 _$ out_ra [7:0] $end
+$var reg 8 `$ out_rd [7:0] $end
+$var reg 8 a$ out_t [7:0] $end
+$var reg 8 b$ out_y [7:0] $end
+$var reg 32 c$ store_count [31:0] $end
+$var integer 32 d$ i [31:0] $end
+$scope begin $ivl_for_loop0 $end
+$var integer 32 e$ j [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module rpc $end
+$var wire 8 f$ A [7:0] $end
+$var wire 8 g$ B [7:0] $end
+$var parameter 32 h$ WIDTH $end
+$var reg 8 i$ R0 [7:0] $end
+$var reg 8 j$ RA [7:0] $end
+$var reg 8 k$ RD [7:0] $end
+$var reg 8 l$ T [7:0] $end
+$var reg 8 m$ Y [7:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module manager $end
+$var wire 1 J babalawo_mode $end
+$var wire 1 K clk $end
+$var wire 1 L command_yara $end
+$var wire 1 N create_valid $end
+$var wire 1 O destroy_valid $end
+$var wire 1 Y pause_valid $end
+$var wire 1 Z resume_valid $end
+$var wire 1 ] rst $end
+$var wire 1 ^ select_valid $end
+$var parameter 32 n$ YARA_COUNT $end
+$var parameter 32 o$ YARA_W $end
+$var reg 1 : active_running $end
+$var reg 1 9 active_valid $end
+$var reg 1 8 active_yara $end
+$var reg 2 p$ clear_yara [1:0] $end
+$var reg 1 7 command_allowed $end
+$var reg 1 6 command_denied $end
+$var reg 32 q$ denied_count [31:0] $end
+$var reg 32 r$ switch_count [31:0] $end
+$var reg 2 s$ yara_running [1:0] $end
+$var reg 2 t$ yara_valid [1:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope task clear_commands $end
+$upscope $end
+$scope task grant_read $end
+$upscope $end
+$scope task manager_command $end
+$upscope $end
+$scope task read_memory $end
+$upscope $end
+$scope task write_memory $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1 o$
+b10 n$
+b1000 h$
+b1000 W$
+b100 V$
+b10000 U$
+b1000 O$
+b10000 N$
+b1000 ?$
+b10000 >$
+b1000 ($
+b1000 u#
+b100 t#
+b10000 s#
+b1000 m#
+b10000 l#
+b1000 ]#
+b10000 \#
+b10 B#
+b1000 A#
+b10000 @#
+b1 y"
+b10 x"
+b1000 w"
+b10000 v"
+b1 n"
+b10 m"
+b1000 l"
+b10000 k"
+b10000 j"
+b1 ?"
+b10 >"
+b1000 ="
+b10000 <"
+b100 ;"
+b1 7"
+b10 6"
+b1000 5"
+b10000 4"
+b100 3"
+b10000 2"
+b10 G
+b1000 F
+b10000 E
+b100 D
+b10000 C
+$end
+#0
+$dumpvars
+bx t$
+bx s$
+bx r$
+bx q$
+bx p$
+b0 m$
+b0 l$
+b0 k$
+b0 j$
+b11111111 i$
+b0 g$
+b0 f$
+b10000 e$
+bx d$
+bx c$
+bx b$
+bx a$
+bx `$
+bx _$
+bx ^$
+bx ]$
+b0 \$
+0[$
+bx Z$
+bx Y$
+bx X$
+b11111111 T$
+b0 S$
+b0 R$
+b0 Q$
+b0 P$
+bx M$
+bx L$
+bx K$
+bx J$
+bx I$
+bx H$
+bx G$
+bx F$
+b11111111 E$
+b0 D$
+b0 C$
+b0 B$
+b0 A$
+bx @$
+bx =$
+bx <$
+bx ;$
+bx :$
+bx 9$
+bx 8$
+bx 7$
+bx 6$
+b11111111 5$
+b0 4$
+b0 3$
+b0 2$
+b0 1$
+bx 0$
+b0 /$
+b0 .$
+b0 -$
+b0 ,$
+b0 +$
+b0 *$
+b11111111 )$
+b0 '$
+b0 &$
+b10000 %$
+bx $$
+bx #$
+bx "$
+bx !$
+bx ~#
+bx }#
+bx |#
+bx {#
+b0 z#
+0y#
+bx x#
+bx w#
+bx v#
+b11111111 r#
+b0 q#
+b0 p#
+b0 o#
+b0 n#
+bx k#
+bx j#
+bx i#
+bx h#
+bx g#
+bx f#
+bx e#
+bx d#
+b11111111 c#
+b0 b#
+b0 a#
+b0 `#
+b0 _#
+bx ^#
+bx [#
+bx Z#
+bx Y#
+bx X#
+bx W#
+bx V#
+bx U#
+bx T#
+b11111111 S#
+b0 R#
+b0 Q#
+b0 P#
+b0 O#
+bx N#
+b0 M#
+b0 L#
+b0 K#
+b0 J#
+b0 I#
+b0 H#
+b0 G#
+b0 F#
+b0 E#
+b0 D#
+b0 C#
+bx ?#
+bx >#
+x=#
+bx <#
+x;#
+bx :#
+bx 9#
+bx 8#
+bx 7#
+bx 6#
+bx 5#
+bx 4#
+bx 3#
+x2#
+bx 1#
+x0#
+bx /#
+bx .#
+bx -#
+bx ,#
+bx +#
+bx *#
+bx )#
+0(#
+1'#
+0&#
+1%#
+b0 $#
+b0 ##
+bx "#
+bx !#
+bx ~"
+bx }"
+bx |"
+bx {"
+bx z"
+bx u"
+b0 t"
+b0 s"
+b0 r"
+b0 q"
+b0 p"
+b0 o"
+bx i"
+bx h"
+bx g"
+b0 f"
+bx e"
+b0 d"
+bx c"
+b0 b"
+bx a"
+b0 `"
+bx _"
+bx ^"
+b0 ]"
+b0 \"
+b0 ["
+b0 Z"
+b0 Y"
+bx X"
+bx W"
+bx V"
+bx U"
+bx T"
+bx S"
+bx R"
+b0 Q"
+b0 P"
+b0 O"
+b0 N"
+b0 M"
+b0 L"
+b0 K"
+0J"
+b0 I"
+bx H"
+bx G"
+bx F"
+xE"
+xD"
+xC"
+bx B"
+bx A"
+bx @"
+b0 :"
+b0 9"
+b0 8"
+bx 1"
+bx 0"
+bx /"
+b0 ."
+bx -"
+b0 ,"
+bx +"
+b0 *"
+bx )"
+x("
+b0 '"
+x&"
+x%"
+x$"
+bx #"
+bx ""
+bx !"
+bx ~
+bx }
+b0 |
+b0 {
+b0 z
+b0 y
+b0 x
+bx w
+bx v
+bx u
+bx t
+bx s
+bx r
+bx q
+b0 p
+b0 o
+b0 n
+b0 m
+b0 l
+b0 k
+b0 j
+b0 i
+0h
+b0 g
+b0 f
+b0 e
+b0 d
+b0 c
+b0 b
+b0 a
+b0 `
+b0 _
+0^
+1]
+0\
+0[
+0Z
+0Y
+b0 X
+0W
+0V
+b0 U
+0T
+0S
+0R
+b0 Q
+b0 P
+0O
+0N
+0M
+0L
+0K
+0J
+0I
+b0 H
+bx B
+bx A
+bx @
+bx ?
+b0 >
+bx =
+b0 <
+bx ;
+x:
+x9
+x8
+x7
+x6
+bx 5
+x4
+x3
+bx 2
+bx 1
+bx 0
+bx /
+b0 .
+b0 -
+b0 ,
+b0 +
+b0 *
+0)
+0(
+bx '
+bx &
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
+#5000
+0:
+09
+b0 ?
+b0 -"
+b0 e"
+b0 }"
+b0 A
+b0 0"
+b0 h"
+b0 {"
+b0 @
+b0 /"
+b0 g"
+b0 |"
+b0 B
+b0 1"
+b0 i"
+b0 z"
+b0 =
+b0 +"
+b0 c"
+b0 ~"
+b0 ;
+b0 )"
+b0 a"
+b0 !#
+b10000 %$
+b10000 e$
+1D"
+1C"
+0E"
+0&"
+0("
+0$"
+0%"
+b0 5
+b0 #"
+b0 ^"
+b0 q$
+b0 '
+b0 w
+b0 X"
+b0 r$
+06
+07
+b0 _"
+b0 u"
+b0 ?#
+b0 p$
+b0 "
+b0 r
+b0 S"
+b0 s$
+b0 !
+b0 q
+b0 R"
+b0 t$
+08
+b0 >#
+b0 [#
+b0 k#
+b0 v#
+b0 6#
+b0 N#
+b0 ^#
+b0 #$
+b0 %
+b0 u
+b0 V"
+b0 :#
+b0 Y#
+b0 i#
+b0 {#
+b0 &
+b0 v
+b0 W"
+b0 <#
+b0 Z#
+b0 j#
+b0 x#
+b0 5#
+b0 U#
+b0 e#
+b0 !$
+b0 9#
+b0 X#
+b0 h#
+b0 |#
+b0 7#
+b0 V#
+b0 f#
+b0 ~#
+b0 8#
+b0 W#
+b0 g#
+b0 }#
+b0 4#
+b0 T#
+b0 d#
+b0 "$
+0;#
+0=#
+b0 w#
+b0 3#
+b0 =$
+b0 M$
+b0 X$
+b0 +#
+b0 0$
+b0 @$
+b0 c$
+b0 #
+b0 s
+b0 T"
+b0 /#
+b0 ;$
+b0 K$
+b0 ]$
+b0 $
+b0 t
+b0 U"
+b0 1#
+b0 <$
+b0 L$
+b0 Z$
+b0 *#
+b0 7$
+b0 G$
+b0 a$
+b0 .#
+b0 :$
+b0 J$
+b0 ^$
+b0 ,#
+b0 8$
+b0 H$
+b0 `$
+b0 -#
+b0 9$
+b0 I$
+b0 _$
+b0 )#
+b0 6$
+b0 F$
+b0 b$
+00#
+02#
+b0 Y$
+b0 1
+b0 !"
+b0 @"
+b0 /
+b0 }
+b0 F"
+b0 0
+b0 ~
+b0 B"
+03
+04
+b0 2
+b0 ""
+b0 A"
+b10 "#
+b10000 $$
+b10000 d$
+b10 H"
+b10000 G"
+1K
+#10000
+0K
+#15000
+b10 H"
+b10000 G"
+b10000 d$
+b10000 $$
+b10 "#
+1K
+#20000
+0K
+#25000
+b10 "#
+b10000 $$
+b10000 d$
+b10 H"
+b10000 G"
+1K
+#30000
+0%#
+0'#
+1J
+0]
+0K
+#35000
+b10 "#
+1K
+#40000
+1N
+0K
+#45000
+1%#
+1:
+19
+17
+b1 _"
+b1 u"
+b1 ?#
+b1 p$
+b1 "
+b1 r
+b1 S"
+b1 s$
+b1 !
+b1 q
+b1 R"
+b1 t$
+b10 "#
+1K
+#50000
+0N
+0K
+#55000
+0%#
+07
+b0 _"
+b0 u"
+b0 ?#
+b0 p$
+b10000 $$
+b10 "#
+1K
+#60000
+1^
+0K
+#65000
+b1 '
+b1 w
+b1 X"
+b1 r$
+17
+b10 "#
+1K
+#70000
+0J
+0^
+0K
+#75000
+07
+b10 "#
+1K
+#80000
+1h
+1V
+1W
+b10101010 X
+b10101010 j
+b10101010 :"
+b11 U
+b11 i
+b11 9"
+0K
+#85000
+1E"
+1%"
+b1 /
+b1 }
+b1 F"
+14
+b10 "#
+1K
+#90000
+0h
+1J
+0W
+0V
+0K
+#95000
+04
+b10 "#
+1K
+#100000
+1N
+1L
+0K
+#105000
+1'#
+17
+b10 _"
+b10 u"
+b10 ?#
+b10 p$
+b11 "
+b11 r
+b11 S"
+b11 s$
+b11 !
+b11 q
+b11 R"
+b11 t$
+b10 "#
+1K
+#110000
+0N
+0K
+#115000
+0'#
+07
+b0 _"
+b0 u"
+b0 ?#
+b0 p$
+b10000 d$
+b10 "#
+1K
+#120000
+1^
+0K
+#125000
+0D"
+0C"
+0E"
+b10 '
+b10 w
+b10 X"
+b10 r$
+17
+18
+b10 "#
+1K
+#130000
+0J
+0^
+0K
+#135000
+07
+b10 "#
+1K
+#140000
+1h
+1V
+0K
+#145000
+b1 1
+b1 !"
+b1 @"
+13
+b10 "#
+1K
+#150000
+0h
+1J
+0V
+0K
+#155000
+03
+b10 "#
+1K
+#160000
+1S
+b11 H
+b11 e
+b11 8"
+1I
+0K
+#165000
+1C"
+1("
+b10 "#
+1K
+#170000
+0J
+0S
+0K
+#175000
+b10 "#
+1K
+#180000
+1h
+1V
+0K
+#185000
+b1 0
+b1 ~
+b1 B"
+14
+b10101010 2
+b10101010 ""
+b10101010 A"
+b10 "#
+1K
+#190000
+0h
+1J
+0V
+0K
+#195000
+04
+b10 "#
+1K
+#200000
+1Y
+0K
+#205000
+0:
+17
+b1 "
+b1 r
+b1 S"
+b1 s$
+b10 "#
+1K
+#210000
+0J
+0Y
+0K
+#215000
+07
+b10 "#
+1K
+#220000
+1V
+0K
+#225000
+b10 "#
+1K
+#230000
+1J
+0V
+0K
+#235000
+b10 "#
+1K
+#240000
+1Z
+0K
+#245000
+1:
+17
+b11 "
+b11 r
+b11 S"
+b11 s$
+b10 "#
+1K
+#250000
+0Z
+0K
+#255000
+07
+b10 "#
+1K
+#260000
+1^
+0K
+#265000
+b11 '
+b11 w
+b11 X"
+b11 r$
+17
+b10 "#
+1K
+#270000
+0J
+0^
+0K
+#275000
+07
+b10 "#
+1K
+#280000
+1h
+1V
+0K
+#285000
+b10 0
+b10 ~
+b10 B"
+14
+b10 "#
+1K
+#290000
+0h
+0V
+0K

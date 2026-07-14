@@ -1,0 +1,257 @@
+$date
+	Fri Jul 10 20:35:32 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_ifa_onile_supervisor $end
+$var wire 1 ! share_denied $end
+$var wire 1 " share_allowed $end
+$var wire 1 # explicit_permission $end
+$var wire 32 $ denied_count [31:0] $end
+$var wire 32 % allowed_count [31:0] $end
+$var parameter 32 & YARA_COUNT $end
+$var parameter 32 ' YARA_W $end
+$var reg 1 ( admin_destination_yara $end
+$var reg 1 ) admin_source_yara $end
+$var reg 1 * babalawo_mode $end
+$var reg 1 + clk $end
+$var reg 1 , grant_valid $end
+$var reg 1 - request_destination_yara $end
+$var reg 1 . request_source_yara $end
+$var reg 1 / revoke_valid $end
+$var reg 1 0 rst $end
+$var reg 1 1 share_request $end
+$scope module dut $end
+$var wire 1 ( admin_destination_yara $end
+$var wire 1 ) admin_source_yara $end
+$var wire 1 * babalawo_mode $end
+$var wire 1 + clk $end
+$var wire 1 , grant_valid $end
+$var wire 1 - request_destination_yara $end
+$var wire 1 . request_source_yara $end
+$var wire 1 / revoke_valid $end
+$var wire 1 0 rst $end
+$var wire 1 1 share_request $end
+$var parameter 32 2 MAX_YARA $end
+$var parameter 32 3 YARA_COUNT $end
+$var parameter 32 4 YARA_W $end
+$var reg 1 5 admin_destination_valid $end
+$var reg 1 6 admin_source_valid $end
+$var reg 32 7 allowed_count [31:0] $end
+$var reg 32 8 denied_count [31:0] $end
+$var reg 1 # explicit_permission $end
+$var reg 1 9 grant_accepted $end
+$var reg 1 : local_access $end
+$var reg 1 ; request_destination_valid $end
+$var reg 1 < request_source_valid $end
+$var reg 1 = revoke_accepted $end
+$var reg 1 " share_allowed $end
+$var reg 1 ! share_denied $end
+$var integer 32 > destination_index [31:0] $end
+$var integer 32 ? source_index [31:0] $end
+$upscope $end
+$scope task grant_share $end
+$upscope $end
+$scope task request_share $end
+$upscope $end
+$scope task revoke_share $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1 4
+b10 3
+b10 2
+b1 '
+b10 &
+$end
+#0
+$dumpvars
+bx ?
+bx >
+0=
+1<
+1;
+1:
+09
+bx 8
+bx 7
+16
+15
+01
+10
+0/
+0.
+0-
+0,
+0+
+0*
+0)
+0(
+bx %
+bx $
+0#
+0"
+0!
+$end
+#5000
+b0 $
+b0 8
+b0 %
+b0 7
+b10 >
+b10 ?
+1+
+#10000
+0+
+#15000
+b10 >
+b10 ?
+1+
+#20000
+0+
+#25000
+b10 >
+b10 ?
+1+
+#30000
+00
+0+
+#35000
+1+
+#40000
+1"
+11
+0+
+#45000
+b1 %
+b1 7
+1+
+#50000
+0"
+01
+0+
+#55000
+1+
+#60000
+1!
+0:
+11
+1-
+0+
+#65000
+b1 $
+b1 8
+1+
+#70000
+0!
+1*
+01
+0+
+#75000
+1+
+#80000
+1!
+11
+0+
+#85000
+b10 $
+b10 8
+1+
+#90000
+0!
+01
+0+
+#95000
+1+
+#100000
+19
+1,
+1(
+0+
+#105000
+1#
+1+
+#110000
+09
+0,
+0+
+#115000
+1+
+#120000
+1"
+11
+0+
+#125000
+b10 %
+b10 7
+1+
+#130000
+0"
+01
+0+
+#135000
+1+
+#140000
+1!
+0#
+11
+0-
+1.
+0+
+#145000
+b11 $
+b11 8
+1+
+#150000
+0!
+01
+0+
+#155000
+1+
+#160000
+1=
+1/
+0+
+#165000
+1+
+#170000
+0=
+0/
+0+
+#175000
+1+
+#180000
+1!
+11
+1-
+0.
+0+
+#185000
+b100 $
+b100 8
+1+
+#190000
+0!
+0*
+01
+0+
+#195000
+1+
+#200000
+1!
+11
+0+
+#205000
+b101 $
+b101 8
+1+
+#210000
+0!
+01
+0+

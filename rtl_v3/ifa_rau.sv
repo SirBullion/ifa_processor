@@ -23,7 +23,7 @@ module ifa_rau #(
     always_comb begin
         RESULT       = '0;
         CARRY_OUT    = 1'b0;
-        AGREEMENT    = ~(A ^ B);
+        AGREEMENT    =  (A & B);   // FIXED: was XNOR, should be AND
         DISAGREEMENT =  (A ^ B);
         TRANSPORT    = '0;
 

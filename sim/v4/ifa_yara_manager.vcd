@@ -1,0 +1,282 @@
+$date
+	Fri Jul 10 20:40:25 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_ifa_yara_manager $end
+$var wire 2 ! yara_valid [1:0] $end
+$var wire 2 " yara_running [1:0] $end
+$var wire 32 # switch_count [31:0] $end
+$var wire 32 $ denied_count [31:0] $end
+$var wire 1 % command_denied $end
+$var wire 1 & command_allowed $end
+$var wire 2 ' clear_yara [1:0] $end
+$var wire 1 ( active_yara $end
+$var wire 1 ) active_valid $end
+$var wire 1 * active_running $end
+$var parameter 32 + YARA_COUNT $end
+$var parameter 32 , YARA_W $end
+$var reg 1 - babalawo_mode $end
+$var reg 1 . clk $end
+$var reg 1 / command_yara $end
+$var reg 1 0 create_valid $end
+$var reg 1 1 destroy_valid $end
+$var reg 1 2 pause_valid $end
+$var reg 1 3 resume_valid $end
+$var reg 1 4 rst $end
+$var reg 1 5 select_valid $end
+$scope module dut $end
+$var wire 1 - babalawo_mode $end
+$var wire 1 . clk $end
+$var wire 1 / command_yara $end
+$var wire 1 0 create_valid $end
+$var wire 1 1 destroy_valid $end
+$var wire 1 2 pause_valid $end
+$var wire 1 3 resume_valid $end
+$var wire 1 4 rst $end
+$var wire 1 5 select_valid $end
+$var parameter 32 6 MAX_YARA $end
+$var parameter 32 7 YARA_COUNT $end
+$var parameter 32 8 YARA_W $end
+$var reg 1 * active_running $end
+$var reg 1 ) active_valid $end
+$var reg 1 ( active_yara $end
+$var reg 1 9 active_yara_in_range $end
+$var reg 2 : clear_yara [1:0] $end
+$var reg 1 & command_allowed $end
+$var reg 1 % command_denied $end
+$var reg 1 ; command_yara_valid $end
+$var reg 32 < denied_count [31:0] $end
+$var reg 32 = switch_count [31:0] $end
+$var reg 2 > yara_running [1:0] $end
+$var reg 2 ? yara_valid [1:0] $end
+$upscope $end
+$scope task command $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1 8
+b10 7
+b10 6
+b1 ,
+b10 +
+$end
+#0
+$dumpvars
+bx ?
+bx >
+bx =
+bx <
+1;
+bx :
+x9
+05
+14
+03
+02
+01
+00
+0/
+0.
+0-
+0*
+0)
+x(
+bx '
+x&
+x%
+bx $
+bx #
+bx "
+bx !
+$end
+#5000
+19
+b0 $
+b0 <
+b0 #
+b0 =
+0%
+0&
+b0 '
+b0 :
+b0 "
+b0 >
+b0 !
+b0 ?
+0(
+1.
+#10000
+0.
+#15000
+1.
+#20000
+0.
+#25000
+1.
+#30000
+04
+0.
+#35000
+1.
+#40000
+10
+0.
+#45000
+b1 $
+b1 <
+1%
+1.
+#50000
+1-
+00
+0.
+#55000
+0%
+1.
+#60000
+10
+0.
+#65000
+1*
+1)
+1&
+b1 '
+b1 :
+b1 "
+b1 >
+b1 !
+b1 ?
+1.
+#70000
+00
+0.
+#75000
+0&
+b0 '
+b0 :
+1.
+#80000
+10
+1/
+0.
+#85000
+1*
+1)
+1&
+b10 '
+b10 :
+b11 "
+b11 >
+b11 !
+b11 ?
+1.
+#90000
+00
+0.
+#95000
+0&
+b0 '
+b0 :
+1.
+#100000
+15
+0.
+#105000
+1*
+1)
+b1 #
+b1 =
+1&
+1(
+1.
+#110000
+05
+0.
+#115000
+0&
+1.
+#120000
+12
+0.
+#125000
+0*
+1)
+1&
+b1 "
+b1 >
+1.
+#130000
+02
+0.
+#135000
+0&
+1.
+#140000
+15
+0.
+#145000
+b10 $
+b10 <
+1%
+1.
+#150000
+05
+0.
+#155000
+0%
+1.
+#160000
+13
+0.
+#165000
+1*
+1)
+1&
+b11 "
+b11 >
+1.
+#170000
+03
+0.
+#175000
+0&
+1.
+#180000
+15
+0.
+#185000
+b10 #
+b10 =
+1&
+1.
+#190000
+05
+0.
+#195000
+0&
+1.
+#200000
+11
+0/
+0.
+#205000
+1*
+1)
+1&
+b1 '
+b1 :
+b10 "
+b10 >
+b10 !
+b10 ?
+1.
+#210000
+01
+0.

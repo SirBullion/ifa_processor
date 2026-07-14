@@ -1,4 +1,8 @@
 ALIASES = {
+    "YARA": "YARA",
+    "YÀRÁ": "YARA",
+    "STATION": "YARA",
+
     # Arithmetic
     "PÀPỌ̀": "PAPO",
     "PAPO": "PAPO",

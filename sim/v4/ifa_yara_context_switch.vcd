@@ -1,0 +1,324 @@
+$date
+	Fri Jul 10 20:42:16 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_ifa_yara_context_switch $end
+$var wire 8 ! read_pc [7:0] $end
+$var wire 16 " read_ir [15:0] $end
+$var wire 8 # read_flags [7:0] $end
+$var wire 8 $ read_b [7:0] $end
+$var wire 8 % read_address [7:0] $end
+$var wire 8 & read_a [7:0] $end
+$var parameter 32 ' IR_WIDTH $end
+$var parameter 32 ( WIDTH $end
+$var parameter 32 ) YARA_COUNT $end
+$var parameter 32 * YARA_W $end
+$var reg 1 + active_yara $end
+$var reg 2 , clear_yara [1:0] $end
+$var reg 1 - clk $end
+$var reg 1 . context_write $end
+$var reg 1 / rst $end
+$var reg 8 0 write_a [7:0] $end
+$var reg 8 1 write_address [7:0] $end
+$var reg 8 2 write_b [7:0] $end
+$var reg 8 3 write_flags [7:0] $end
+$var reg 16 4 write_ir [15:0] $end
+$var reg 8 5 write_pc [7:0] $end
+$scope module dut $end
+$var wire 1 + active_yara $end
+$var wire 2 6 clear_yara [1:0] $end
+$var wire 1 - clk $end
+$var wire 1 . context_write $end
+$var wire 1 / rst $end
+$var wire 8 7 write_a [7:0] $end
+$var wire 8 8 write_address [7:0] $end
+$var wire 8 9 write_b [7:0] $end
+$var wire 8 : write_flags [7:0] $end
+$var wire 16 ; write_ir [15:0] $end
+$var wire 8 < write_pc [7:0] $end
+$var parameter 32 = IR_WIDTH $end
+$var parameter 32 > MAX_YARA $end
+$var parameter 32 ? WIDTH $end
+$var parameter 32 @ YARA_COUNT $end
+$var parameter 32 A YARA_W $end
+$var reg 1 B active_yara_valid $end
+$var reg 8 C read_a [7:0] $end
+$var reg 8 D read_address [7:0] $end
+$var reg 8 E read_b [7:0] $end
+$var reg 8 F read_flags [7:0] $end
+$var reg 16 G read_ir [15:0] $end
+$var reg 8 H read_pc [7:0] $end
+$var integer 32 I context_index [31:0] $end
+$upscope $end
+$scope task clear_context $end
+$upscope $end
+$scope task select_context $end
+$upscope $end
+$scope task write_context $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1 A
+b10 @
+b1000 ?
+b10 >
+b10000 =
+b1 *
+b10 )
+b1000 (
+b10000 '
+$end
+#0
+$dumpvars
+bx I
+bx H
+bx G
+bx F
+bx E
+bx D
+bx C
+1B
+b0 <
+b0 ;
+b0 :
+b0 9
+b0 8
+b0 7
+b0 6
+b0 5
+b0 4
+b0 3
+b0 2
+b0 1
+b0 0
+1/
+0.
+0-
+b0 ,
+0+
+bx &
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
+#5000
+b0 #
+b0 F
+b0 %
+b0 D
+b0 $
+b0 E
+b0 &
+b0 C
+b0 "
+b0 G
+b0 !
+b0 H
+b10 I
+1-
+#10000
+0-
+#15000
+b10 I
+1-
+#20000
+0-
+#25000
+b10 I
+1-
+#30000
+0/
+0-
+#35000
+b10 I
+1-
+#40000
+1.
+b101 3
+b101 :
+b100000 1
+b100000 8
+b110 2
+b110 9
+b1101 0
+b1101 7
+b1010000100000000 4
+b1010000100000000 ;
+b10010 5
+b10010 <
+0-
+#45000
+b101 #
+b101 F
+b100000 %
+b100000 D
+b110 $
+b110 E
+b1101 &
+b1101 C
+b1010000100000000 "
+b1010000100000000 G
+b10010 !
+b10010 H
+b10 I
+1-
+#50000
+0.
+0-
+#55000
+b10 I
+1-
+#60000
+b0 #
+b0 F
+b0 %
+b0 D
+b0 $
+b0 E
+b0 &
+b0 C
+b0 "
+b0 G
+b0 !
+b0 H
+1.
+b10100000 3
+b10100000 :
+b10000000 1
+b10000000 8
+b1000010 2
+b1000010 9
+b100001 0
+b100001 7
+b1011001000000000 4
+b1011001000000000 ;
+b1000100 5
+b1000100 <
+1+
+0-
+#65000
+b10100000 #
+b10100000 F
+b10000000 %
+b10000000 D
+b1000010 $
+b1000010 E
+b100001 &
+b100001 C
+b1011001000000000 "
+b1011001000000000 G
+b1000100 !
+b1000100 H
+b10 I
+1-
+#70000
+0.
+0-
+#75000
+b10 I
+1-
+#80000
+b101 #
+b101 F
+b100000 %
+b100000 D
+b110 $
+b110 E
+b1101 &
+b1101 C
+b1010000100000000 "
+b1010000100000000 G
+b10010 !
+b10010 H
+0+
+0-
+#85000
+b10 I
+1-
+#90000
+b10100000 #
+b10100000 F
+b10000000 %
+b10000000 D
+b1000010 $
+b1000010 E
+b100001 &
+b100001 C
+b1011001000000000 "
+b1011001000000000 G
+b1000100 !
+b1000100 H
+1+
+0-
+#95000
+b10 I
+1-
+#100000
+b1 ,
+b1 6
+0-
+#105000
+b10100000 #
+b10100000 F
+b10000000 %
+b10000000 D
+b1000010 $
+b1000010 E
+b100001 &
+b100001 C
+b1011001000000000 "
+b1011001000000000 G
+b1000100 !
+b1000100 H
+b10 I
+1-
+#110000
+b0 ,
+b0 6
+0-
+#115000
+b10 I
+1-
+#120000
+b0 #
+b0 F
+b0 %
+b0 D
+b0 $
+b0 E
+b0 &
+b0 C
+b0 "
+b0 G
+b0 !
+b0 H
+0+
+0-
+#125000
+b10 I
+1-
+#130000
+b10100000 #
+b10100000 F
+b10000000 %
+b10000000 D
+b1000010 $
+b1000010 E
+b100001 &
+b100001 C
+b1011001000000000 "
+b1011001000000000 G
+b1000100 !
+b1000100 H
+1+
+0-
+#131000

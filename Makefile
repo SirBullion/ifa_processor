@@ -274,3 +274,42 @@ monitor:
 	@echo "Monitor output saved to: sim/odu_all_output.txt"
 	@echo ""
 	@cat sim/odu_all_output.txt
+
+###############################################################################
+# IFÁ Processor V4
+###############################################################################
+
+V4_RTL = \
+	rtl/v4/ifa_program_executor_v4.sv \
+	rtl/v4/ifa_native_rau_v4.sv \
+	rtl/v4/ifa_relation_memory_controller_admin.sv \
+	rtl/v4/ifa_yara_manager.sv \
+	rtl/v4/ifa_yara_context_bank.sv \
+	rtl/v4/ifa_onile_supervisor.sv \
+	rtl/v4/ifa_yara_frame_share_core.sv \
+	rtl/v4/ifa_general_memory_guard.sv \
+	rtl/v4/ifa_stack_memory_v4.sv \
+	rtl/v4/ifa_onile_kernel_v4.sv
+
+V4_BRIDGE_TB = tb/v4/tb_ifa_v4_os_bridge.sv
+V4_BRIDGE    = sim/v4/ifa_v4_os_bridge.out
+
+.PHONY: v4-build test-v4 clean-v4
+
+v4-build:
+	@mkdir -p sim/v4
+	$(IVERILOG) $(SVFLAGS) \
+		-o $(V4_BRIDGE) \
+		$(V4_RTL) \
+		$(V4_BRIDGE_TB)
+	@echo "PASS: V4 bridge built"
+
+test-v4:
+	./tools/test_v4.sh
+
+clean-v4:
+	rm -f sim/v4/*.out
+	rm -rf sim/v4/regression_logs
+	rm -f programs_v4/_program_v4.hex
+	rm -f programs_v4/_program_v4.lst
+	rm -f programs_v4/_generated_v4.ifa4

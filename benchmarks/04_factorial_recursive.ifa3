@@ -1,0 +1,19 @@
+BERE
+
+; V3 factorial-style recursive workload
+; fac(4) = 4 * 3 * 2 * 1
+; Multiplication is represented by repeated PAPO because SOPO is V4.
+
+; 4 * 3 = 12
+PAPO 4 ATI 4
+PAPO 8 ATI 4
+
+; 12 * 2 = 24
+PAPO 12 ATI 12
+
+; 24 * 1 = 24
+PAPO 24 ATI 0
+
+TE ODU
+
+DURO
