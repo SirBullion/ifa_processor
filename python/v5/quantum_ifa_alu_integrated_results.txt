@@ -1,0 +1,85 @@
+=== INTEGRATED 8-BIT IFÁ QUANTUM ALU ===
+
+Width               : 8
+Qubits              : 80
+Circuit depth       : 90
+Qiskit gate count   : OrderedDict({'cx': 73, 'ccx': 49, 'x': 49, 'mcx': 20, 'barrier': 3})
+Compiled operations : 191
+
+Native operations:
+  000  PAPO  A + B
+  001  YO    A - B
+  010  SEDA  A == B
+  011  JU    A > B
+  100  KERE  A < B
+
+Generation pipeline:
+  A,B -> PAPO carry-ripple
+  A,B -> B_NOT -> YO subtraction ripple
+  A,B -> difference/equality relation
+  YO final carry + equality -> JU/KERE
+  OP -> reversible native-result selection
+
+=== SELECTED INTEGRATED IFÁ ALU STATES ===
+
+OP     A   B  | PAPO YO | SEDA JU KERE | OUT
+------------------------------------------------
+PAPO   A5  5A |  FF   4B |   0    1    0  | FF
+PAPO   FF  01 |  00   FE |   0    1    0  | 00
+YO     10  01 |  11   0F |   0    1    0  | 0F
+YO     00  01 |  01   FF |   0    0    1  | FF
+SEDA   55  55 |  AA   00 |   1    0    0  | 01
+SEDA   55  AA |  FF   AB |   0    0    1  | 00
+JU     FF  01 |  00   FE |   0    1    0  | 01
+KERE   01  FF |  00   02 |   0    0    1  | 01
+
+=== EXHAUSTIVE CANDIDATE-GENERATOR TEST ===
+
+Operand pairs tested     : 65536
+Candidate failures       : 0
+=== EXHAUSTIVE INTEGRATED IFÁ ALU TEST ===
+
+Native operations            : 5
+Ordered pairs per operation  : 65536
+Total integrated cases       : 327680
+Integrated ALU failures      : 0
+
+=== RESERVED OPCODE TEST ===
+
+Reserved cases tested : 15
+Reserved failures     : 0
+
+=== ARBITRARY OUTPUT-TARGET TEST ===
+
+Target cases tested : 125
+Target failures     : 0
+
+=== COMPLETE ALU INVERSE TEST ===
+
+Inverse cases tested : 1600
+Inverse failures     : 0
+
+=== INTEGRATED ALU SUPERPOSITION TEST ===
+
+Input operation branches : 5
+Output branches          : 5
+State norm               : 1.000000000000
+Linear mapping           : True
+
+Observed coherent ALU branches:
+  amplitude=(0.4472135954999579+0j) OP=PAPO  PAPO=FF YO=4B SEDA=0 JU=1 KERE=0 OUT=FF
+  amplitude=(0.4472135954999579+0j) OP=YO    PAPO=FF YO=4B SEDA=0 JU=1 KERE=0 OUT=4B
+  amplitude=(0.4472135954999579+0j) OP=SEDA  PAPO=FF YO=4B SEDA=0 JU=1 KERE=0 OUT=00
+  amplitude=(0.4472135954999579+0j) OP=JU    PAPO=FF YO=4B SEDA=0 JU=1 KERE=0 OUT=01
+  amplitude=(0.4472135954999579+0j) OP=KERE  PAPO=FF YO=4B SEDA=0 JU=1 KERE=0 OUT=00
+
+=== REVERSIBLE ALU STATEMENT ===
+
+PAPO, YO, SEDA, JU and KERE are generated inside the circuit.
+No candidate result is preloaded by the classical test harness.
+The ALU consists exclusively of X and controlled-X permutation gates.
+Therefore the complete 8-bit ALU is a reversible unitary quantum operator.
+
+=== FINAL RESULT ===
+Total failures : 0
+RESULT         : PASS

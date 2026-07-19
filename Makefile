@@ -278,21 +278,39 @@ monitor:
 ###############################################################################
 # IFÁ Processor V4
 ###############################################################################
-
 V4_RTL = \
-	rtl/v4/ifa_program_executor_v4.sv \
-	rtl/v4/ifa_native_rau_v4.sv \
-	rtl/v4/ifa_relation_memory_controller_admin.sv \
-	rtl/v4/ifa_yara_manager.sv \
-	rtl/v4/ifa_yara_context_bank.sv \
-	rtl/v4/ifa_onile_supervisor.sv \
-	rtl/v4/ifa_yara_frame_share_core.sv \
-	rtl/v4/ifa_general_memory_guard.sv \
-	rtl/v4/ifa_stack_memory_v4.sv \
-	rtl/v4/ifa_onile_kernel_v4.sv
+        rtl/v4/ifa_program_executor_v4.sv \
+        rtl/v4/ifa_native_rau_v4.sv \
+        rtl/v4/ifa_relation_memory_controller_admin.sv \
+        rtl/v4/ifa_yara_manager.sv \
+        rtl/v4/ifa_yara_context_bank.sv \
+        rtl/v4/ifa_onile_supervisor.sv \
+        rtl/v4/ifa_yara_frame_share_core.sv \
+        rtl/v4/ifa_general_memory_guard.sv \
+        rtl/v4/ifa_stack_memory_v4.sv \
+        rtl/v4/ifa_onile_kernel_v4.sv
+
+V45_RTL = \
+        rtl/v45/ifa_phi_p8.sv \
+        rtl/v45/ifa_relation_frame.sv \
+        rtl/v45/ifa_yara_pe.sv \
+        rtl/v45/ifa_yara_pe_bank4.sv \
+        rtl/v45/ifa_yara_frame_share_core_v45.sv \
+        rtl/v45/ifa_program_executor_v45.sv \
+        rtl/v4/ifa_native_rau_v4.sv \
+        rtl/v4/ifa_relation_memory_controller_admin.sv \
+        rtl/v4/ifa_yara_manager.sv \
+        rtl/v4/ifa_yara_context_bank.sv \
+        rtl/v4/ifa_onile_supervisor.sv \
+        rtl/v4/ifa_general_memory_guard.sv \
+        rtl/v4/ifa_stack_memory_v4.sv \
+        rtl/v45/ifa_onile_kernel_v45.sv
+
 
 V4_BRIDGE_TB = tb/v4/tb_ifa_v4_os_bridge.sv
 V4_BRIDGE    = sim/v4/ifa_v4_os_bridge.out
+V45_BRIDGE_TB = tb/v45/tb_ifa_v45_os_bridge.sv
+V45_BRIDGE    = sim/v45/ifa_v45_os_bridge.out
 
 .PHONY: v4-build test-v4 clean-v4
 
@@ -313,3 +331,55 @@ clean-v4:
 	rm -f programs_v4/_program_v4.hex
 	rm -f programs_v4/_program_v4.lst
 	rm -f programs_v4/_generated_v4.ifa4
+.PHONY: v45-build
+
+v45-build:
+	@mkdir -p sim/v45
+	$(IVERILOG) $(SVFLAGS) \
+		-o $(V45_BRIDGE) \
+		$(V45_RTL) \
+		$(V45_BRIDGE_TB)
+	@echo "PASS: V4.5 bridge built"
+
+
+.PHONY: relation-frame-v45
+
+relation-frame-v45:
+	mkdir -p sim_v45
+	iverilog \
+		-g2012 \
+		-Wall \
+		-s tb_ifa_relation_frame \
+		-o sim_v45/ifa_relation_frame.vvp \
+		rtl/v45/ifa_relation_frame.sv \
+		tb/v45/tb_ifa_relation_frame.sv
+	vvp sim_v45/ifa_relation_frame.vvp
+
+
+.PHONY: yara-pe-v45
+
+yara-pe-v45:
+	mkdir -p sim_v45
+	iverilog \
+		-g2012 \
+		-Wall \
+		-s tb_ifa_yara_pe \
+		-o sim_v45/ifa_yara_pe.vvp \
+		rtl/v45/ifa_yara_pe.sv \
+		tb/v45/tb_ifa_yara_pe.sv
+	vvp sim_v45/ifa_yara_pe.vvp
+
+.PHONY: yara-pe-bank4-v45
+
+yara-pe-bank4-v45:
+	mkdir -p sim_v45
+	iverilog \
+		-g2012 \
+		-Wall \
+		-s tb_ifa_yara_pe_bank4 \
+		-o sim_v45/ifa_yara_pe_bank4.vvp \
+		rtl/v45/ifa_phi_p8.sv \
+		rtl/v45/ifa_yara_pe.sv \
+		rtl/v45/ifa_yara_pe_bank4.sv \
+		tb/v45/tb_ifa_yara_pe_bank4.sv
+	vvp sim_v45/ifa_yara_pe_bank4.vvp

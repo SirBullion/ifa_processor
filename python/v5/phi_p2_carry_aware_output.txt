@@ -1,0 +1,32 @@
+================================================================================
+IFÁ V5: CARRY-AWARE Φ-P2 BLOCK ALGEBRA
+================================================================================
+
+LOCAL CARRY-AWARE ALGEBRA
+--------------------------------------------------------------------------------
+Two-bit operand-pair states          : 16
+Carry contexts per operand pair      : 4
+Total local contexts                 : 64
+Distinct relation transitions       : 40
+Distinct XOR transition vectors     : 13
+Carry-aware source states           : 18
+Branching source states             : 18
+Maximum targets from one source     : 4
+
+FOUR-BLOCK BYTE RECONSTRUCTION
+--------------------------------------------------------------------------------
+Ordered byte pairs tested           : 65536
+Direct reconstruction               : PASS
+Φ-P8 reconstruction                : PASS
+Reachable block/carry trace contexts: 46
+
+Final carry-pair frequencies
+--------------------------------------------------------------------------------
+  (0, 0) : 24704
+  (0, 1) : 8192
+  (1, 0) : 8192
+  (1, 1) : 24448
+
+Saved:
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_carry_aware_local_contexts.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_carry_aware_summary.json

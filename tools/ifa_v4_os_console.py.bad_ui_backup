@@ -1,0 +1,1822 @@
+#!/usr/bin/env python3
+
+from __future__ import annotations
+
+import queue
+import random
+import re
+import shlex
+import subprocess
+import sys
+import threading
+import time
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+BRIDGE = PROJECT_ROOT / "sim/v4/ifa_v4_os_bridge.out"
+ASSEMBLER = PROJECT_ROOT / "tools/ifaasm_v4.py"
+YORUBA_FRONTEND = PROJECT_ROOT / "tools/ifa_yoruba_frontend_v4.py"
+APPS_DIR = PROJECT_ROOT / "apps_v4"
+WORK_DIR = PROJECT_ROOT / "programs_v4"
+
+MAX_YARA = 16
+
+
+NATIVE_OPERATIONS = {
+    "PAPO": 0x0,
+    "PÀPỌ̀": 0x0,
+
+    "YO": 0x1,
+    "YỌ": 0x1,
+
+    "DAGBA": 0x2,
+    "DÁGBA": 0x2,
+
+    "PIN": 0x3,
+    "PÍN": 0x3,
+
+    "KU": 0x4,
+    "KÙ": 0x4,
+
+    "GBE": 0x5,
+    "GBÉ": 0x5,
+
+    "SEDA": 0x6,
+    "ṢẸ̀DÁ": 0x6,
+
+    "JU": 0x7,
+    "JÙ": 0x7,
+
+    "KERE": 0x8,
+    "KERÉ": 0x8,
+}
+
+
+
+#======================================================================
+# OHÙN IFÁ 3.0 — canonical V3 Odù services
+#======================================================================
+
+# Canonical primary-Odù order used only as a guarded fallback.
+# The normal path first reads the existing V3 Odù module.
+FALLBACK_ODU_NAMES = (
+    "OGBÈ",
+    "Ọ̀YẸ̀KÚ",
+    "ÌWÒRÌ",
+    "ÒDÍ",
+    "ÌRÒSÙN",
+    "Ọ̀WỌ́NRÍN",
+    "Ọ̀BÀRÀ",
+    "Ọ̀KÀNRÀN",
+    "ÒGÚNDÁ",
+    "Ọ̀SÁ",
+    "ÌKÁ",
+    "ÒTÚRÚPỌ̀N",
+    "ÒTÚRÁ",
+    "ÌRẸTẸ̀",
+    "Ọ̀ṢẸ́",
+    "ÒFÚN",
+)
+
+
+def _load_v3_odu_module():
+    try:
+        from language_v3.spec import odu as v3_odu
+        return v3_odu
+    except Exception:
+        return None
+
+
+def _normalize_odu_key(value) -> int | None:
+    if isinstance(value, int):
+        if 0 <= value <= 15:
+            return value
+        return None
+
+    if isinstance(value, str):
+        cleaned = value.strip().replace("_", "").replace(" ", "")
+
+        if len(cleaned) == 4 and set(cleaned) <= {"0", "1"}:
+            return int(cleaned, 2)
+
+        try:
+            numeric = int(cleaned, 0)
+        except ValueError:
+            return None
+
+        if 0 <= numeric <= 15:
+            return numeric
+
+    return None
+
+
+def _discover_v3_odu_map() -> dict[int, str]:
+    """
+    Discover the real V3 binary-to-Odù mapping.
+
+    This does not assume that the canonical name order is the same
+    as the four-bit numeric order.
+    """
+
+    module = _load_v3_odu_module()
+
+    if module is None:
+        return {
+            index: name
+            for index, name in enumerate(FALLBACK_ODU_NAMES)
+        }
+
+    best_map: dict[int, str] = {}
+
+    for attribute_name in dir(module):
+        if attribute_name.startswith("_"):
+            continue
+
+        value = getattr(module, attribute_name)
+
+        if not isinstance(value, dict):
+            continue
+
+        candidate: dict[int, str] = {}
+
+        # Form 1:
+        #     0b0000 -> "OGBÈ"
+        #     "0000" -> "OGBÈ"
+        for key, mapped_value in value.items():
+            index = _normalize_odu_key(key)
+
+            if index is not None and isinstance(mapped_value, str):
+                candidate[index] = mapped_value
+
+        if len(candidate) > len(best_map):
+            best_map = candidate
+
+        # Form 2:
+        #     "OGBÈ" -> 0b0000
+        #     "OGBÈ" -> "0000"
+        inverted: dict[int, str] = {}
+
+        for name, mapped_value in value.items():
+            index = _normalize_odu_key(mapped_value)
+
+            if index is not None and isinstance(name, str):
+                inverted[index] = name
+
+        if len(inverted) > len(best_map):
+            best_map = inverted
+
+    if len(best_map) == 16:
+        return best_map
+
+    # Search sequences of records such as:
+    #     [("OGBÈ", "0000"), ...]
+    for attribute_name in dir(module):
+        if attribute_name.startswith("_"):
+            continue
+
+        value = getattr(module, attribute_name)
+
+        if not isinstance(value, (list, tuple)):
+            continue
+
+        candidate: dict[int, str] = {}
+
+        for item in value:
+            if not isinstance(item, (list, tuple)) or len(item) < 2:
+                continue
+
+            first, second = item[0], item[1]
+
+            first_index = _normalize_odu_key(first)
+            second_index = _normalize_odu_key(second)
+
+            if first_index is not None and isinstance(second, str):
+                candidate[first_index] = second
+            elif second_index is not None and isinstance(first, str):
+                candidate[second_index] = first
+
+        if len(candidate) > len(best_map):
+            best_map = candidate
+
+    if len(best_map) == 16:
+        return best_map
+
+    raise RuntimeError(
+        "Could not discover the complete canonical V3 Odù mapping "
+        "from language_v3.spec.odu."
+    )
+
+
+ODU_MAP = _discover_v3_odu_map()
+
+
+def odu_name(value: int) -> str:
+    return ODU_MAP[value & 0x0F]
+
+
+def odu_bits(value: int) -> tuple[int, int, int, int]:
+    """
+    Return four Odù positions from top to bottom.
+
+    0 renders as a single mark:  I
+    1 renders as a double mark: II
+    """
+
+    nibble = value & 0x0F
+
+    return tuple(
+        (nibble >> shift) & 1
+        for shift in (3, 2, 1, 0)
+    )
+
+
+def odu_mark(bit: int) -> str:
+    return "II" if bit else "I"
+
+
+def render_single_odu(
+    value: int,
+    heading: str = "ODÙ",
+) -> None:
+    bits = odu_bits(value)
+
+    print()
+    print(f"{heading}: {odu_name(value)}")
+    print()
+
+    for bit in bits:
+        print(f"          {odu_mark(bit)}")
+
+    print()
+    print(f"Binary : {value & 0x0F:04b}")
+    print(f"Index  : {value & 0x0F}")
+    print()
+
+
+def render_complete_odu(
+    left_value: int,
+    right_value: int,
+    heading: str = "ODÙ IFÁ",
+) -> None:
+    left_bits = odu_bits(left_value)
+    right_bits = odu_bits(right_value)
+
+    print()
+    print(f"{heading}")
+    print()
+    print("            LEFT        RIGHT")
+    print()
+
+    for left_bit, right_bit in zip(
+        left_bits,
+        right_bits,
+    ):
+        print(
+            f"              "
+            f"{odu_mark(left_bit):<8}"
+            f"{odu_mark(right_bit)}"
+        )
+
+    print()
+    print(
+        f"Name   : "
+        f"{odu_name(left_value)} "
+        f"{odu_name(right_value)}"
+    )
+    print(
+        f"Binary : "
+        f"{left_value & 0x0F:04b} "
+        f"{right_value & 0x0F:04b}"
+    )
+    print(
+        f"Index  : "
+        f"{left_value & 0x0F}:"
+        f"{right_value & 0x0F}"
+    )
+    print()
+
+
+def render_circular_cast(
+    cast_value: int,
+    cast_number: int,
+) -> None:
+    """
+    Circular TẸ IFÁ presentation.
+
+    ORÍ remains at the top centre.
+    No rectangular border is used.
+    """
+
+    bits = odu_bits(cast_value)
+    marks = [odu_mark(bit) for bit in bits]
+
+    print()
+    print("                         ORÍ")
+    print("                          ●")
+    print()
+    print(
+        f"                 {marks[0]:<8}"
+        f"{marks[1]:>8}"
+    )
+    print()
+    print("             ●                    ●")
+    print()
+    print(
+        f"                 {marks[3]:<8}"
+        f"{marks[2]:>8}"
+    )
+    print()
+    print("                          ●")
+    print()
+    print(
+        f"Cast {cast_number}: "
+        f"{odu_name(cast_value)} "
+        f"({cast_value & 0x0F:04b})"
+    )
+    print()
+
+
+def daifa_service() -> int:
+    """
+    Produce one ordinary random primary-Odù simulation.
+    """
+
+    value = random.randrange(16)
+
+    render_single_odu(
+        value,
+        heading="DÁIFÁ",
+    )
+
+    return value
+
+
+def printodu_service(
+    latest_relation: dict[str, int] | None,
+) -> None:
+    """
+    PRINTODU displays the latest manifested result Y as one Odù.
+    """
+
+    if latest_relation is None:
+        print("KÒ SÍ ODÙ — no recent processor result.")
+        return
+
+    render_single_odu(
+        latest_relation["Y"],
+        heading="PRINTODU",
+    )
+
+
+def printoduall_service(
+    latest_relation: dict[str, int] | None,
+) -> None:
+    """
+    PRINTODUALL displays the complete active V4 relation fields as Odù.
+    """
+
+    if latest_relation is None:
+        print("KÒ SÍ ODÙ — no recent processor relation.")
+        return
+
+    print()
+    print("PRINTODUALL — ACTIVE RELATION")
+    print("-----------------------------")
+
+    fields = (
+        ("Y", latest_relation["Y"]),
+        ("RA", latest_relation["RA"]),
+        ("RD", latest_relation["RD"]),
+        ("R0", latest_relation["R0"]),
+        ("T", latest_relation["T"]),
+    )
+
+    for field_name, value in fields:
+        render_single_odu(
+            value,
+            heading=field_name,
+        )
+
+
+SYMBOLIC_OPERATIONS = {
+    "+": "PAPO",
+    "-": "YO",
+    "*": "DAGBA",
+    "/": "PIN",
+    "%": "KU",
+    "^": "GBE",
+    "==": "SEDA",
+    ">": "JU",
+    "<": "KERE",
+}
+
+
+COMMAND_ALIASES = {
+    # Normal OHÙN IFÁ services
+    "DAIFA": "DAIFA",
+    "DÁIFÁ": "DAIFA",
+
+    "TEIFA": "TEIFA",
+    "TẸIFA": "TEIFA",
+    "TẸ_IFÁ": "TEIFA",
+
+    "PRINTODU": "PRINTODU",
+    "PRINTODUALL": "PRINTODUALL",
+
+    # Programmer-mode entry
+    "BABALAWO": "PROGRAMMER_MODE",
+    "BÀBÁLÁWO": "PROGRAMMER_MODE",
+
+    # Privilege
+    "TAN": "BABALAWO_ON",
+    "OPEN": "BABALAWO_ON",
+    "PA": "BABALAWO_OFF",
+    "CLOSE": "BABALAWO_OFF",
+
+    # YÀRÁ lifecycle
+    "YARA": "SELECT",
+    "YÀRÁ": "SELECT",
+    "WO": "SELECT",
+    "WỌ": "SELECT",
+
+    "SEDA_YARA": "CREATE",
+    "ṢẸ̀DÁ_YÀRÁ": "CREATE",
+
+    "DURO": "PAUSE",
+    "DÚRÓ": "PAUSE",
+
+    "TESIWAJU": "RESUME",
+    "TẸ̀SÍWÁJÚ": "RESUME",
+
+    "PARE": "DESTROY",
+    "PAARẸ": "DESTROY",
+
+    # Inspection
+    "IPO": "STATUS",
+    "IPÒ": "STATUS",
+
+    # Human interpretation of the latest relation
+    "OYELA": "OYELA",
+    "OYÈLÁ": "OYELA",
+    "OYELAA": "OYELAA",
+
+    # Program execution
+    "SE": "RUN",
+    "ṢE": "RUN",
+
+    # Shell
+    "IRANLOWO": "HELP",
+    "ÌRÀNLỌ́WỌ́": "HELP",
+    "DA": "QUIT",
+    "DÁ": "QUIT",
+    "EXIT": "QUIT",
+
+    "PADA": "PADA",
+    "PADÀ": "PADA",
+}
+
+
+RAW_BRIDGE_COMMANDS = {
+    "BABALAWO",
+    "CREATE",
+    "SELECT",
+    "PAUSE",
+    "RESUME",
+    "DESTROY",
+
+    "STACKWRITE",
+    "STACKREAD",
+
+    "CONTEXT",
+
+    "RUN",
+    "STEP",
+    "STOP",
+    "LOAD",
+    "EXEC",
+
+    "GRANT",
+    "REVOKE",
+    "SHARE",
+
+    "MEMWRITE",
+    "MEMREAD",
+    "MEMGRANTR",
+    "MEMGRANTW",
+    "MEMREVOKER",
+    "MEMREVOKEW",
+
+    "STATUS",
+    "QUIT",
+}
+
+
+class BridgeSession:
+    def __init__(self) -> None:
+        if not BRIDGE.exists():
+            raise FileNotFoundError(
+                f"V4 bridge not found: {BRIDGE}\n"
+                "Run make test-v4 to rebuild it."
+            )
+
+        self.process = subprocess.Popen(
+            [
+                "vvp",
+                str(BRIDGE),
+                "+INTERACTIVE",
+            ],
+            cwd=PROJECT_ROOT,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+        )
+
+        if self.process.stdin is None or self.process.stdout is None:
+            raise RuntimeError("Could not open bridge pipes.")
+
+        self.output_queue: queue.Queue[str] = queue.Queue()
+        self.last_lines: list[str] = []
+
+        # Latest successful native/program relation. This remains
+        # available after HELP, PRINTODU, APPS and other UI commands.
+        self.last_relation_lines: list[str] = []
+
+        # UI-only metadata for human rendering.
+        # This does not modify the locked V4 hardware frame.
+        self.last_operation_name: str | None = None
+        self.last_operand_a: int | None = None
+        self.last_operand_b: int | None = None
+
+        self.reader = threading.Thread(
+            target=self._read_output,
+            daemon=True,
+        )
+        self.reader.start()
+
+        self.collect_output(
+            first_timeout=2.0,
+            idle_timeout=0.15,
+        )
+
+    def _read_output(self) -> None:
+        assert self.process.stdout is not None
+
+        for line in self.process.stdout:
+            self.output_queue.put(line.rstrip("\n"))
+
+    def collect_output(
+        self,
+        first_timeout: float = 1.0,
+        idle_timeout: float = 0.12,
+        display: bool = True,
+    ) -> list[str]:
+        lines: list[str] = []
+
+        try:
+            first_line = self.output_queue.get(
+                timeout=first_timeout
+            )
+            lines.append(first_line)
+        except queue.Empty:
+            return lines
+
+        while True:
+            try:
+                line = self.output_queue.get(
+                    timeout=idle_timeout
+                )
+                lines.append(line)
+            except queue.Empty:
+                break
+
+        if display:
+            for line in lines:
+                print(line)
+
+        return lines
+
+    def command(
+        self,
+        command_text: str,
+        first_timeout: float = 1.5,
+        idle_timeout: float = 0.15,
+        display: bool = True,
+    ) -> list[str]:
+        if self.process.poll() is not None:
+            raise RuntimeError(
+                "The V4 bridge process has stopped."
+            )
+
+        assert self.process.stdin is not None
+
+        self.process.stdin.write(command_text + "\n")
+        self.process.stdin.flush()
+
+        lines = self.collect_output(
+            first_timeout=first_timeout,
+            idle_timeout=idle_timeout,
+            display=display,
+        )
+
+        self.last_lines = lines
+
+        # Preserve the latest processor relation independently.
+        # Commands such as PRINTODU and HELP must not erase it.
+        relation_lines = [
+            line
+            for line in lines
+            if (
+                "EXEC ID=" in line
+                or "FRAME OP=" in line
+                or "OK RUN ID=" in line
+            )
+        ]
+
+        if relation_lines:
+            self.last_relation_lines = relation_lines
+
+        return lines
+
+    def close(self) -> None:
+        if self.process.poll() is not None:
+            return
+
+        try:
+            self.command("QUIT")
+        except (BrokenPipeError, RuntimeError):
+            pass
+
+        try:
+            self.process.wait(timeout=2)
+        except subprocess.TimeoutExpired:
+            self.process.terminate()
+
+
+def normalize(token: str) -> str:
+    upper = token.strip().upper()
+    return COMMAND_ALIASES.get(upper, upper)
+
+
+def parse_byte(token: str) -> int:
+    cleaned = token.strip()
+
+    try:
+        value = int(cleaned, 0)
+    except ValueError:
+        try:
+            value = int(cleaned, 16)
+        except ValueError as error:
+            raise ValueError(
+                f"Invalid 8-bit value: {token}"
+            ) from error
+
+    if not 0 <= value <= 0xFF:
+        raise ValueError(
+            f"Value outside 8-bit range: {token}"
+        )
+
+    return value
+
+
+def parse_symbolic_expression(
+    expression: str,
+) -> tuple[str, int, int] | None:
+    """
+    Parse a direct two-operand IFÁ expression.
+
+    Supported forms include:
+
+        2+6
+        12 / 4
+        12%5
+        2^8
+        5==5
+        9>4
+        3<8
+
+    Operands accept decimal or Python-style hexadecimal values.
+    """
+
+    match = re.fullmatch(
+        r"""
+        \s*
+        (0[xX][0-9a-fA-F]+|\d+)
+        \s*
+        (==|[+\-*/%^<>])
+        \s*
+        (0[xX][0-9a-fA-F]+|\d+)
+        \s*
+        """,
+        expression,
+        flags=re.VERBOSE,
+    )
+
+    if match is None:
+        return None
+
+    left_text, symbol, right_text = match.groups()
+
+    left = parse_byte(left_text)
+    right = parse_byte(right_text)
+
+    operation_name = SYMBOLIC_OPERATIONS[symbol]
+
+    return operation_name, left, right
+
+
+def execute_symbolic_expression(
+    session: BridgeSession,
+    expression: str,
+) -> bool:
+    parsed = parse_symbolic_expression(expression)
+
+    if parsed is None:
+        return False
+
+    operation_name, a, b = parsed
+
+    session.last_operation_name = operation_name
+    session.last_operand_a = a
+    session.last_operand_b = b
+
+    session.command(
+        f"EXEC {operation_name} {a:02x} {b:02x}"
+    )
+
+    return True
+
+
+def signed8(value: int) -> int:
+    return value - 256 if value >= 128 else value
+
+
+def parse_latest_relation(
+    lines: list[str],
+) -> dict[str, int] | None:
+    """
+    Read the latest V4 EXEC or FRAME output.
+
+    Supported examples:
+
+        EXEC ID=0 OP=3 ... Y=02 RA=04 RD=0b R0=f0 T=01 ...
+        FRAME OP=3 Y=02 RA=04 RD=0b R0=f0 T=01 ...
+    """
+
+    patterns = [
+        re.compile(
+            r"\bOP=([0-9a-fA-F]+).*?"
+            r"\bY=([0-9a-fA-F]{2}).*?"
+            r"\bRA=([0-9a-fA-F]{2}).*?"
+            r"\bRD=([0-9a-fA-F]{2}).*?"
+            r"\bR0=([0-9a-fA-F]{2}).*?"
+            r"\bT=([0-9a-fA-F]{2})"
+        ),
+    ]
+
+    for line in reversed(lines):
+        if "EXEC ID=" not in line and "FRAME OP=" not in line:
+            continue
+
+        for pattern in patterns:
+            match = pattern.search(line)
+
+            if match is None:
+                continue
+
+            op, y, ra, rd, r0, transport = match.groups()
+
+            return {
+                "OP": int(op, 16),
+                "Y": int(y, 16),
+                "RA": int(ra, 16),
+                "RD": int(rd, 16),
+                "R0": int(r0, 16),
+                "T": int(transport, 16),
+            }
+
+    return None
+
+
+OP_NAMES = {
+    0x0: "PAPO",
+    0x1: "YO",
+    0x2: "DAGBA",
+    0x3: "PIN",
+    0x4: "KU",
+    0x5: "GBE",
+    0x6: "SEDA",
+    0x7: "JU",
+    0x8: "KERE",
+}
+
+
+def decimal_rendering(
+    session: BridgeSession,
+) -> str | None:
+    operation = session.last_operation_name
+    a = session.last_operand_a
+    b = session.last_operand_b
+
+    if operation not in {"PIN", "KU"}:
+        return None
+
+    if a is None or b is None or b == 0:
+        return None
+
+    value = a / b
+
+    return f"{value:.12f}".rstrip("0").rstrip(".")
+
+
+def oyela(
+    session: BridgeSession,
+    english: bool = False,
+) -> None:
+    frame = parse_latest_relation(session.last_relation_lines)
+
+    if frame is None:
+        print("KÒ SÍ ÀBÁJÁDE — no recent IFÁ relation.")
+        return
+
+    operation = OP_NAMES.get(
+        frame["OP"],
+        f"OP-{frame['OP']:X}",
+    )
+
+    if english:
+        print()
+        print("OYELAA — ENGLISH INTERPRETATION")
+        print("--------------------------------")
+        print(
+            f"Operation     : {operation} "
+            f"(OP=0x{frame['OP']:X})"
+        )
+        print(
+            f"Result        : {signed8(frame['Y'])} "
+            f"(raw 0x{frame['Y']:02X}, "
+            f"unsigned {frame['Y']})"
+        )
+
+        decimal_value = decimal_rendering(session)
+
+        if decimal_value is not None:
+            print(f"Decimal       : {decimal_value}")
+
+            if session.last_operation_name == "PIN":
+                print(
+                    f"Exact division: "
+                    f"{frame['Y']} remainder {frame['T']}"
+                )
+            elif session.last_operation_name == "KU":
+                print(
+                    f"Exact division: "
+                    f"{frame['T']} remainder {frame['Y']}"
+                )
+
+        print()
+        print("Relation Frame")
+        print("--------------")
+        print(f"Agreement     : 0x{frame['RA']:02X}")
+        print(f"Disagreement  : 0x{frame['RD']:02X}")
+        print(f"Base/Return   : 0x{frame['R0']:02X}")
+        print(f"Transport     : 0x{frame['T']:02X}")
+        print()
+        print(
+            "OYELAA reads the latest IFÁ computation "
+            "as a human-facing result and relation frame."
+        )
+        print()
+        return
+
+    print()
+    print("OYÈLÁ — ÌTÚMỌ̀ ÀBÁJÁDE")
+    print("----------------------")
+    print(
+        f"ÌṢẸ́          : {operation} "
+        f"(OP=0x{frame['OP']:X})"
+    )
+    print(
+        f"ÈSÌ / OYÈLÁ  : {signed8(frame['Y'])} "
+        f"(0x{frame['Y']:02X})"
+    )
+
+    decimal_value = decimal_rendering(session)
+
+    if decimal_value is not None:
+        print(f"ÈSÌ DẸ́SÍMÀLÌ : {decimal_value}")
+
+        if session.last_operation_name == "PIN":
+            print(
+                f"ÌPÍN PÍPÉ    : "
+                f"{frame['Y']} pẹ̀lú ìyókù {frame['T']}"
+            )
+        elif session.last_operation_name == "KU":
+            print(
+                f"ÌPÍN PÍPÉ    : "
+                f"{frame['T']} pẹ̀lú ìyókù {frame['Y']}"
+            )
+
+    print()
+    print("ÀWÒRÁN ÌBÁṢẸ̀PỌ̀")
+    print("----------------")
+    print(f"FARAPỌ̀   = 0x{frame['RA']:02X}")
+    print(f"YÀTỌ̀     = 0x{frame['RD']:02X}")
+    print(f"ÌPÌLẸ̀    = 0x{frame['R0']:02X}")
+    print(f"GBÉ       = 0x{frame['T']:02X}")
+    print()
+    print(
+        "OYÈLÁ ń ka ohun tí YÀRÁ ṣe, "
+        "ó sì ń túmọ̀ rẹ̀ fún ènìyàn."
+    )
+    print()
+
+
+def print_banner() -> None:
+    print()
+    print(
+        "════════════════════════════════════════════════════════"
+        "═══════════════"
+    )
+    print(
+        "                              OHÙN IFÁ"
+    )
+    print(
+        "════════════════════════════════════════════════════════"
+        "═══════════════"
+    )
+    print()
+    print("Version      : 3.0")
+    print("Core         : Relation Processor Core (RPC)")
+    print("Processor    : IFÁ Processor V4")
+    print("Architecture : ODU V3")
+    print("Shell        : OHÙN IFÁ")
+    print()
+    print("Native Services")
+    print("---------------")
+    print("• DÁIFÁ")
+    print("• TẸ IFÁ")
+    print("• PRINTODU")
+    print("• PRINTODUALL")
+    print()
+    print("Type HELP for available commands.")
+    print("Type BABALAWO to enter programmer mode.")
+    print()
+
+
+def print_help() -> None:
+    print(
+        """
+OHÙN IFÁ 3.0 — ÌRÀNLỌ́WỌ́
+==========================
+
+Normal Native Services
+----------------------
+DÁIFÁ
+    Produce one random primary-Odù simulation.
+
+TẸ IFÁ
+    Perform one circular cast.
+
+    The first use preserves the first side.
+    The second use produces the second side and combines both
+    into one complete Odù.
+
+PRINTODU
+    Display the latest processor result Y as a proper Odù.
+
+PRINTODUALL
+    Display Y, RA, RD, R0 and T as proper Odù forms.
+
+
+Babaláwo privilege
+------------------
+TAN
+    Enable Babaláwo mode.
+
+PA
+    Disable Babaláwo mode.
+
+YÀRÁ lifecycle
+--------------
+CREATE <id>
+    Create a YÀRÁ.
+
+SELECT <id>
+YARA <id>
+WỌ <id>
+    Select a YÀRÁ.
+
+ENTER <id>
+    Create the YÀRÁ if needed, then select it.
+
+PAUSE <id>
+RESUME <id>
+DESTROY <id>
+
+Native IFÁ operations
+---------------------
+PAPO <A> ATI <B>
+YO <A> ATI <B>
+DAGBA <A> ATI <B>
+PIN <A> ATI <B>
+KU <A> ATI <B>
+GBE <A> ATI <B>
+SEDA <A> ATI <B>
+JU <A> ATI <B>
+KERE <A> ATI <B>
+
+Examples:
+    PAPO 13 ATI 6
+    PIN 0x0D ATI 0x06
+
+Direct symbolic expressions
+---------------------------
++     PAPO    addition
+-     YO      subtraction
+*     DAGBA   multiplication
+/     PIN     quotient; remainder is T
+%     KU      remainder; quotient is T
+^     GBE     relation exponentiation
+==    SEDA    equality/comparison relation
+>     JU      greater-than relation
+<     KERE    less-than relation
+
+Examples:
+    2+6
+    12 - 4
+    5*7
+    13/6
+    13%6
+    2^8
+    5==5
+    9>4
+    3<8
+
+Programs and applications
+-------------------------
+APPS
+    List files in apps_v4/.
+
+LOADAPP <name>
+    Assemble and load an application.
+
+RUNAPP <name>
+    Load and execute an application.
+
+LOADPROGRAM <path>
+    Assemble and load an .ifa4 or .ifa4y file.
+
+RUN
+STEP
+STOP
+
+LISTING
+    Show the most recently assembled listing.
+
+Context
+-------
+CONTEXT <PC> <IR> <A> <B> <ADDR> <FLAGS> <SP>
+
+Example:
+    CONTEXT 00 0000 00 00 00 00 00
+
+STATUS
+IPO
+    Show complete ONÍLẸ̀ and active-YÀRÁ status.
+
+OYELA
+OYÈLÁ
+    Interpret the latest IFÁ result and relation frame in Yorùbá.
+
+OYELAA
+    Interpret the latest IFÁ result and relation frame in English.
+
+Relation stack diagnostics
+--------------------------
+STACKWRITE <byte>
+STACKREAD
+
+The V4 ISA also supports:
+    RPUSH
+    RPOP
+    CALL
+    RET
+
+These are normally used inside loaded programs.
+
+Relation sharing
+----------------
+GRANT <source> <destination>
+REVOKE <source> <destination>
+SHARE <source> <destination>
+
+General memory
+--------------
+MEMWRITE <address> <data>
+MEMREAD <address>
+
+MEMGRANTR <address> <yara>
+MEMGRANTW <address> <yara>
+MEMREVOKER <address> <yara>
+MEMREVOKEW <address> <yara>
+
+Raw bridge access
+-----------------
+RAW <bridge command>
+
+Example:
+    RAW STATUS
+    RAW EXEC 0 0d 06
+
+Shell
+-----
+HISTORY
+CLEAR
+HELP
+QUIT
+DÁ
+"""
+    )
+
+
+def discover_apps() -> dict[str, Path]:
+    APPS_DIR.mkdir(parents=True, exist_ok=True)
+
+    applications: dict[str, Path] = {}
+
+    for path in sorted(APPS_DIR.iterdir()):
+        if path.is_file() and path.suffix in {
+            ".ifa4",
+            ".ifa4y",
+        }:
+            applications[path.stem.lower()] = path
+
+    return applications
+
+
+def print_apps() -> None:
+    applications = discover_apps()
+
+    print()
+    print("AVAILABLE V4 APPLICATIONS")
+    print("=========================")
+
+    if not applications:
+        print("No applications found in apps_v4/.")
+        print()
+        return
+
+    for index, (name, path) in enumerate(
+        applications.items(),
+        start=1,
+    ):
+        source_type = (
+            "OHÙN/Yorùbá"
+            if path.suffix == ".ifa4y"
+            else "V4 assembly"
+        )
+
+        print(
+            f"{index:>2}. {name:<26} "
+            f"{source_type}"
+        )
+
+    print()
+
+
+def resolve_source(name_or_path: str) -> Path:
+    supplied = Path(name_or_path)
+
+    candidates = [
+        supplied,
+        PROJECT_ROOT / supplied,
+    ]
+
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate.resolve()
+
+    app = discover_apps().get(
+        supplied.stem.lower()
+    )
+
+    if app is not None:
+        return app.resolve()
+
+    raise FileNotFoundError(
+        f"Application or program not found: {name_or_path}"
+    )
+
+
+def assemble_source(source: Path) -> tuple[Path, Path]:
+    WORK_DIR.mkdir(parents=True, exist_ok=True)
+
+    generated_source = (
+        WORK_DIR / "_os_console_generated.ifa4"
+    )
+    output_prefix = WORK_DIR / "_os_console_program"
+
+    assembly_source = source
+
+    if source.suffix == ".ifa4y":
+        frontend_result = subprocess.run(
+            [
+                sys.executable,
+                str(YORUBA_FRONTEND),
+                str(source),
+                str(generated_source),
+            ],
+            cwd=PROJECT_ROOT,
+        )
+
+        if frontend_result.returncode != 0:
+            raise RuntimeError(
+                "OHÙN IFÁ V4 source compilation failed."
+            )
+
+        assembly_source = generated_source
+
+    elif source.suffix != ".ifa4":
+        raise ValueError(
+            "Program must end in .ifa4 or .ifa4y"
+        )
+
+    assembler_result = subprocess.run(
+        [
+            sys.executable,
+            str(ASSEMBLER),
+            str(assembly_source),
+            str(output_prefix),
+        ],
+        cwd=PROJECT_ROOT,
+    )
+
+    if assembler_result.returncode != 0:
+        raise RuntimeError(
+            "V4 assembly failed."
+        )
+
+    hex_path = output_prefix.with_suffix(".hex")
+    listing_path = output_prefix.with_suffix(".lst")
+
+    return hex_path, listing_path
+
+
+def load_hex_program(
+    session: BridgeSession,
+    hex_path: Path,
+) -> int:
+    instructions: list[int] = []
+
+    for line_number, raw_line in enumerate(
+        hex_path.read_text(
+            encoding="utf-8"
+        ).splitlines(),
+        start=1,
+    ):
+        line = raw_line.split(";", 1)[0].strip()
+
+        if not line:
+            continue
+
+        try:
+            instruction = int(line, 16)
+        except ValueError as error:
+            raise ValueError(
+                f"{hex_path}:{line_number}: "
+                f"invalid instruction {line!r}"
+            ) from error
+
+        if not 0 <= instruction <= 0xFFFF:
+            raise ValueError(
+                f"{hex_path}:{line_number}: "
+                "instruction exceeds 16 bits"
+            )
+
+        instructions.append(instruction)
+
+    if not instructions:
+        raise ValueError(
+            f"No instructions found in {hex_path}"
+        )
+
+    if len(instructions) > 256:
+        raise ValueError(
+            "V4 program exceeds 256 instructions"
+        )
+
+    for address, instruction in enumerate(
+        instructions
+    ):
+        session.command(
+            f"LOAD {address:02x} {instruction:04x}"
+        )
+
+    print(
+        f"OK PROGRAM LOADED: "
+        f"{len(instructions)} instructions"
+    )
+
+    return len(instructions)
+
+
+def execute_native(
+    session: BridgeSession,
+    operation_name: str,
+    arguments: list[str],
+) -> None:
+    normalized_arguments = [
+        item
+        for item in arguments
+        if item.upper() not in {"ATI", "ÀTI"}
+    ]
+
+    if len(normalized_arguments) != 2:
+        raise ValueError(
+            f"{operation_name} requires two operands.\n"
+            f"Example: {operation_name} 13 ATI 6"
+        )
+
+    a = parse_byte(normalized_arguments[0])
+    b = parse_byte(normalized_arguments[1])
+
+    session.last_operation_name = operation_name
+    session.last_operand_a = a
+    session.last_operand_b = b
+
+    session.command(
+        f"EXEC {operation_name} {a:02x} {b:02x}"
+    )
+
+
+def bootstrap_normal_os(
+    session: BridgeSession,
+    yara_id: int = 0,
+) -> None:
+    """
+    Prepare the ordinary OHÙN IFÁ execution environment.
+
+    Babaláwo privilege is used internally only for creation and
+    selection, then disabled again before the normal shell appears.
+    """
+
+    session.command(
+        "BABALAWO ON",
+        display=False,
+    )
+    session.command(
+        f"CREATE {yara_id}",
+        display=False,
+    )
+    session.command(
+        f"SELECT {yara_id}",
+        display=False,
+    )
+    session.command(
+        "BABALAWO OFF",
+        display=False,
+    )
+
+
+def main() -> None:
+    history: list[str] = []
+    active_yara: int | None = None
+
+    # Normal OHÙN IFÁ starts in ordinary user mode.
+    # Babaláwo exposes programmer/security administration.
+    babalawo_enabled = False
+    programmer_mode = False
+    loaded_source: Path | None = None
+    latest_listing: Path | None = None
+
+    # TẸ IFÁ requires two successive casts to form one complete Odù.
+    pending_teifa_cast: int | None = None
+
+    try:
+        session = BridgeSession()
+    except (OSError, RuntimeError) as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        raise SystemExit(1)
+
+    try:
+        input("Press ENTER to enter IFÁ OS...")
+    except (EOFError, KeyboardInterrupt):
+        print()
+        session.close()
+        return
+
+    # Normal OHÙN IFÁ operates like a complete computer.
+    # A default execution YÀRÁ is prepared internally.
+    bootstrap_normal_os(
+        session,
+        yara_id=0,
+    )
+    active_yara = 0
+
+    print_banner()
+
+    try:
+        while True:
+            yara_text = (
+                "NONE"
+                if active_yara is None
+                else str(active_yara)
+            )
+
+            try:
+                if programmer_mode:
+                    prompt = (
+                        f"OHÙN IFÁ[BABALÁWO:"
+                        f"YÀRÁ-{yara_text}]> "
+                    )
+                else:
+                    prompt = "OHÙN IFÁ> "
+
+                raw_line = input(prompt).strip()
+            except (EOFError, KeyboardInterrupt):
+                print()
+                break
+
+            if not raw_line:
+                continue
+
+            history.append(raw_line)
+
+            # Multiword normal-service commands.
+            service_phrase = re.sub(
+                r"\s+",
+                " ",
+                raw_line.strip().upper(),
+            )
+
+            if service_phrase in {
+                "TE IFA",
+                "TE IFÁ",
+                "TẸ IFA",
+                "TẸ IFÁ",
+            }:
+                raw_line = "TEIFA"
+
+            try:
+                if execute_symbolic_expression(
+                    session,
+                    raw_line,
+                ):
+                    continue
+            except ValueError as error:
+                print(f"ERROR: {error}")
+                continue
+
+            try:
+                parts = shlex.split(raw_line)
+            except ValueError as error:
+                print(f"ERROR: {error}")
+                continue
+
+            original_command = parts[0]
+            command = normalize(original_command)
+            arguments = parts[1:]
+
+            try:
+                if command == "HELP":
+                    print_help()
+                    continue
+
+                #------------------------------------------------------
+                # Normal OHÙN IFÁ native services
+                #------------------------------------------------------
+
+                if command == "DAIFA":
+                    if arguments:
+                        raise ValueError(
+                            "DÁIFÁ takes no arguments."
+                        )
+
+                    daifa_service()
+                    continue
+
+                if command == "TEIFA":
+                    if arguments:
+                        raise ValueError(
+                            "TẸ IFÁ takes no arguments."
+                        )
+
+                    current_cast = random.randrange(16)
+
+                    if pending_teifa_cast is None:
+                        pending_teifa_cast = current_cast
+
+                        render_circular_cast(
+                            current_cast,
+                            cast_number=1,
+                        )
+
+                        print(
+                            "TẸ IFÁ again to complete "
+                            "the combined Odù."
+                        )
+                        print()
+                    else:
+                        first_cast = pending_teifa_cast
+                        second_cast = current_cast
+                        pending_teifa_cast = None
+
+                        render_circular_cast(
+                            second_cast,
+                            cast_number=2,
+                        )
+
+                        render_complete_odu(
+                            first_cast,
+                            second_cast,
+                            heading="TẸ IFÁ — COMPLETE ODÙ",
+                        )
+
+                    continue
+
+                if command == "PRINTODU":
+                    if arguments:
+                        raise ValueError(
+                            "PRINTODU takes no arguments."
+                        )
+
+                    frame = parse_latest_relation(
+                        session.last_relation_lines
+                    )
+
+                    printodu_service(frame)
+                    continue
+
+                if command == "PRINTODUALL":
+                    if arguments:
+                        raise ValueError(
+                            "PRINTODUALL takes no arguments."
+                        )
+
+                    frame = parse_latest_relation(
+                        session.last_relation_lines
+                    )
+
+                    printoduall_service(frame)
+                    continue
+
+                if command == "PROGRAMMER_MODE":
+                    if arguments:
+                        raise ValueError(
+                            "BABALAWO takes no arguments."
+                        )
+
+                    if not babalawo_enabled:
+                        session.command("BABALAWO ON")
+                        babalawo_enabled = True
+
+                    programmer_mode = True
+
+                    print()
+                    print("BÀBÁLÁWO PROGRAMMER MODE")
+                    print("------------------------")
+                    print(
+                        "ONÍLẸ̀ administration and V4 "
+                        "developer controls are available."
+                    )
+                    print(
+                        "Use PADA to return to the normal "
+                        "OHÙN IFÁ shell."
+                    )
+                    print()
+                    continue
+
+                if command == "PADA":
+                    programmer_mode = False
+                    print(
+                        "Returned to the normal OHÙN IFÁ shell."
+                    )
+                    continue
+
+                if command == "OYELA":
+                    oyela(session, english=False)
+                    continue
+
+                if command == "OYELAA":
+                    oyela(session, english=True)
+                    continue
+
+                if command == "CLEAR":
+                    print("\033[2J\033[H", end="")
+                    print_banner()
+                    continue
+
+                if command == "HISTORY":
+                    for index, item in enumerate(
+                        history,
+                        start=1,
+                    ):
+                        print(f"{index:>3}: {item}")
+                    continue
+
+                if command == "QUIT":
+                    break
+
+                if command == "BABALAWO_ON":
+                    session.command("BABALAWO ON")
+                    babalawo_enabled = True
+                    continue
+
+                if command == "BABALAWO_OFF":
+                    session.command("BABALAWO OFF")
+                    babalawo_enabled = False
+                    continue
+
+                if command == "ENTER":
+                    if len(arguments) != 1:
+                        raise ValueError(
+                            "ENTER requires one YÀRÁ ID."
+                        )
+
+                    yara_id = int(arguments[0], 0)
+
+                    if not 0 <= yara_id < MAX_YARA:
+                        raise ValueError(
+                            "YÀRÁ ID must be between "
+                            "0 and 15."
+                        )
+
+                    session.command(
+                        f"CREATE {yara_id}"
+                    )
+                    session.command(
+                        f"SELECT {yara_id}"
+                    )
+
+                    active_yara = yara_id
+                    continue
+
+                if command in {
+                    "CREATE",
+                    "SELECT",
+                    "PAUSE",
+                    "RESUME",
+                    "DESTROY",
+                }:
+                    if len(arguments) != 1:
+                        raise ValueError(
+                            f"{command} requires one YÀRÁ ID."
+                        )
+
+                    yara_id = int(arguments[0], 0)
+
+                    if not 0 <= yara_id < MAX_YARA:
+                        raise ValueError(
+                            "YÀRÁ ID must be between "
+                            "0 and 15."
+                        )
+
+                    session.command(
+                        f"{command} {yara_id}"
+                    )
+
+                    if command == "SELECT":
+                        active_yara = yara_id
+
+                    if (
+                        command == "DESTROY"
+                        and active_yara == yara_id
+                    ):
+                        active_yara = None
+
+                    continue
+
+                native_name = original_command.upper()
+
+                if native_name in NATIVE_OPERATIONS:
+                    execute_native(
+                        session,
+                        native_name,
+                        arguments,
+                    )
+                    continue
+
+                if command == "APPS":
+                    print_apps()
+                    continue
+
+                if command in {
+                    "LOADAPP",
+                    "LOADPROGRAM",
+                }:
+                    if len(arguments) != 1:
+                        raise ValueError(
+                            f"{command} requires one source."
+                        )
+
+                    loaded_source = resolve_source(
+                        arguments[0]
+                    )
+
+                    hex_path, latest_listing = (
+                        assemble_source(loaded_source)
+                    )
+
+                    load_hex_program(
+                        session,
+                        hex_path,
+                    )
+
+                    print(
+                        f"OK SOURCE READY: "
+                        f"{loaded_source.name}"
+                    )
+                    continue
+
+                if command == "RUNAPP":
+                    if len(arguments) != 1:
+                        raise ValueError(
+                            "RUNAPP requires one application."
+                        )
+
+                    loaded_source = resolve_source(
+                        arguments[0]
+                    )
+
+                    hex_path, latest_listing = (
+                        assemble_source(loaded_source)
+                    )
+
+                    load_hex_program(
+                        session,
+                        hex_path,
+                    )
+
+                    session.command(
+                        "RUN",
+                        first_timeout=3.0,
+                        idle_timeout=0.25,
+                    )
+                    continue
+
+                if command == "LISTING":
+                    if (
+                        latest_listing is None
+                        or not latest_listing.exists()
+                    ):
+                        print(
+                            "No program has been assembled "
+                            "in this session."
+                        )
+                    else:
+                        print()
+                        print(
+                            latest_listing.read_text(
+                                encoding="utf-8"
+                            ),
+                            end="",
+                        )
+                    continue
+
+                if command == "RAW":
+                    if not arguments:
+                        raise ValueError(
+                            "RAW requires a bridge command."
+                        )
+
+                    session.command(
+                        " ".join(arguments),
+                        first_timeout=3.0,
+                        idle_timeout=0.25,
+                    )
+                    continue
+
+                if command in RAW_BRIDGE_COMMANDS:
+                    session.command(
+                        " ".join(
+                            [command] + arguments
+                        ),
+                        first_timeout=3.0,
+                        idle_timeout=0.25,
+                    )
+                    continue
+
+                print(
+                    f"ERROR UNKNOWN_COMMAND "
+                    f"{original_command}"
+                )
+
+            except (
+                FileNotFoundError,
+                OSError,
+                RuntimeError,
+                ValueError,
+            ) as error:
+                print(f"ERROR: {error}")
+
+    finally:
+        session.close()
+
+    print("DÁ — OHÙN IFÁ operating system closed.")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,60 @@
+=== IFÁ QUANTUM DUAL-CARRY RIPPLE ===
+
+Width        : 4
+Qubits       : 34
+Circuit depth: 31
+Gate count   : OrderedDict({'cx': 36, 'ccx': 24, 'x': 4, 'barrier': 2})
+
+Register structure:
+  A, B       : direct operands
+  A_phi,B_phi: Φ-transformed operands
+  S          : direct sum
+  S_phi      : Φ-channel sum
+  C[0..4]    : direct ripple propagation
+  C_phi[0..4]: Φ ripple propagation
+
+=== SELECTED DUAL-CARRY MAPPINGS ===
+
+A B C0 Cφ0 | Aφ Bφ | S Cout | Sφ Cφout
+-----------------------------------------
+0 0  0   0  | 5  5  | 0   0   | A    0
+1 1  0   0  | 4  4  | 2   0   | 8    0
+7 1  0   0  | 3  4  | 8   0   | 7    0
+F 1  0   0  | F  4  | 0   1   | 3    1
+A 5  1   0  | A  0  | 0   1   | A    0
+F F  1   1  | F  F  | F   1   | F    1
+=== EXHAUSTIVE DUAL-CARRY RIPPLE TEST ===
+
+Configurations tested : 1024
+Ripple failures       : 0
+
+=== ARITHMETIC IDENTITY TEST ===
+
+Arithmetic cases tested : 1024
+Arithmetic failures     : 0
+
+=== EXHAUSTIVE INVERSE ROUND-TRIP TEST ===
+
+Round trips tested : 1024
+Round-trip failures: 0
+
+=== FULL-RIPPLE SPARSE SUPERPOSITION TEST ===
+
+Input components : 2
+Output components: 2
+State norm       : 1.000000000000
+Linear mapping   : True
+
+Observed output relation states:
+  amplitude=(0.7071067811865475+0j) A=0 B=0 Aφ=5 Bφ=5 S=0 Cout=0 Sφ=A Cφout=0
+  amplitude=(0.7071067811865475+0j) A=F B=1 Aφ=F Bφ=4 S=1 Cout=1 Sφ=4 Cφout=1
+
+=== REVERSIBILITY STATEMENT ===
+
+The circuit is composed only of X, CNOT and Toffoli gates.
+Each component gate is unitary and reversible.
+The complete inverse circuit is obtained by reversing the gate order.
+
+=== FINAL RESULT ===
+Total failures : 0
+RESULT         : PASS

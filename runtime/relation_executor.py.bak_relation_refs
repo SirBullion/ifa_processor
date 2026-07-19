@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+"""
+======================================================================
+
+IFÁ Processor V4.5
+
+Software Relation Execution Engine
+
+======================================================================
+"""
+
+from compiler.relation_graph import build_relation_graph
+
+
+# ------------------------------------------------------------
+# Arithmetic engine
+# ------------------------------------------------------------
+
+def execute_operation(op, a, b):
+
+    op = op.upper()
+
+    if op == "PAPO":
+        return a + b
+
+    elif op == "YO":
+        return a - b
+
+    elif op == "DAGBA":
+        return a * b
+
+    elif op == "PIN":
+        return a / b
+
+    elif op == "KU":
+        return a & b
+
+    elif op == "GBE":
+        return a | b
+
+    raise ValueError(f"Unknown operation {op}")
+
+
+# ------------------------------------------------------------
+# Relation executor
+# ------------------------------------------------------------
+
+class RelationExecutor:
+
+    def __init__(self):
+
+        self.values = {}
+
+    def resolve(self, operand):
+
+        if isinstance(operand, str):
+
+            return self.values[operand]
+
+        return operand
+
+    def run(self, graph):
+
+        print("=" * 72)
+        print("IFÁ SOFTWARE EXECUTION")
+        print("=" * 72)
+
+        for wave_number, wave in enumerate(graph.execution_waves):
+
+            print()
+            print(f"WAVE {wave_number}")
+            print("-" * 72)
+
+            for relation_id in wave:
+
+                node = graph.nodes[relation_id]
+
+                req = node.relation.representative
+
+                a = self.resolve(req.a)
+                b = self.resolve(req.b)
+
+                result = execute_operation(
+                    req.op,
+                    a,
+                    b,
+                )
+
+                print(
+                    f"{relation_id:<4}"
+                    f"{req.op:<8}"
+                    f"{a}"
+                    f" ATI "
+                    f"{b}"
+                    f" = "
+                    f"{result}"
+                )
+
+                # Broadcast to every destination
+
+                for dest in node.relation.destinations:
+
+                    self.values[dest] = result
+
+                    print(
+                        f"      -> {dest} = {result}"
+                    )
+
+        print()
+        print("=" * 72)
+        print("FINAL REGISTER VALUES")
+        print("=" * 72)
+
+        for k in sorted(self.values):
+
+            print(f"{k:<12}{self.values[k]}")
+
+
+# ------------------------------------------------------------
+# Demo
+# ------------------------------------------------------------
+
+if __name__ == "__main__":
+
+    program = [
+
+        ("PAPO",2,3,"A"),
+
+        ("YO",10,4,"B"),
+
+        ("DAGBA",5,6,"C"),
+
+        ("PAPO",3,2,"A_COPY"),
+
+        ("PAPO","A","B","D"),
+
+        ("YO","C",2,"E"),
+
+        ("DAGBA","D","E","F"),
+
+    ]
+
+    graph = build_relation_graph(
+        program
+    )
+
+    executor = RelationExecutor()
+
+    executor.run(graph)

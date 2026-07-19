@@ -1,0 +1,40 @@
+================================================================================
+IFÁ V5: 32-ELEMENT TRANSPORT CLOSURE ALGEBRA
+================================================================================
+
+GENERATED ALGEBRA
+--------------------------------------------------------------------------------
+Observed vectors               : 13
+GF(2) rank                    : 5
+Closure vectors                : 32
+Abstract group                 : (Z2)^5
+Observed portion of closure    : 13/32 (40.62%)
+Algebraic but unobserved vectors: 19
+
+CANONICAL BASIS
+--------------------------------------------------------------------------------
+B0  V01  00000010101
+B1  V02  00001010001
+B2  V03  01000000001
+B3  V06  10001000110
+B4  V07  10100010111
+
+GROUP PROPERTIES
+--------------------------------------------------------------------------------
+closure                         : PASS
+identity                        : PASS
+every_element_self_inverse      : PASS
+commutative                     : PASS
+associative                     : PASS
+
+MINIMAL GENERATORS
+--------------------------------------------------------------------------------
+Minimum generator count        : 5
+Independent five-vector bases  : 408
+
+Saved:
+/home/sirbullion/ifa_processor/python/v5/results/transport_closure_32_vectors.csv
+/home/sirbullion/ifa_processor/python/v5/results/transport_closure_cayley_table.csv
+/home/sirbullion/ifa_processor/python/v5/results/transport_observed_coordinate_table.csv
+/home/sirbullion/ifa_processor/python/v5/results/transport_minimal_bases.csv
+/home/sirbullion/ifa_processor/python/v5/results/transport_closure_algebra_summary.json

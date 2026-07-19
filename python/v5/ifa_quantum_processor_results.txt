@@ -1,0 +1,66 @@
+=== IFÁ 8-BIT QUANTUM PROCESSING CORE ===
+
+Width               : 8
+Qubits              : 90
+Circuit depth       : 61
+Qiskit gate count   : OrderedDict({'cx': 88, 'ccx': 64, 'x': 40, 'barrier': 3})
+Compiled operations : 192
+
+Pipeline:
+  A,B
+    -> coherent Φ-channel embedding
+    -> Φ-P8
+    -> RA/RD/R0 relation frame
+    -> direct ripple propagation
+    -> Φ ripple propagation
+
+=== SELECTED IFÁ PROCESSOR STATES ===
+
+ A   B  C0 Cφ0 | Aφ  Bφ | RA  RD  R0 |  S Cout | Sφ Cφout
+-----------------------------------------------------------
+00  00   0   0  | 55  55 | 55  00  AA | 00   0   | AA    0
+01  01   0   0  | 54  54 | 54  00  AB | 02   0   | A8    0
+7F  01   0   0  | 3F  54 | 14  6B  80 | 80   0   | 93    0
+FF  01   0   0  | FF  54 | 54  AB  00 | 00   1   | 53    1
+A5  5A   1   0  | A0  0A | 00  AA  55 | 00   1   | AA    0
+FF  FF   1   1  | FF  FF | FF  00  00 | FF   1   | FF    1
+=== EXHAUSTIVE END-TO-END PROCESSOR TEST ===
+
+Ordered operand pairs       : 65536
+Initial-carry configurations: 4
+Total configurations tested : 262144
+Processor failures          : 0
+
+=== END-TO-END ARITHMETIC IDENTITY TEST ===
+
+Identity cases tested : 262144
+Identity failures     : 0
+
+=== COMPLETE PROCESSOR INVERSE TEST ===
+
+Inverse cases tested : 400
+Inverse failures     : 0
+
+=== END-TO-END SPARSE SUPERPOSITION TEST ===
+
+Input components : 4
+Output components: 4
+State norm       : 1.000000000000
+Linear mapping   : True
+
+Observed processor branches:
+  amplitude=(0.5+0j) A=00 B=00 Aφ=55 Bφ=55 RA=55 RD=00 R0=AA S=00 Cout=0 Sφ=AA Cφout=0
+  amplitude=(0.5+0j) A=55 B=AA Aφ=00 Bφ=AA RA=00 RD=AA R0=55 S=FF Cout=0 Sφ=AB Cφout=0
+  amplitude=(0.5+0j) A=A5 B=5A Aφ=A0 Bφ=0A RA=00 RD=AA R0=55 S=00 Cout=1 Sφ=AA Cφout=0
+  amplitude=(0.5+0j) A=FF B=01 Aφ=FF Bφ=54 RA=54 RD=AB R0=00 S=01 Cout=1 Sφ=54 Cφout=1
+
+=== QUANTUM VALIDITY STATEMENT ===
+
+The processing core is composed exclusively of X, CNOT and Toffoli gates.
+Each primitive is unitary and reversible.
+Therefore their ordered composition is a unitary reversible quantum operator.
+The inverse processor is obtained by reversing the complete gate sequence.
+
+=== FINAL RESULT ===
+Total failures : 0
+RESULT         : PASS

@@ -1,0 +1,369 @@
+     1	###############################################################################
+     2	# IFÁ REVERSIBLE PROCESSOR
+     3	# Makefile
+     4	###############################################################################
+     5	
+     6	IVERILOG = iverilog
+     7	VVP      = vvp
+     8	GTKWAVE  = gtkwave
+     9	
+    10	RTL = rtl
+    11	TB  = tb
+    12	SIM = sim
+    13	
+    14	SVFLAGS = -g2012
+    15	
+    16	
+    17	###############################################################################
+    18	# Default
+    19	###############################################################################
+    20	
+    21	all: p2 p4 p8 rm4 t8 recovery error corrector top
+    22	
+    23	###############################################################################
+    24	# P2
+    25	###############################################################################
+    26	
+    27	p2:
+    28		$(IVERILOG) $(SVFLAGS) \
+    29		$(RTL)/ifa_p2.sv \
+    30		$(TB)/tb_p2.sv \
+    31		-o $(SIM)/tb_p2.out
+    32		$(VVP) $(SIM)/tb_p2.out
+    33	
+    34	wave-p2:
+    35		$(GTKWAVE) $(SIM)/p2.vcd
+    36	
+    37	###############################################################################
+    38	# P4
+    39	###############################################################################
+    40	
+    41	p4:
+    42		$(IVERILOG) $(SVFLAGS) \
+    43		$(RTL)/ifa_p2.sv \
+    44		$(RTL)/ifa_p4.sv \
+    45		$(TB)/tb_p4.sv \
+    46		-o $(SIM)/tb_p4.out
+    47		$(VVP) $(SIM)/tb_p4.out
+    48	
+    49	wave-p4:
+    50		$(GTKWAVE) $(SIM)/p4.vcd
+    51	
+    52	###############################################################################
+    53	# P8
+    54	###############################################################################
+    55	
+    56	p8:
+    57		$(IVERILOG) $(SVFLAGS) \
+    58		$(RTL)/ifa_p2.sv \
+    59		$(RTL)/ifa_p4.sv \
+    60		$(RTL)/ifa_p8.sv \
+    61		$(TB)/tb_p8.sv \
+    62		-o $(SIM)/tb_p8.out
+    63		$(VVP) $(SIM)/tb_p8.out
+    64	
+    65	wave-p8:
+    66		$(GTKWAVE) $(SIM)/p8.vcd
+    67	
+    68	###############################################################################
+    69	# Routing Matrix
+    70	###############################################################################
+    71	
+    72	rm4:
+    73		$(IVERILOG) $(SVFLAGS) \
+    74		$(RTL)/ifa_rm4.sv \
+    75		$(TB)/tb_rm4.sv \
+    76		-o $(SIM)/tb_rm4.out
+    77		$(VVP) $(SIM)/tb_rm4.out
+    78	
+    79	wave-rm4:
+    80		$(GTKWAVE) $(SIM)/rm4.vcd
+    81	
+    82	###############################################################################
+    83	# Transport Matrix
+    84	###############################################################################
+    85	
+    86	t8:
+    87		$(IVERILOG) $(SVFLAGS) \
+    88		$(RTL)/ifa_t8.sv \
+    89		$(TB)/tb_t8.sv \
+    90		-o $(SIM)/tb_t8.out
+    91		$(VVP) $(SIM)/tb_t8.out
+    92	
+    93	wave-t8:
+    94		$(GTKWAVE) $(SIM)/t8.vcd
+    95	
+    96	###############################################################################
+    97	# Recovery
+    98	###############################################################################
+    99	
+   100	recovery:
+   101		$(IVERILOG) $(SVFLAGS) \
+   102		$(RTL)/ifa_p2.sv \
+   103		$(RTL)/ifa_p4.sv \
+   104		$(RTL)/ifa_p8.sv \
+   105		$(RTL)/ifa_p2_inv.sv \
+   106		$(RTL)/ifa_p4_inv.sv \
+   107		$(RTL)/ifa_p8_inv.sv \
+   108		$(TB)/tb_recovery.sv \
+   109		-o $(SIM)/tb_recovery.out
+   110		$(VVP) $(SIM)/tb_recovery.out
+   111	
+   112	wave-recovery:
+   113		$(GTKWAVE) $(SIM)/recovery.vcd
+   114	
+   115	###############################################################################
+   116	# Error Transport
+   117	###############################################################################
+   118	
+   119	error:
+   120		$(IVERILOG) $(SVFLAGS) \
+   121		$(RTL)/ifa_p2.sv \
+   122		$(RTL)/ifa_p4.sv \
+   123		$(RTL)/ifa_p8.sv \
+   124		$(RTL)/ifa_p2_inv.sv \
+   125		$(RTL)/ifa_p4_inv.sv \
+   126		$(RTL)/ifa_p8_inv.sv \
+   127		$(RTL)/ifa_t8.sv \
+   128		$(TB)/tb_error_transport.sv \
+   129		-o $(SIM)/tb_error_transport.out
+   130		$(VVP) $(SIM)/tb_error_transport.out
+   131	
+   132	wave-error:
+   133		$(GTKWAVE) $(SIM)/error_transport.vcd
+   134	
+   135	###############################################################################
+   136	# Corrector
+   137	###############################################################################
+   138	
+   139	corrector:
+   140		$(IVERILOG) $(SVFLAGS) \
+   141		$(RTL)/ifa_p2.sv \
+   142		$(RTL)/ifa_p4.sv \
+   143		$(RTL)/ifa_p8.sv \
+   144		$(RTL)/ifa_p2_inv.sv \
+   145		$(RTL)/ifa_p4_inv.sv \
+   146		$(RTL)/ifa_p8_inv.sv \
+   147		$(RTL)/ifa_t8.sv \
+   148		$(RTL)/ifa_corrector.sv \
+   149		$(TB)/tb_corrector.sv \
+   150		-o $(SIM)/tb_corrector.out
+   151		$(VVP) $(SIM)/tb_corrector.out
+   152	
+   153	wave-corrector:
+   154		$(GTKWAVE) $(SIM)/corrector.vcd
+   155	
+   156	###############################################################################
+   157	# Complete Processor
+   158	###############################################################################
+   159	
+   160	top:
+   161		$(IVERILOG) $(SVFLAGS) \
+   162		$(RTL)/ifa_p2.sv \
+   163		$(RTL)/ifa_p4.sv \
+   164		$(RTL)/ifa_p8.sv \
+   165		$(RTL)/ifa_rm4.sv \
+   166		$(RTL)/ifa_t8.sv \
+   167		$(RTL)/ifa_top.sv \
+   168		$(TB)/tb_top.sv \
+   169		-o $(SIM)/tb_top.out
+   170		$(VVP) $(SIM)/tb_top.out
+   171	
+   172	wave-top:
+   173		$(GTKWAVE) $(SIM)/top.vcd
+   174	
+   175	###############################################################################
+   176	# Clean
+   177	###############################################################################
+   178	
+   179	clean:
+   180		rm -f $(SIM)/*.out
+   181		rm -f $(SIM)/*.vcd
+   182	
+   183	###############################################################################
+   184	# Help
+   185	###############################################################################
+   186	
+   187	help:
+   188		@echo ""
+   189		@echo "==============================="
+   190		@echo " IFÁ REVERSIBLE PROCESSOR"
+   191		@echo "==============================="
+   192		@echo ""
+   193		@echo "Simulation Targets"
+   194		@echo "------------------"
+   195		@echo "make p2"
+   196		@echo "make p4"
+   197		@echo "make p8"
+   198		@echo "make rm4"
+   199		@echo "make t8"
+   200		@echo "make recovery"
+   201		@echo "make error"
+   202		@echo "make corrector"
+   203		@echo "make top"
+   204		@echo "make all"
+   205		@echo ""
+   206		@echo "Waveforms"
+   207		@echo "---------"
+   208		@echo "make wave-p2"
+   209		@echo "make wave-p4"
+   210		@echo "make wave-p8"
+   211		@echo "make wave-rm4"
+   212		@echo "make wave-t8"
+   213		@echo "make wave-recovery"
+   214		@echo "make wave-error"
+   215		@echo "make wave-corrector"
+   216		@echo "make wave-top"
+   217		@echo ""
+   218		@echo "Utilities"
+   219		@echo "---------"
+   220		@echo "make clean"
+   221		@echo "make help"
+   222	
+   223	###############################################################################
+   224	# CPU ROM Top
+   225	###############################################################################
+   226	
+   227	cpu-rom:
+   228		$(IVERILOG) $(SVFLAGS) \
+   229		$(RTL)/ifa_p2.sv \
+   230		$(RTL)/ifa_p4.sv \
+   231		$(RTL)/ifa_p8.sv \
+   232		$(RTL)/ifa_p2_inv.sv \
+   233		$(RTL)/ifa_p4_inv.sv \
+   234		$(RTL)/ifa_p8_inv.sv \
+   235		$(RTL)/ifa_t8.sv \
+   236		$(RTL)/ifa_rom.sv \
+   237		$(RTL)/ifa_cpu_core.sv \
+   238		$(RTL)/ifa_cpu_rom_top.sv \
+   239		$(TB)/tb_cpu_rom_top.sv \
+   240		-o $(SIM)/tb_cpu_rom_top.out
+   241		$(VVP) $(SIM)/tb_cpu_rom_top.out
+   242	
+   243	wave-cpu-rom:
+   244		$(GTKWAVE) $(SIM)/cpu_rom_top.vcd
+   245	
+   246	###############################################################################
+   247	# Assemble Demo Program
+   248	###############################################################################
+   249	
+   250	assemble:
+   251		python3 tools/ifaasm.py demo.ifa
+   252	
+   253	run-program: assemble cpu-rom
+   254	
+   255	###############################################################################
+   256	# Yosys Synthesis
+   257	###############################################################################
+   258	
+   259	synth-cpu:
+   260		yosys -s synth_cpu.ys
+   261	
+   262	synth-fpga:
+   263		yosys -s synth_fpga.ys
+   264	
+   265	###############################################################################
+   266	# Ifa Monitor v1
+   267	###############################################################################
+   268	
+   269	monitor:
+   270		cp programs/monitor_v1.ifa demo.ifa
+   271		python3 tools/ifaasm.py demo.ifa
+   272		$(MAKE) cpu-rom
+   273		@echo ""
+   274		@echo "Monitor output saved to: sim/odu_all_output.txt"
+   275		@echo ""
+   276		@cat sim/odu_all_output.txt
+   277	
+   278	###############################################################################
+   279	# IFÁ Processor V4
+   280	###############################################################################
+   281	
+   282	V4_RTL = \
+   283		rtl/v45/ifa_program_executor_v45.sv \
+   284		rtl/v4/ifa_native_rau_v4.sv \
+   285		rtl/v4/ifa_relation_memory_controller_admin.sv \
+   286		rtl/v4/ifa_yara_manager.sv \
+   287		rtl/v4/ifa_yara_context_bank.sv \
+   288		rtl/v4/ifa_onile_supervisor.sv \
+   289		rtl/v4/ifa_yara_frame_share_core.sv \
+   290		rtl/v4/ifa_general_memory_guard.sv \
+   291		rtl/v4/ifa_stack_memory_v4.sv \
+   292		rtl/v45/ifa_onile_kernel_v45.sv
+   293	
+   294	V4_BRIDGE_TB = tb/v4/tb_ifa_v4_os_bridge.sv
+   295	V4_BRIDGE    = sim/v4/ifa_v4_os_bridge.out
+   296	V45_BRIDGE_TB = tb/v45/tb_ifa_v45_os_bridge.sv
+   297	V45_BRIDGE    = sim/v45/ifa_v45_os_bridge.out
+   298	
+   299	.PHONY: v4-build test-v4 clean-v4
+   300	
+   301	v4-build:
+   302		@mkdir -p sim/v4
+   303		$(IVERILOG) $(SVFLAGS) \
+   304			-o $(V4_BRIDGE) \
+   305			$(V4_RTL) \
+   306			$(V4_BRIDGE_TB)
+   307		@echo "PASS: V4 bridge built"
+   308	
+   309	test-v4:
+   310		./tools/test_v4.sh
+   311	
+   312	clean-v4:
+   313		rm -f sim/v4/*.out
+   314		rm -rf sim/v4/regression_logs
+   315		rm -f programs_v4/_program_v4.hex
+   316		rm -f programs_v4/_program_v4.lst
+   317		rm -f programs_v4/_generated_v4.ifa4
+   318	.PHONY: v45-build
+   319	
+   320	v45-build:
+   321		@mkdir -p sim/v45
+   322		$(IVERILOG) $(SVFLAGS) \
+   323			-o $(V45_BRIDGE) \
+   324			$(V4_RTL) \
+   325			$(V45_BRIDGE_TB)
+   326		@echo "PASS: V4.5 bridge built"
+   327	
+   328	
+   329	.PHONY: relation-frame-v45
+   330	
+   331	relation-frame-v45:
+   332		mkdir -p sim_v45
+   333		iverilog \
+   334			-g2012 \
+   335			-Wall \
+   336			-s tb_ifa_relation_frame \
+   337			-o sim_v45/ifa_relation_frame.vvp \
+   338			rtl/v45/ifa_relation_frame.sv \
+   339			tb/v45/tb_ifa_relation_frame.sv
+   340		vvp sim_v45/ifa_relation_frame.vvp
+   341	
+   342	
+   343	.PHONY: yara-pe-v45
+   344	
+   345	yara-pe-v45:
+   346		mkdir -p sim_v45
+   347		iverilog \
+   348			-g2012 \
+   349			-Wall \
+   350			-s tb_ifa_yara_pe \
+   351			-o sim_v45/ifa_yara_pe.vvp \
+   352			rtl/v45/ifa_yara_pe.sv \
+   353			tb/v45/tb_ifa_yara_pe.sv
+   354		vvp sim_v45/ifa_yara_pe.vvp
+   355	
+   356	.PHONY: yara-pe-bank4-v45
+   357	
+   358	yara-pe-bank4-v45:
+   359		mkdir -p sim_v45
+   360		iverilog \
+   361			-g2012 \
+   362			-Wall \
+   363			-s tb_ifa_yara_pe_bank4 \
+   364			-o sim_v45/ifa_yara_pe_bank4.vvp \
+   365			rtl/v45/ifa_phi_p8.sv \
+   366			rtl/v45/ifa_yara_pe.sv \
+   367			rtl/v45/ifa_yara_pe_bank4.sv \
+   368			tb/v45/tb_ifa_yara_pe_bank4.sv
+   369		vvp sim_v45/ifa_yara_pe_bank4.vvp

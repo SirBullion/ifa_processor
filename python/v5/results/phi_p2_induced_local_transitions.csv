@@ -1,0 +1,5 @@
+source_A,source_B,source_operand,source_relation_label,source_Y,source_RA,source_RD,source_R0,source_T,destination_A,destination_B,destination_operand,destination_relation_label,destination_Y,destination_RA,destination_RD,destination_R0,destination_T,delta_Y,delta_RA,delta_RD,delta_R0,delta_T,phi_p2_induced
+0,0,00,BOTH_ZERO,0,0,0,1,0,0,1,01,DISAGREE,1,0,1,0,0,1,0,1,1,0,True
+0,1,01,DISAGREE,1,0,1,0,0,0,0,00,BOTH_ZERO,0,0,0,1,0,1,0,1,1,0,True
+1,0,10,DISAGREE,1,0,1,0,0,1,0,10,DISAGREE,1,0,1,0,0,0,0,0,0,0,True
+1,1,11,BOTH_ONE,0,1,0,0,0,1,1,11,BOTH_ONE,0,1,0,0,0,0,0,0,0,0,True

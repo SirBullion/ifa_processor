@@ -2,8 +2,13 @@
 
 set -euo pipefail
 
+if [ $# -eq 0 ]; then
+    exec python3 monitor/ifa_monitor_v4.py
+fi
+
 if [ $# -lt 1 ]; then
     echo "Usage:"
+    echo "    ./ifa4"
     echo "    ./ifa4 program.ifa4 [--yara ID]"
     echo "    ./ifa4 program.ifa4y [--yara ID]"
     exit 1

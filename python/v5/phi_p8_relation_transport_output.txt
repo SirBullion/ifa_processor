@@ -1,0 +1,31 @@
+========================================================================
+Φ-P8 RELATION TRANSPORT ANALYSIS
+========================================================================
+
+Pairs tested                 : 65536
+Relation unchanged           : 1296
+Relation changed             : 64240
+
+Component changes
+-----------------
+Y  : 64240
+RA : 55536
+RD : 61440
+R0 : 55536
+T  : 55536
+
+Unique transport vectors     : 575
+Unique relation transitions  : 10000
+
+Most common transport vector
+----------------------------
+ΔY : 00000000
+ΔRA: 00000000
+ΔRD: 00000000
+ΔR0: 00000000
+ΔT : 00000000
+Frequency: 1296
+
+Saved:
+/home/sirbullion/ifa_processor/python/v5/results/phi_p8_relation_transport.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p8_relation_transport_summary.json

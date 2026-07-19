@@ -1,0 +1,74 @@
+=== IFÁ REVERSIBLE QUANTUM FULL ADDER ===
+
+                                   
+q_0: ──■──────────────■────■───────
+       │              │    │       
+q_1: ──┼────■─────────■────┼────■──
+       │    │         │    │    │  
+q_2: ──┼────┼────■────┼────■────■──
+     ┌─┴─┐┌─┴─┐┌─┴─┐  │    │    │  
+q_3: ┤ X ├┤ X ├┤ X ├──┼────┼────┼──
+     └───┘└───┘└───┘┌─┴─┐┌─┴─┐┌─┴─┐
+q_4: ───────────────┤ X ├┤ X ├┤ X ├
+                    └───┘└───┘└───┘
+
+Qubits       : 5
+Circuit depth: 5
+Gate count   : OrderedDict({'cx': 3, 'ccx': 3})
+
+=== QUANTUM FULL-ADDER TRUTH TABLE ===
+
+A B Cin | Sum Cout | Probability Result
+----------------------------------------
+0 0  0  |  0    0   | 1.000000000000 PASS
+0 0  1  |  1    0   | 1.000000000000 PASS
+0 1  0  |  1    0   | 1.000000000000 PASS
+0 1  1  |  0    1   | 1.000000000000 PASS
+1 0  0  |  1    0   | 1.000000000000 PASS
+1 0  1  |  0    1   | 1.000000000000 PASS
+1 1  0  |  0    1   | 1.000000000000 PASS
+1 1  1  |  1    1   | 1.000000000000 PASS
+
+Truth-table cases tested : 8
+Truth-table failures     : 0
+
+=== COMPLETE 32-STATE REVERSIBLE TEST ===
+
+Basis states tested : 32
+Basis failures      : 0
+
+=== FULL-ADDER UNITARITY TEST ===
+
+U†U = I          : True
+Maximum deviation: 0.000e+00
+
+=== FULL-ADDER SELF-INVERSE TEST ===
+
+U² = I           : True
+Maximum deviation: 0.000e+00
+
+=== FULL-ADDER ROUND-TRIP TEST ===
+
+Round trips tested : 32
+Round-trip failures: 0
+
+=== FULL-ADDER SUPERPOSITION TEST ===
+
+Expected non-zero states:
+  |00000>
+  |11111>
+
+Observed non-zero amplitudes:
+  |00000> = (0.7071067811865475+0j)
+  |11111> = (0.7071067811865475+0j)
+
+Superposition mapping: True
+
+=== UNIFORM SUPERPOSITION TEST ===
+
+Uniform state preserved: True
+Output state norm       : 1.000000000000
+
+=== FINAL RESULT ===
+Total failures : 0
+RESULT         : PASS

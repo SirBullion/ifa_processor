@@ -1,0 +1,41 @@
+====================================================================
+IFÁ V5 CANONICAL Φ-P8 EXHAUSTIVE TEST
+====================================================================
+
+P2 ANCHOR–AGREEMENT TABLE
+-------------------------------------------
+A B | Anchor Agreement | Recovered A B
+0 0 |   0        1      |     0 0
+0 1 |   0        0      |     0 1
+1 0 |   1        0      |     1 0
+1 1 |   1        1      |     1 1
+
+Testing Φ-P8 tensor Φ-P8 over 65,536 basis states...
+
+====================================================================
+Φ-P8 TEST REPORT
+====================================================================
+Input states                 : 256
+Unique outputs               : 256
+Bijection                    : PASS
+Inverse reconstruction       : PASS
+Self-inverse P8² = I         : PASS
+P8⁴ = I                      : PASS
+Exact operator order         : 2
+Permutation matrix unitary   : PASS
+Basis-state action           : PASS
+Superposition norm           : PASS
+Tensor states tested         : 65,536
+P8 tensor P8 bijection       : PASS
+Fixed points                 : 16
+Cycle histogram              : {1: 16, 2: 120}
+Eigenvalue multiplicities    : {'(-1+0j)': 120, '(1+0j)': 136}
+====================================================================
+
+Saved:
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_truth_table.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p8_mapping.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p8_cycles.txt
+/home/sirbullion/ifa_processor/python/v5/results/phi_p8_summary.json
+
+PASS: Canonical Φ-P8 is ready for V5.

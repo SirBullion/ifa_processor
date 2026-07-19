@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+from runtime.relation_frame import RelationFrame
+from compiler.phi_p8_adapter import phi_p8
+
+
+def build_relation_frame(
+    relation_id,
+    operation,
+    operand_a,
+    operand_b,
+    value,
+):
+    """
+    Temporary frame builder.
+
+    The current implementation computes the comparison and relation flags.
+    The next stage will replace the placeholder relation channels (RA, RD,
+    R0, T) with the processor's actual relation-frame generation logic.
+    """
+
+    if isinstance(value, int):
+        Y = phi_p8(value)
+    else:
+        Y = value
+
+    EQ = int(operand_a == operand_b)
+    GT = int(operand_a > operand_b)
+    LT = int(operand_a < operand_b)
+
+    return RelationFrame(
+        relation_id=relation_id,
+        operation=operation,
+        operand_a=operand_a,
+        operand_b=operand_b,
+        Y=Y,
+
+        # placeholders until RMU integration
+        RA=0,
+        RD=0,
+        R0=0,
+        T=0,
+
+        EQ=EQ,
+        GT=GT,
+        LT=LT,
+
+        STATE=0,
+        VALID=True,
+
+        VALUE=value,
+    )

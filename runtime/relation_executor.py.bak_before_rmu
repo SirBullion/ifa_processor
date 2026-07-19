@@ -1,0 +1,577 @@
+#!/usr/bin/env python3
+"""
+============================================================================
+IFÁ Processor V4.5
+Relation-Centric Software Execution Engine
+============================================================================
+
+Execution model:
+
+    Binary literal
+        ↓
+    Φ-P8 canonical relation
+        ↓
+    Dependency graph
+        ↓
+    Relation scheduler
+        ↓
+    Relation execution
+        ↓
+    Relation result store
+        ↓
+    Destination broadcast
+
+Symbolic operands are resolved through RelationReference objects:
+
+    A
+        ↓
+    graph.destination_to_relation["A"]
+        ↓
+    RelationReference(producer="R0", destination="A")
+        ↓
+    relation_results["R0"]
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from numbers import Integral, Real
+from typing import Any
+
+from compiler.relation_graph import (
+    RelationDependencyGraph,
+    build_relation_graph,
+)
+from compiler.relation_reference import RelationReference
+from runtime.frame_builder import build_relation_frame
+from runtime.relation_frame import RelationFrame
+
+
+# --------------------------------------------------------------------------
+# Execution errors
+# --------------------------------------------------------------------------
+
+class RelationExecutionError(RuntimeError):
+    """Base error for relation execution."""
+
+
+class RelationValueAbsent(RelationExecutionError):
+    """
+    A required producer relation has not produced a value.
+
+    This uses relation-oriented terminology rather than classical
+    register underflow terminology.
+    """
+
+
+class UnsupportedRelationOperation(RelationExecutionError):
+    """The requested native operation is not implemented."""
+
+
+# --------------------------------------------------------------------------
+# Execution record
+# --------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class RelationExecutionRecord:
+    relation_id: str
+    wave: int
+    operation: str
+    operand_a: Any
+    operand_b: Any
+    result: Any
+    destinations: tuple[str, ...]
+
+
+# --------------------------------------------------------------------------
+# Native IFÁ V4.5 operation engine
+# --------------------------------------------------------------------------
+
+def normalise_operation(operation: str) -> str:
+    """
+    Normalise Yoruba diacritics and common textual forms.
+    """
+
+    operation = str(operation).strip().upper()
+
+    aliases = {
+        "KÙ": "KU",
+        "GBÉ": "GBE",
+        "DÁGBA": "DAGBA",
+        "DAGBA": "DAGBA",
+        "PAPO": "PAPO",
+        "YO": "YO",
+        "PIN": "PIN",
+        "KU": "KU",
+        "GBE": "GBE",
+        "SEDA": "SEDA",
+        "JU": "JU",
+        "KERE": "KERE",
+        "KERÉ": "KERE",
+    }
+
+    return aliases.get(operation, operation)
+
+
+def require_numeric(value: Any, operand_name: str) -> Real:
+    """
+    Reject unresolved or unsupported operand types explicitly.
+    """
+
+    if isinstance(value, bool):
+        return int(value)
+
+    if not isinstance(value, Real):
+        raise TypeError(
+            f"{operand_name} must resolve to a numeric value; "
+            f"received {value!r}"
+        )
+
+    return value
+
+
+def execute_operation(
+    operation: str,
+    operand_a: Any,
+    operand_b: Any,
+) -> Any:
+    """
+    Execute one native IFÁ V4.5 operation.
+
+    Native operation mapping:
+
+        PAPO   addition
+        YO     subtraction
+        DAGBA  multiplication
+        PIN    division
+        KU     modulo
+        GBE    exponentiation
+        SEDA   equality
+        JU     greater-than
+        KERE   less-than
+    """
+
+    op = normalise_operation(operation)
+
+    a = require_numeric(operand_a, "operand A")
+    b = require_numeric(operand_b, "operand B")
+
+    if op == "PAPO":
+        return a + b
+
+    if op == "YO":
+        return a - b
+
+    if op == "DAGBA":
+        return a * b
+
+    if op == "PIN":
+        if b == 0:
+            raise ZeroDivisionError(
+                "PIN relation cannot divide by zero."
+            )
+
+        result = a / b
+
+        # Preserve integers where division is exact.
+        if (
+            isinstance(a, Integral)
+            and isinstance(b, Integral)
+            and a % b == 0
+        ):
+            return a // b
+
+        return result
+
+    if op == "KU":
+        if b == 0:
+            raise ZeroDivisionError(
+                "KU relation cannot calculate modulo zero."
+            )
+
+        return a % b
+
+    if op == "GBE":
+        return a ** b
+
+    if op == "SEDA":
+        return int(a == b)
+
+    if op == "JU":
+        return int(a > b)
+
+    if op == "KERE":
+        return int(a < b)
+
+    raise UnsupportedRelationOperation(
+        f"Unsupported IFÁ operation: {operation!r}"
+    )
+
+
+# --------------------------------------------------------------------------
+# Relation-centric executor
+# --------------------------------------------------------------------------
+
+class RelationExecutor:
+    """
+    Execute a RelationDependencyGraph wave by wave.
+
+    Two result views are preserved:
+
+    relation_results
+        Authoritative relation-centric result store.
+
+        Example:
+            R0 -> 5
+
+    destination_values
+        Broadcast aliases exposed to the language/runtime.
+
+        Example:
+            A      -> 5
+            A_COPY -> 5
+
+    Symbolic operands are resolved through:
+
+        destination
+            ↓
+        RelationReference
+            ↓
+        producer relation result
+    """
+
+    def __init__(self) -> None:
+        self.relation_results: dict[str, Any] = {}
+        self.relation_frames: dict[str, RelationFrame] = {}
+        self.destination_values: dict[str, Any] = {}
+        self.execution_records: list[
+            RelationExecutionRecord
+        ] = []
+
+    @property
+    def values(self) -> dict[str, Any]:
+        """
+        Compatibility alias for earlier executor code.
+        """
+
+        return self.destination_values
+
+    def reset(self) -> None:
+        self.relation_results.clear()
+        self.relation_frames.clear()
+        self.destination_values.clear()
+        self.execution_records.clear()
+
+    def resolve_reference(
+        self,
+        reference: RelationReference,
+    ) -> Any:
+        """
+        Resolve a RelationReference through its producer relation.
+        """
+
+        if reference.producer not in self.relation_results:
+            raise RelationValueAbsent(
+                "RELATION_ABSENT: "
+                f"{reference.producer} has not produced the value "
+                f"required by destination "
+                f"{reference.destination!r}."
+            )
+
+        return self.relation_results[
+            reference.producer
+        ]
+
+    def resolve_operand(
+        self,
+        operand: Any,
+        graph: RelationDependencyGraph,
+    ) -> Any:
+        """
+        Resolve a literal or symbolic relation operand.
+
+        Integer and numeric literals are returned directly.
+
+        Strings must identify destinations in the graph's
+        destination-to-relation table.
+        """
+
+        if not isinstance(operand, str):
+            return operand
+
+        reference = graph.destination_to_relation.get(
+            operand
+        )
+
+        if reference is None:
+            raise RelationValueAbsent(
+                "RELATION_ABSENT: "
+                f"no producer relation exists for symbolic "
+                f"operand {operand!r}."
+            )
+
+        if not isinstance(reference, RelationReference):
+            raise TypeError(
+                "Graph destination table contains a legacy "
+                f"value for {operand!r}: {reference!r}. "
+                "Expected RelationReference."
+            )
+
+        return self.resolve_reference(reference)
+
+    def execute_relation(
+        self,
+        relation_id: str,
+        wave_number: int,
+        graph: RelationDependencyGraph,
+    ) -> RelationExecutionRecord:
+        """
+        Execute one relation and broadcast its result.
+        """
+
+        node = graph.nodes[relation_id]
+        relation = node.relation
+        request = relation.representative
+
+        operand_a = self.resolve_operand(
+            request.a,
+            graph,
+        )
+
+        operand_b = self.resolve_operand(
+            request.b,
+            graph,
+        )
+
+        result = execute_operation(
+            request.op,
+            operand_a,
+            operand_b,
+        )
+
+        # The relation result is authoritative.
+        self.relation_results[
+            relation_id
+        ] = result
+
+        frame = build_relation_frame(
+            relation_id=relation_id,
+            operation=request.op,
+            operand_a=operand_a,
+            operand_b=operand_b,
+            value=result,
+            width=8,
+        )
+
+        self.relation_frames[
+            relation_id
+        ] = frame
+
+        destinations = tuple(
+            str(destination)
+            for destination in relation.destinations
+        )
+
+        # Broadcast one computed relation result to all consumers.
+        for destination in destinations:
+            reference = graph.destination_to_relation.get(
+                destination
+            )
+
+            if reference is None:
+                raise RelationValueAbsent(
+                    "RELATION_ABSENT: "
+                    f"destination {destination!r} has no "
+                    "RelationReference."
+                )
+
+            if reference.producer != relation_id:
+                raise RelationExecutionError(
+                    "Relation-reference mismatch: "
+                    f"{destination!r} points to "
+                    f"{reference.producer}, but was emitted by "
+                    f"{relation_id}."
+                )
+
+            self.destination_values[
+                destination
+            ] = result
+
+        record = RelationExecutionRecord(
+            relation_id=relation_id,
+            wave=wave_number,
+            operation=normalise_operation(
+                request.op
+            ),
+            operand_a=operand_a,
+            operand_b=operand_b,
+            result=result,
+            destinations=destinations,
+        )
+
+        self.execution_records.append(record)
+
+        return record
+
+    def run(
+        self,
+        graph: RelationDependencyGraph,
+        *,
+        reset: bool = True,
+        print_report: bool = True,
+    ) -> dict[str, Any]:
+        """
+        Execute all graph waves.
+
+        Relations within the same wave are dependency-independent.
+        This software model executes them sequentially while preserving
+        the parallel-wave structure required by future YÀRÁ workers.
+        """
+
+        if reset:
+            self.reset()
+
+        if print_report:
+            print("=" * 72)
+            print("IFÁ SOFTWARE RELATION EXECUTION")
+            print("=" * 72)
+
+        for wave_number, wave in enumerate(
+            graph.execution_waves
+        ):
+            if print_report:
+                print()
+                print(f"WAVE {wave_number}")
+                print("-" * 72)
+
+            for relation_id in wave:
+                record = self.execute_relation(
+                    relation_id,
+                    wave_number,
+                    graph,
+                )
+
+                if print_report:
+                    print(
+                        f"{record.relation_id:<4}"
+                        f"{record.operation:<8}"
+                        f"{record.operand_a} ATI "
+                        f"{record.operand_b} = "
+                        f"{record.result}"
+                    )
+
+                    print(
+                        "      relation result "
+                        f"-> {record.relation_id} = "
+                        f"{record.result}"
+                    )
+
+                    print(
+                        "      relation frame  "
+                        f"-> {self.relation_frames[record.relation_id]}"
+                    )
+
+                    for destination in record.destinations:
+                        reference = (
+                            graph.destination_to_relation[
+                                destination
+                            ]
+                        )
+
+                        print(
+                            f"      broadcast       "
+                            f"-> {reference} = "
+                            f"{record.result}"
+                        )
+
+        if print_report:
+            self.print_final_report(graph)
+
+        return dict(self.destination_values)
+
+    def print_final_report(
+        self,
+        graph: RelationDependencyGraph,
+    ) -> None:
+        print()
+        print("=" * 72)
+        print("RELATION RESULT STORE")
+        print("=" * 72)
+
+        for relation_id in sorted(
+            self.relation_results,
+            key=lambda value: int(value[1:]),
+        ):
+            print(
+                f"{relation_id:<12}"
+                f"{self.relation_results[relation_id]}"
+            )
+
+        print()
+        print("=" * 72)
+        print("DESTINATION BROADCAST VALUES")
+        print("=" * 72)
+
+        for destination in sorted(
+            self.destination_values
+        ):
+            reference = graph.destination_to_relation[
+                destination
+            ]
+
+            print(
+                f"{destination:<12}"
+                f"{self.destination_values[destination]:<12}"
+                f"via {reference}"
+            )
+
+        print()
+        print("=" * 72)
+        print("EXECUTION STATISTICS")
+        print("=" * 72)
+        print(
+            f"Relations executed : "
+            f"{len(self.execution_records)}"
+        )
+        print(
+            f"Execution waves    : "
+            f"{graph.wave_count}"
+        )
+        print(
+            f"Maximum parallelism: "
+            f"{graph.maximum_parallelism}"
+        )
+        print(
+            f"Broadcast outputs  : "
+            f"{len(self.destination_values)}"
+        )
+
+
+# --------------------------------------------------------------------------
+# Demonstration
+# --------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    program = [
+        ("PAPO", 2, 3, "A"),
+        ("YO", 10, 4, "B"),
+        ("DAGBA", 5, 6, "C"),
+
+        # Canonically equivalent to PAPO 2 ATI 3.
+        ("PAPO", 3, 2, "A_COPY"),
+
+        # Symbolic operands resolve through RelationReference objects.
+        ("PAPO", "A", "B", "D"),
+        ("YO", "C", 2, "E"),
+        ("DAGBA", "D", "E", "F"),
+    ]
+
+    relation_graph = build_relation_graph(
+        program
+    )
+
+    executor = RelationExecutor()
+
+    executor.run(
+        relation_graph
+    )

@@ -1,0 +1,44 @@
+[*]
+[*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
+[*] Sat Jul 18 04:47:21 2026
+[*]
+[dumpfile] "/home/sirbullion/ifa_processor/sim_v45/ifa_yara_pe.vcd"
+[dumpfile_mtime] "Sat Jul 18 04:23:17 2026"
+[dumpfile_size] 11362
+[savefile] "/home/sirbullion/ifa_processor/sim_v45/sim_v45.gtkw"
+[timestart] 0
+[size] 1920 1001
+[pos] -51 -51
+*-15.591522 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 278
+[signals_width] 174
+[sst_expanded] 1
+[sst_vpaned_height] 297
+@28
+tb_ifa_yara_pe.clk
+tb_ifa_yara_pe.start_i
+tb_ifa_yara_pe.rst_n
+tb_ifa_yara_pe.busy_o
+tb_ifa_yara_pe.done_o
+@22
+tb_ifa_yara_pe.relation_id_i[7:0]
+tb_ifa_yara_pe.operation_i[3:0]
+tb_ifa_yara_pe.operand_b_i[7:0]
+tb_ifa_yara_pe.operand_a_i[7:0]
+tb_ifa_yara_pe.phi_a_i[7:0]
+tb_ifa_yara_pe.phi_b_i[7:0]
+tb_ifa_yara_pe.phi_a_o[7:0]
+tb_ifa_yara_pe.phi_b_o[7:0]
+tb_ifa_yara_pe.phi_y_o[7:0]
+tb_ifa_yara_pe.value_o[31:0]
+tb_ifa_yara_pe.y_o[7:0]
+tb_ifa_yara_pe.ra_o[7:0]
+tb_ifa_yara_pe.rd_o[7:0]
+tb_ifa_yara_pe.r0_o[7:0]
+@28
+tb_ifa_yara_pe.transport_o
+tb_ifa_yara_pe.state_o
+@29
+tb_ifa_yara_pe.valid_o
+[pattern_trace] 1
+[pattern_trace] 0

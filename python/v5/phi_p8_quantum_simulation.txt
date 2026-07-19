@@ -1,0 +1,70 @@
+=== Φ-P8 QUANTUM CIRCUIT ===
+
+     ┌───┐┌───┐
+q_0: ┤ X ├┤ X ├
+     └─┬─┘└───┘
+q_1: ──■───────
+     ┌───┐┌───┐
+q_2: ┤ X ├┤ X ├
+     └─┬─┘└───┘
+q_3: ──■───────
+     ┌───┐┌───┐
+q_4: ┤ X ├┤ X ├
+     └─┬─┘└───┘
+q_5: ──■───────
+     ┌───┐┌───┐
+q_6: ┤ X ├┤ X ├
+     └─┬─┘└───┘
+q_7: ──■───────
+               
+
+
+=== SELECTED Φ-P8 MAPPINGS ===
+
+|00000000> -> |01010101>  expected |01010101>  P=1.000000000000  PASS
+|00000001> -> |01010100>  expected |01010100>  P=1.000000000000  PASS
+|00000010> -> |01010110>  expected |01010110>  P=1.000000000000  PASS
+|00000011> -> |01010111>  expected |01010111>  P=1.000000000000  PASS
+|01010101> -> |00000000>  expected |00000000>  P=1.000000000000  PASS
+|10101010> -> |10101010>  expected |10101010>  P=1.000000000000  PASS
+|11110000> -> |11110101>  expected |11110101>  P=1.000000000000  PASS
+|11111111> -> |11111111>  expected |11111111>  P=1.000000000000  PASS
+=== Φ-P8 EXHAUSTIVE BASIS-STATE SIMULATION ===
+
+Basis states tested : 256
+Basis failures      : 0
+
+=== Φ-P8 UNITARITY TEST ===
+
+U†U = I          : True
+Maximum deviation: 0.000e+00
+
+=== Φ-P8 SELF-INVERSE TEST ===
+
+U² = I           : True
+Maximum deviation: 0.000e+00
+
+=== Φ-P8 ROUND-TRIP TEST ===
+
+Round trips tested : 256
+Round-trip failures: 0
+
+=== Φ-P8 SUPERPOSITION TEST ===
+
+Input components:
+  |00000000>
+  |11111111>
+
+Expected output components:
+  |01010101>
+  |11111111>
+
+Observed non-zero amplitudes:
+  |01010101> = (0.7071067811865475+0j)
+  |11111111> = (0.7071067811865475+0j)
+
+Superposition mapping: True
+
+=== FINAL RESULT ===
+Total failures : 0
+RESULT         : PASS

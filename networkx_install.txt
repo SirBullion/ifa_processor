@@ -1,0 +1,8 @@
+Defaulting to user installation because normal site-packages is not writeable
+WARNING: Skipping /usr/lib/python3.12/dist-packages/pybind11-2.11.1.dist-info due to invalid metadata entry 'name'
+Collecting networkx
+  Using cached networkx-3.6.1-py3-none-any.whl.metadata (6.8 kB)
+Using cached networkx-3.6.1-py3-none-any.whl (2.1 MB)
+WARNING: Skipping /usr/lib/python3.12/dist-packages/pybind11-2.11.1.dist-info due to invalid metadata entry 'name'
+Installing collected packages: networkx
+Successfully installed networkx-3.6.1

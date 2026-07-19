@@ -1,0 +1,25 @@
+digraph PhiP2CarryAutomaton {
+    graph [rankdir=LR, label="IFÁ V5 Dual-Carry Ripple Automaton", labelloc=t];
+    node [shape=circle, fontname="DejaVu Sans"];
+    edge [fontname="DejaVu Sans"];
+
+    "00" [shape=doublecircle, label="C=0, CΦ=0"];
+    "01" [label="C=0, CΦ=1"];
+    "10" [label="C=1, CΦ=0"];
+    "11" [label="C=1, CΦ=1"];
+
+    "00" -> "00" [label="75008"];
+    "00" -> "01" [label="18752"];
+    "00" -> "10" [label="18752"];
+    "00" -> "11" [label="37504"];
+    "01" -> "00" [label="9216"];
+    "01" -> "01" [label="6144"];
+    "01" -> "11" [label="9216"];
+    "10" -> "00" [label="9216"];
+    "10" -> "10" [label="6144"];
+    "10" -> "11" [label="9216"];
+    "11" -> "00" [label="15744"];
+    "11" -> "01" [label="7872"];
+    "11" -> "10" [label="7872"];
+    "11" -> "11" [label="31488"];
+}

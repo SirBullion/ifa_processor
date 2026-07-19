@@ -1,0 +1,76 @@
+=== IFÁ QUANTUM RELATION-FRAME CIRCUIT ===
+
+Qubits       : 40
+Circuit depth: 8
+Gate count   : OrderedDict({'x': 40, 'cx': 24, 'ccx': 16, 'barrier': 2})
+
+=== LOCAL FIVE-QUBIT RELATION CELL ===
+
+               ┌───┐          ┌───┐
+q_0: ──■────■──┤ X ├───────■──┤ X ├
+       │    │  └───┘┌───┐  │  ├───┤
+q_1: ──■────┼────■──┤ X ├──■──┤ X ├
+     ┌─┴─┐  │    │  └───┘  │  └───┘
+q_2: ┤ X ├──┼────┼─────────┼───────
+     └───┘┌─┴─┐┌─┴─┐       │       
+q_3: ─────┤ X ├┤ X ├───────┼───────
+          └───┘└───┘     ┌─┴─┐     
+q_4: ────────────────────┤ X ├─────
+                         └───┘     
+
+=== LOCAL RELATION-CELL BASIS TEST ===
+
+A=0 B=0 -> RA=0 RD=0 R0=1 P=1.000000000000 PASS
+A=0 B=1 -> RA=0 RD=1 R0=0 P=1.000000000000 PASS
+A=1 B=0 -> RA=0 RD=1 R0=0 P=1.000000000000 PASS
+A=1 B=1 -> RA=1 RD=0 R0=0 P=1.000000000000 PASS
+
+=== LOCAL RELATION-CELL UNITARITY ===
+
+U†U = I          : True
+Maximum deviation: 0.000e+00
+
+=== LOCAL RELATION-CELL SELF-INVERSE TEST ===
+
+U² = I           : True
+Maximum deviation: 0.000e+00
+
+=== LOCAL RELATION-CELL SUPERPOSITION TEST ===
+
+Expected non-zero states:
+  |10000>
+  |00111>
+
+Observed non-zero amplitudes:
+  |00111> = (0.7071067811865475+0j)
+  |10000> = (0.7071067811865475+0j)
+
+Superposition relation mapping: True
+
+=== SELECTED FULL RELATION FRAMES ===
+
+ A   B   Aφ  Bφ  RA  RD  R0
+00  00  55  55  55  00  AA
+00  FF  55  FF  55  AA  00
+55  AA  00  AA  00  AA  55
+A5  5A  A0  0A  00  AA  55
+F0  0F  F5  5F  55  AA  00
+FF  FF  FF  FF  FF  00  00
+=== EXHAUSTIVE QUANTUM RELATION-FRAME TEST ===
+
+Ordered operand pairs tested : 65536
+Relation-frame failures      : 0
+
+=== EXHAUSTIVE UNCOMPUTATION TEST ===
+
+Round trips tested       : 65536
+Uncomputation failures   : 0
+
+=== ARBITRARY TARGET REVERSIBILITY TEST ===
+
+Target-state tests    : 30
+Target-state failures : 0
+
+=== FINAL RESULT ===
+Total failures : 0
+RESULT         : PASS

@@ -1,0 +1,40 @@
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+rtl/v5/ifa_phi_p2_relation_block.sv:34: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+Ordered byte pairs tested : 65536
+Failures                  : 0
+(0,0) : 24704
+(0,1) : 8192
+(1,0) : 8192
+(1,1) : 24448
+OVERALL RESULT : PASS
+rtl/v5/tb_ifa_phi_p8_relation_ripple.sv:154: $finish called at 65536000 (1ps)

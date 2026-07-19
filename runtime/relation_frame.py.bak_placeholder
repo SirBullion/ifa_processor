@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""
+==========================================================================
+IFÁ Processor V4.5
+
+Relation Frame
+==========================================================================
+
+Native execution object carried through the IFÁ runtime.
+
+Binary
+    ↓
+Φ-P8
+    ↓
+Relation Frame
+    ↓
+RMU
+    ↓
+Scheduler
+    ↓
+YÀRÁ
+"""
+
+from dataclasses import dataclass
+from typing import Any
+
+
+@dataclass(slots=True)
+class RelationFrame:
+
+    # ----------------------------------------------------
+    # identity
+    # ----------------------------------------------------
+
+    relation_id: str
+
+    operation: str
+
+    # ----------------------------------------------------
+    # operands
+    # ----------------------------------------------------
+
+    operand_a: Any
+
+    operand_b: Any
+
+    # ----------------------------------------------------
+    # Φ channel
+    # ----------------------------------------------------
+
+    Y: Any
+
+    # ----------------------------------------------------
+    # relation channels
+    # ----------------------------------------------------
+
+    RA: int
+
+    RD: int
+
+    R0: int
+
+    T: int
+
+    # ----------------------------------------------------
+    # comparison
+    # ----------------------------------------------------
+
+    EQ: int
+
+    GT: int
+
+    LT: int
+
+    # ----------------------------------------------------
+    # execution state
+    # ----------------------------------------------------
+
+    STATE: int
+
+    VALID: bool
+
+    # ----------------------------------------------------
+    # numeric result
+    # ----------------------------------------------------
+
+    VALUE: Any
+
+    def summary(self):
+
+        return {
+
+            "relation": self.relation_id,
+
+            "operation": self.operation,
+
+            "Y": self.Y,
+
+            "RA": self.RA,
+
+            "RD": self.RD,
+
+            "R0": self.R0,
+
+            "T": self.T,
+
+            "EQ": self.EQ,
+
+            "GT": self.GT,
+
+            "LT": self.LT,
+
+            "STATE": self.STATE,
+
+            "VALID": self.VALID,
+
+            "VALUE": self.VALUE,
+
+        }
+
+    def __str__(self):
+
+        return (
+            f"{self.relation_id} "
+            f"Y={self.Y} "
+            f"RA={self.RA} "
+            f"RD={self.RD} "
+            f"R0={self.R0} "
+            f"T={self.T} "
+            f"EQ={self.EQ} "
+            f"GT={self.GT} "
+            f"LT={self.LT} "
+            f"STATE={self.STATE} "
+            f"VALID={self.VALID} "
+            f"VALUE={self.VALUE}"
+        )

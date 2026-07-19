@@ -1,0 +1,37 @@
+=== Φ-P2 QUANTUM CIRCUIT ===
+
+     ┌───┐┌───┐
+q_0: ┤ X ├┤ X ├
+     └─┬─┘└───┘
+q_1: ──■───────
+               
+=== Φ-P2 BASIS-STATE SIMULATION ===
+
+|00> -> |01>  expected |01>  P=1.000000000000  PASS
+|01> -> |00>  expected |00>  P=1.000000000000  PASS
+|10> -> |10>  expected |10>  P=1.000000000000  PASS
+|11> -> |11>  expected |11>  P=1.000000000000  PASS
+
+=== UNITARITY TEST ===
+
+U†U = I : True
+
+=== SELF-INVERSE TEST ===
+
+U² = I  : True
+
+=== SUPERPOSITION TEST ===
+
+Expected non-zero amplitudes:
+  |01> = 0.707106781187+0.000000000000j
+  |11> = 0.707106781187+0.000000000000j
+
+Observed statevector:
+  |01> = (0.7071067811865475+0j)
+  |11> = (0.7071067811865475+0j)
+
+Superposition mapping : True
+
+=== FINAL RESULT ===
+Failures : 0
+RESULT   : PASS

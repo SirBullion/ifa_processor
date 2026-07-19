@@ -20,8 +20,47 @@ def norm(word):
     w = word.strip().upper()
     return ALIASES.get(w, w)
 
+
+ODU_VALUES = {
+    "OGBE": 0x00,
+    "ÒGBÈ": 0x00,
+    "OYEKU": 0x01,
+    "ÒYÈKÚ": 0x01,
+    "IWORI": 0x02,
+    "ÌWÒRÌ": 0x02,
+    "ODI": 0x03,
+    "ÒDÍ": 0x03,
+    "IROSUN": 0x04,
+    "ÌRÒSÙN": 0x04,
+    "OWONRIN": 0x05,
+    "ÒWÓNRÍN": 0x05,
+    "OBARA": 0x06,
+    "ÒBÀRÀ": 0x06,
+    "OKANRAN": 0x07,
+    "ÒKÀNRÀN": 0x07,
+    "OGUNDA": 0x08,
+    "ÒGÚNDÁ": 0x08,
+    "OSA": 0x09,
+    "ÒSÁ": 0x09,
+    "IKA": 0x0A,
+    "ÌKÁ": 0x0A,
+    "OTURUPON": 0x0B,
+    "ÒTÚRÚPỌ̀N": 0x0B,
+    "OTURA": 0x0C,
+    "ÒTÚRÁ": 0x0C,
+    "IRETE": 0x0D,
+    "ÌRETÈ": 0x0D,
+    "OSE": 0x0E,
+    "Ọ̀ṢẸ́": 0x0E,
+    "OFUN": 0x0F,
+    "ÒFÚN": 0x0F,
+}
+
 def parse_value(x):
     x = norm(x)
+
+    if x in ODU_VALUES:
+        return ODU_VALUES[x]
 
     if x in NUMBER_WORDS:
         return NUMBER_WORDS[x] & 0xFF

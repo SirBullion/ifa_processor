@@ -1,0 +1,20 @@
+======================================================================
+LOCAL Φ-P2 ALGEBRA
+======================================================================
+
+Operand states              : 4
+Relation states             : 3
+Target relation states      : 3
+
+Branching
+----------------
+(0, 0, 0, 1, 0)  ->  1 target(s)
+(1, 0, 1, 0, 0)  ->  2 target(s)
+(0, 1, 0, 0, 0)  ->  1 target(s)
+
+Distinct relation transitions : 4
+Transition vectors            : 2
+
+Saved:
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_local_algebra.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_local_algebra_summary.json

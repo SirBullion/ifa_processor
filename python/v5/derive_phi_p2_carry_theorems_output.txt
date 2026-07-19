@@ -1,0 +1,64 @@
+================================================================================
+IFÁ V5: EXACT Φ-P2 CARRY THEOREM DERIVATION
+================================================================================
+
+LOCAL ALGEBRA
+--------------------------------------------------------------------------------
+Total contexts                    : 64
+Distinct relation transitions     : 40
+Distinct XOR transport vectors    : 13
+Carry-aware source states         : 18
+Branching source states           : 18
+Maximum targets from one source   : 4
+
+TRANSITION MULTIPLICITY DISTRIBUTION
+--------------------------------------------------------------------------------
+Multiplicity  1 : 16 transition(s)
+Multiplicity  2 : 24 transition(s)
+
+VECTOR MULTIPLICITY DISTRIBUTION
+--------------------------------------------------------------------------------
+Multiplicity  4 : 11 vector(s)
+Multiplicity  8 : 1 vector(s)
+Multiplicity 12 : 1 vector(s)
+
+BRANCHING DEGREE DISTRIBUTION
+--------------------------------------------------------------------------------
+2 target(s) : 16 source state(s)
+4 target(s) : 2 source state(s)
+
+GLOBAL CARRY ALGEBRA
+--------------------------------------------------------------------------------
+Reachable trace contexts          : 46
+Reachable carry-input contexts    : 13
+Reachable carry transitions       : 14
+
+FINAL CARRY-PAIR DISTRIBUTION
+--------------------------------------------------------------------------------
+(0, 0) : 24704
+(0, 1) : 8192
+(1, 0) : 8192
+(1, 1) : 24448
+
+Matching final carries            : 49152 (75.00%)
+Different final carries           : 16384 (25.00%)
+
+THEOREM CHECKS
+--------------------------------------------------------------------------------
+64 local contexts                             PASS
+40 distinct relation transitions              PASS
+13 distinct XOR vectors                       PASS
+18 carry-aware source states                  PASS
+18 branching source states                    PASS
+maximum branch degree 4                       PASS
+46 reachable trace contexts                   PASS
+final carry distribution                      PASS
+matching carry count 49152                    PASS
+different carry count 16384                   PASS
+
+Saved:
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_theorem_local_contexts.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_theorem_40_transitions.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_theorem_13_vectors.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_theorem_46_trace_contexts.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_carry_theorems_summary.json

@@ -1,0 +1,45 @@
+==============================================================================
+IFÁ V5: ALL 16 LOCAL OPERAND-STATE TRANSITIONS
+==============================================================================
+
+ALL ORDERED OPERAND TRANSITIONS
+------------------------------------------------------------------------------
+Source Destination | Source relation -> Destination relation | Φ-P2
+  00       00      | BOTH_ZERO -> BOTH_ZERO | no
+  00       01      | BOTH_ZERO -> DISAGREE  | YES
+  00       10      | BOTH_ZERO -> DISAGREE  | no
+  00       11      | BOTH_ZERO -> BOTH_ONE  | no
+  01       00      | DISAGREE  -> BOTH_ZERO | YES
+  01       01      | DISAGREE  -> DISAGREE  | no
+  01       10      | DISAGREE  -> DISAGREE  | no
+  01       11      | DISAGREE  -> BOTH_ONE  | no
+  10       00      | DISAGREE  -> BOTH_ZERO | no
+  10       01      | DISAGREE  -> DISAGREE  | no
+  10       10      | DISAGREE  -> DISAGREE  | YES
+  10       11      | DISAGREE  -> BOTH_ONE  | no
+  11       00      | BOTH_ONE  -> BOTH_ZERO | no
+  11       01      | BOTH_ONE  -> DISAGREE  | no
+  11       10      | BOTH_ONE  -> DISAGREE  | no
+  11       11      | BOTH_ONE  -> BOTH_ONE  | YES
+
+Φ-P2-INDUCED TRANSITIONS
+------------------------------------------------------------------------------
+00 -> 01    BOTH_ZERO -> DISAGREE
+01 -> 00    DISAGREE -> BOTH_ZERO
+10 -> 10    DISAGREE -> DISAGREE
+11 -> 11    BOTH_ONE -> BOTH_ONE
+
+SUMMARY
+------------------------------------------------------------------------------
+Local operand states                 : 4
+All ordered operand transitions      : 16
+Φ-P2-induced operand transitions     : 4
+Local relation states                : 3
+Distinct relation-level transitions : 9
+Distinct XOR transition vectors     : 4
+
+Saved:
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_all_16_local_transitions.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_induced_local_transitions.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_all_transition_vectors.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p2_all_local_transitions_summary.json

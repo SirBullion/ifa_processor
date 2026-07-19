@@ -1,0 +1,32 @@
+================================================================================
+IFÁ V5: TRANSPORT-VECTOR XOR CLOSURE
+================================================================================
+
+VECTOR SET
+--------------------------------------------------------------------------------
+Transport vectors              : 13
+Encoded width                  : 11 bits
+Contains zero vector           : True
+
+PAIRWISE XOR TEST
+--------------------------------------------------------------------------------
+Ordered pairs tested           : 169
+Results inside original set    : 67
+Results outside original set   : 102
+Closure fraction               : 39.644970%
+Closed under XOR               : False
+
+GENERATED STRUCTURE
+--------------------------------------------------------------------------------
+Distinct pairwise XOR results  : 28
+New pairwise vectors           : 15
+GF(2) rank                     : 5
+Complete XOR closure size      : 32
+
+RESULT: The 13 vectors are NOT closed under XOR.
+Their smallest XOR-closed completion contains 32 vectors.
+
+Saved:
+/home/sirbullion/ifa_processor/python/v5/results/transport_vector_xor_table.csv
+/home/sirbullion/ifa_processor/python/v5/results/transport_vector_closure_failures.csv
+/home/sirbullion/ifa_processor/python/v5/results/transport_vector_closure_summary.json

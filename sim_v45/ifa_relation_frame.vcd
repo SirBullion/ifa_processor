@@ -1,0 +1,351 @@
+$date
+	Sat Jul 18 13:53:17 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_ifa_relation_frame $end
+$var wire 8 ! y_o [7:0] $end
+$var wire 9 " value_o [8:0] $end
+$var wire 1 # valid_o $end
+$var wire 1 $ transport_o $end
+$var wire 1 % state_o $end
+$var wire 8 & relation_id_o [7:0] $end
+$var wire 8 ' rd_o [7:0] $end
+$var wire 8 ( ra_o [7:0] $end
+$var wire 8 ) r0_o [7:0] $end
+$var wire 8 * phi_y_o [7:0] $end
+$var wire 8 + phi_b_o [7:0] $end
+$var wire 8 , phi_a_o [7:0] $end
+$var wire 4 - operation_o [3:0] $end
+$var wire 8 . operand_b_o [7:0] $end
+$var wire 8 / operand_a_o [7:0] $end
+$var wire 1 0 lt_o $end
+$var wire 1 1 gt_o $end
+$var wire 1 2 eq_o $end
+$var parameter 32 3 OP_WIDTH $end
+$var parameter 32 4 REL_ID_WIDTH $end
+$var parameter 32 5 WIDTH $end
+$var reg 1 6 clk $end
+$var reg 1 7 eq_i $end
+$var reg 1 8 gt_i $end
+$var reg 1 9 load_i $end
+$var reg 1 : lt_i $end
+$var reg 8 ; operand_a_i [7:0] $end
+$var reg 8 < operand_b_i [7:0] $end
+$var reg 4 = operation_i [3:0] $end
+$var reg 8 > phi_a_i [7:0] $end
+$var reg 8 ? phi_b_i [7:0] $end
+$var reg 8 @ phi_y_i [7:0] $end
+$var reg 8 A r0_i [7:0] $end
+$var reg 8 B ra_i [7:0] $end
+$var reg 8 C rd_i [7:0] $end
+$var reg 8 D relation_id_i [7:0] $end
+$var reg 1 E rst_n $end
+$var reg 1 F state_i $end
+$var reg 1 G transport_i $end
+$var reg 1 H valid_i $end
+$var reg 9 I value_i [8:0] $end
+$var reg 8 J y_i [7:0] $end
+$var integer 32 K tests_failed [31:0] $end
+$var integer 32 L tests_run [31:0] $end
+$scope module dut $end
+$var wire 1 6 clk $end
+$var wire 1 7 eq_i $end
+$var wire 1 8 gt_i $end
+$var wire 1 9 load_i $end
+$var wire 1 : lt_i $end
+$var wire 8 M operand_a_i [7:0] $end
+$var wire 8 N operand_b_i [7:0] $end
+$var wire 4 O operation_i [3:0] $end
+$var wire 8 P phi_a_i [7:0] $end
+$var wire 8 Q phi_b_i [7:0] $end
+$var wire 8 R phi_y_i [7:0] $end
+$var wire 8 S r0_i [7:0] $end
+$var wire 8 T ra_i [7:0] $end
+$var wire 8 U rd_i [7:0] $end
+$var wire 8 V relation_id_i [7:0] $end
+$var wire 1 E rst_n $end
+$var wire 1 F state_i $end
+$var wire 1 G transport_i $end
+$var wire 1 H valid_i $end
+$var wire 9 W value_i [8:0] $end
+$var wire 8 X y_i [7:0] $end
+$var parameter 32 Y OP_WIDTH $end
+$var parameter 32 Z REL_ID_WIDTH $end
+$var parameter 32 [ VALUE_WIDTH $end
+$var parameter 32 \ WIDTH $end
+$var reg 1 2 eq_o $end
+$var reg 1 1 gt_o $end
+$var reg 1 0 lt_o $end
+$var reg 8 ] operand_a_o [7:0] $end
+$var reg 8 ^ operand_b_o [7:0] $end
+$var reg 4 _ operation_o [3:0] $end
+$var reg 8 ` phi_a_o [7:0] $end
+$var reg 8 a phi_b_o [7:0] $end
+$var reg 8 b phi_y_o [7:0] $end
+$var reg 8 c r0_o [7:0] $end
+$var reg 8 d ra_o [7:0] $end
+$var reg 8 e rd_o [7:0] $end
+$var reg 8 f relation_id_o [7:0] $end
+$var reg 1 % state_o $end
+$var reg 1 $ transport_o $end
+$var reg 1 # valid_o $end
+$var reg 9 g value_o [8:0] $end
+$var reg 8 h y_o [7:0] $end
+$upscope $end
+$scope task check_reset_state $end
+$upscope $end
+$scope task clear_inputs $end
+$upscope $end
+$scope task expect_bit $end
+$upscope $end
+$scope task expect_value $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1000 \
+b1001 [
+b1000 Z
+b100 Y
+b1000 5
+b1000 4
+b100 3
+$end
+#0
+$dumpvars
+b0 h
+b0 g
+b0 f
+b0 e
+b0 d
+b0 c
+b0 b
+b0 a
+b0 `
+b0 _
+b0 ^
+b0 ]
+b0 X
+b0 W
+b0 V
+b0 U
+b0 T
+b0 S
+b0 R
+b0 Q
+b0 P
+b0 O
+b0 N
+b0 M
+b0 L
+b0 K
+b0 J
+b0 I
+0H
+0G
+0F
+0E
+b0 D
+b0 C
+b0 B
+b0 A
+b0 @
+b0 ?
+b0 >
+b0 =
+b0 <
+b0 ;
+0:
+09
+08
+07
+06
+02
+01
+00
+b0 /
+b0 .
+b0 -
+b0 ,
+b0 +
+b0 *
+b0 )
+b0 (
+b0 '
+b0 &
+0%
+0$
+0#
+b0 "
+b0 !
+$end
+#2000
+b10010 L
+#5000
+16
+#10000
+06
+#15000
+1E
+16
+#20000
+1H
+1:
+b101 I
+b101 W
+b11111100 A
+b11111100 S
+b1 C
+b1 U
+b10 B
+b10 T
+b101 J
+b101 X
+b10100101 @
+b10100101 R
+b10100011 ?
+b10100011 Q
+b10100010 >
+b10100010 P
+b11 <
+b11 N
+b10 ;
+b10 M
+19
+06
+#25000
+1#
+10
+b101 "
+b101 g
+b11111100 )
+b11111100 c
+b1 '
+b1 e
+b10 (
+b10 d
+b101 !
+b101 h
+b10100101 *
+b10100101 b
+b10100011 +
+b10100011 a
+b10100010 ,
+b10100010 `
+b11 .
+b11 ^
+b10 /
+b10 ]
+16
+#26000
+b100100 L
+#30000
+0H
+b11111111 J
+b11111111 X
+b1010101 D
+b1010101 V
+09
+06
+#35000
+16
+#36000
+b100111 L
+#40000
+1H
+1F
+1G
+b100110100 I
+b100110100 W
+b11100000 A
+b11100000 S
+b10111 C
+b10111 U
+b1000 B
+b1000 T
+b110100 J
+b110100 X
+b10110100 @
+b10110100 R
+b10111100 ?
+b10111100 Q
+b10101011 >
+b10101011 P
+b11100 <
+b11100 N
+b1011 ;
+b1011 M
+b10 =
+b10 O
+b101 D
+b101 V
+19
+06
+#45000
+1%
+1$
+b100110100 "
+b100110100 g
+b11100000 )
+b11100000 c
+b10111 '
+b10111 e
+b1000 (
+b1000 d
+b110100 !
+b110100 h
+b10110100 *
+b10110100 b
+b10111100 +
+b10111100 a
+b10101011 ,
+b10101011 `
+b11100 .
+b11100 ^
+b1011 /
+b1011 ]
+b10 -
+b10 _
+b101 &
+b101 f
+16
+#46000
+b110111 L
+#48000
+0#
+0%
+00
+0$
+b0 "
+b0 g
+b0 )
+b0 c
+b0 '
+b0 e
+b0 (
+b0 d
+b0 !
+b0 h
+b0 *
+b0 b
+b0 +
+b0 a
+b0 ,
+b0 `
+b0 .
+b0 ^
+b0 /
+b0 ]
+b0 -
+b0 _
+b0 &
+b0 f
+0E
+#49000
+b1001001 L

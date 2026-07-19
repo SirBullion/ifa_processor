@@ -1,0 +1,46 @@
+========================================================================
+IFÁ V5: BINARY → Φ-P8 → RELATION-SPACE TEST
+========================================================================
+
+Enumerating all 65,536 ordered byte pairs...
+Analysing direct binary relation space...
+Analysing Φ-P8 relation space...
+Testing reversible preserved-state embedding...
+
+========================================================================
+IFÁ V5 Φ-P8 RELATION-SPACE REPORT
+========================================================================
+Operand width                    : 8 bits
+Ordered input pairs              : 65,536
+Φ-P8 inverse reconstruction      : PASS
+Preserved pipeline injective     : PASS
+
+DIRECT BINARY RELATION SPACE
+Unique relation frames          : 6,561
+Collision classes               : 6,305
+Largest collision               : 256
+Compact relation qubits         : 13
+
+Φ-P8 RELATION SPACE
+Unique relation frames          : 6,561
+Collision classes               : 6,305
+Largest collision               : 256
+Compact relation qubits         : 13
+Unique transport values         : 128
+
+SPACE COMPARISON
+Common frames                   : 6,561
+Direct-only frames              : 0
+Φ-P8-only frames                : 0
+Frame sets identical            : True
+Full five-register dimension    : 1,099,511,627,776
+Φ-P8 relation occupancy         : 0.000000596719%
+========================================================================
+
+Saved:
+/home/sirbullion/ifa_processor/python/v5/results/phi_p8_relation_pipeline.csv
+/home/sirbullion/ifa_processor/python/v5/results/direct_relation_collisions.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p8_relation_collisions.csv
+/home/sirbullion/ifa_processor/python/v5/results/phi_p8_relation_summary.json
+
+PASS: Binary → Φ-P8 → Relation Frame pipeline completed.
