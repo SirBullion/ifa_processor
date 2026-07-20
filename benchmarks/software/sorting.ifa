@@ -1,0 +1,17 @@
+ISE SORT(A)
+    JE KI I = 0
+    NIGBATI I < YO LEN(A) ATI 1
+        JE KI J = 0
+        NIGBATI J < YO (YO LEN(A) ATI I) ATI 1
+            BI A[J] > A[PAPO J ATI 1]
+                JE KI T = A[J]
+                A[J] = A[PAPO J ATI 1]
+                A[PAPO J ATI 1] = T
+            PARI
+            JE KI J = PAPO J ATI 1
+        PARI
+        JE KI I = PAPO I ATI 1
+    PARI
+    RETURN A
+PARI
+SORT([9, 1, 8, 2, 7, 3, 6, 4, 5])

@@ -1,0 +1,13 @@
+MODULE MATH
+    ISE ADD(X, Y)
+        RETURN PAPO X ATI Y
+    PARI
+
+    ISE SUBTRACT(X, Y)
+        RETURN YO X ATI Y
+    PARI
+
+    ISE MULTIPLY(X, Y)
+        RETURN DAGBA X ATI Y
+    PARI
+PARI

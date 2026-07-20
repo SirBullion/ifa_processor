@@ -1,0 +1,11 @@
+ISE SEARCH(A, TARGET)
+    JE KI I = 0
+    NIGBATI I < LEN(A)
+        BI A[I] == TARGET
+            RETURN I
+        PARI
+        JE KI I = PAPO I ATI 1
+    PARI
+    RETURN YO 0 ATI 1
+PARI
+SEARCH([4,8,15,16,23,42], 23)

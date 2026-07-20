@@ -1,0 +1,26 @@
+ISE SORT(A)
+    JE KI N = LEN(A)
+    JE KI I = 0
+
+    NIGBATI I < YO N ATI 1
+        JE KI J = 0
+
+        NIGBATI J < YO (YO N ATI I) ATI 1
+            BI A[J] > A[PAPO J ATI 1]
+                JE KI TEMP = A[J]
+                A[J] = A[PAPO J ATI 1]
+                A[PAPO J ATI 1] = TEMP
+            PARI
+
+            JE KI J = PAPO J ATI 1
+        PARI
+
+        JE KI I = PAPO I ATI 1
+    PARI
+
+    RETURN A
+PARI
+
+JE KI VALUES = [5, 1, 4, 2, 3]
+SORT(VALUES)
+PRINT(VALUES)

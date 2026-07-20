@@ -1,0 +1,15 @@
+ISE MATRIX_ADD(A, B, RESULT)
+    FUN I LATI 0 SI 1
+        FUN J LATI 0 SI 1
+            RESULT[I][J] = PAPO A[I][J] ATI B[I][J]
+        PARI
+    PARI
+
+    RETURN RESULT
+PARI
+
+JE KI A = [[1, 2], [3, 4]]
+JE KI B = [[5, 6], [7, 8]]
+JE KI RESULT = [[0, 0], [0, 0]]
+MATRIX_ADD(A, B, RESULT)
+PRINT(RESULT)

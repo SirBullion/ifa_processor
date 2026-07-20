@@ -1,0 +1,7 @@
+ISE DEPTH(N)
+    BI N <= 0
+        RETURN 0
+    PARI
+    RETURN PAPO 1 ATI DEPTH(YO N ATI 1)
+PARI
+DEPTH(64)

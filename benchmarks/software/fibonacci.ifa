@@ -1,0 +1,7 @@
+ISE FIB(N)
+    BI N <= 1
+        RETURN N
+    PARI
+    RETURN PAPO FIB(YO N ATI 1) ATI FIB(YO N ATI 2)
+PARI
+FIB(12)

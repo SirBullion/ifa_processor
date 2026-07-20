@@ -1,0 +1,2 @@
+# Optional dependency for the IFÁ V4.5 quantum backend and circuit atlas.
+qiskit>=1.0

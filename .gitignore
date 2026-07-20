@@ -6,6 +6,9 @@ sim/*.gtkw
 sim_v2/*.out
 sim_v2/*.vcd
 sim_v2/*.vvp
+sim_v45/*.vvp
+sim_v45/*.vcd
+sim/v4/regression_logs/
 
 # Build / FPGA outputs
 *.json
@@ -13,6 +16,8 @@ sim_v2/*.vvp
 *.bin
 *.rpt
 *.log
+build/*.ir
+build/*.sv
 
 # Generated program files
 odu_v2_program.hex
@@ -26,3 +31,11 @@ __pycache__/
 
 # Temp monitor files
 programs_v2/_monitor_*.ifa
+programs_v4/_generated_*
+programs_v4/_program_*
+
+# Local toolchains, archives and generated website exports
+.tools/
+*.zip
+*.bak
+website_export/
