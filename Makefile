@@ -292,6 +292,7 @@ V4_RTL = \
 
 V45_RTL = \
         rtl/v45/ifa_phi_p8.sv \
+        rtl/v45/ifa_native_services_v45.sv \
         rtl/v45/ifa_relation_frame.sv \
         rtl/v45/ifa_yara_pe.sv \
         rtl/v45/ifa_yara_pe_bank4.sv \
@@ -331,7 +332,17 @@ clean-v4:
 	rm -f programs_v4/_program_v4.hex
 	rm -f programs_v4/_program_v4.lst
 	rm -f programs_v4/_generated_v4.ifa4
-.PHONY: v45-build
+.PHONY: v45-build v45-lint v45-synth
+
+v45-lint:
+	verilator --lint-only --timing -Wall -Wno-fatal \
+		--top-module ifa_onile_kernel_v45 $(V45_RTL)
+
+v45-synth:
+	@mkdir -p build/v45
+	yosys -q -s synth_v45.ys
+	@test -s build/v45/ifa_onile_kernel_v45.json
+	@echo "PASS: V4.5 Yosys synthesis completed"
 
 v45-build:
 	@mkdir -p sim/v45
@@ -341,6 +352,16 @@ v45-build:
 		$(V45_BRIDGE_TB)
 	@echo "PASS: V4.5 bridge built"
 
+
+.PHONY: native-services-v45
+
+native-services-v45:
+	mkdir -p sim_v45
+	iverilog -g2012 -Wall -s tb_ifa_native_services_v45 \
+		-o sim_v45/ifa_native_services_v45.vvp \
+		rtl/v45/ifa_native_services_v45.sv \
+		tb/v45/tb_ifa_native_services_v45.sv
+	vvp sim_v45/ifa_native_services_v45.vvp
 
 .PHONY: relation-frame-v45
 

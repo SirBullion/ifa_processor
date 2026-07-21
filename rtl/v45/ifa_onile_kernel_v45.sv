@@ -635,8 +635,9 @@ module ifa_onile_kernel_v45 #(
     //==================================================================
     // Native IFÁ operation status export
     //
-    // Status is combinational and belongs to the current guarded
-    // execution request.
+    // The request is a one-cycle pulse.  The fabric response arrives later,
+    // so keep completion visible while the selected YARA remains runnable;
+    // do not require execute_valid to stay asserted while waiting.
     //==================================================================
 
     always_comb begin
@@ -652,7 +653,7 @@ module ifa_onile_kernel_v45 #(
         gt_flag = 1'b0;
         lt_flag = 1'b0;
 
-        if (execute_guarded) begin
+        if (active_valid && active_running) begin
             operation_valid = fabric_operation_valid;
 
             exception_valid = fabric_exception_valid;

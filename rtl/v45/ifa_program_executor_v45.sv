@@ -345,6 +345,12 @@ module ifa_program_executor_v45 #(
     // Selects whether the current relation restore is RPOP or RET.
     logic pending_stack_return;
     logic [WIDTH-1:0] pending_return_y;
+    logic pending_return_void;
+
+    logic staged_call_valid;
+    logic [WIDTH-1:0] staged_arg0, staged_arg1, staged_arg2, staged_arg3;
+    logic [WIDTH-1:0] staged_parent_a, staged_parent_b;
+    logic [WIDTH-1:0] staged_parent_address, staged_parent_flags;
 
     //------------------------------------------------------------------
     // Decoded IFÁ relation-stack entry
@@ -495,6 +501,16 @@ module ifa_program_executor_v45 #(
             pending_call_target  <= {WIDTH{1'b0}};
             pending_stack_return <= 1'b0;
             pending_return_y      <= {WIDTH{1'b0}};
+            pending_return_void   <= 1'b0;
+            staged_call_valid     <= 1'b0;
+            staged_arg0           <= {WIDTH{1'b0}};
+            staged_arg1           <= {WIDTH{1'b0}};
+            staged_arg2           <= {WIDTH{1'b0}};
+            staged_arg3           <= {WIDTH{1'b0}};
+            staged_parent_a       <= {WIDTH{1'b0}};
+            staged_parent_b       <= {WIDTH{1'b0}};
+            staged_parent_address <= {WIDTH{1'b0}};
+            staged_parent_flags   <= {WIDTH{1'b0}};
 
             halted <= 1'b0;
             fault  <= 1'b0;
@@ -799,6 +815,43 @@ module ifa_program_executor_v45 #(
                             end
 
                             //--------------------------------------------------
+                            // Staged four-argument call ABI
+                            //--------------------------------------------------
+
+                            4'h5: begin
+                                case (fetched_ir[11:10])
+                                    2'd0: staged_arg0 <= (fetched_ir[9:8] == 2'd0) ? active_a : (fetched_ir[9:8] == 2'd1) ? active_b : (fetched_ir[9:8] == 2'd2) ? active_address : active_flags;
+                                    2'd1: staged_arg1 <= (fetched_ir[9:8] == 2'd0) ? active_a : (fetched_ir[9:8] == 2'd1) ? active_b : (fetched_ir[9:8] == 2'd2) ? active_address : active_flags;
+                                    2'd2: staged_arg2 <= (fetched_ir[9:8] == 2'd0) ? active_a : (fetched_ir[9:8] == 2'd1) ? active_b : (fetched_ir[9:8] == 2'd2) ? active_address : active_flags;
+                                    2'd3: staged_arg3 <= (fetched_ir[9:8] == 2'd0) ? active_a : (fetched_ir[9:8] == 2'd1) ? active_b : (fetched_ir[9:8] == 2'd2) ? active_address : active_flags;
+                                endcase
+                                prepare_context_write(active_pc + 1'b1, fetched_ir, active_a, active_b, active_address, active_flags);
+                                state <= ST_COMMIT;
+                            end
+
+                            4'h6: begin
+                                staged_call_valid <= 1'b1;
+                                staged_parent_a <= active_a;
+                                staged_parent_b <= active_b;
+                                staged_parent_address <= active_address;
+                                staged_parent_flags <= active_flags;
+                                prepare_context_write(active_pc + 1'b1, fetched_ir, active_a, active_b, active_address, active_flags);
+                                state <= ST_COMMIT;
+                            end
+
+                            4'h7: begin
+                                print_valid <= 1'b1;
+                                print_kind <= 4'h8 + fetched_ir[9:8];
+                                case (fetched_ir[9:8])
+                                    2'd0: print_data <= active_a;
+                                    2'd1: print_data <= active_b;
+                                    2'd2: print_data <= active_address;
+                                    default: print_data <= active_flags;
+                                endcase
+                                prepare_context_write(active_pc + 1'b1, fetched_ir, active_a, active_b, active_address, active_flags);
+                                state <= ST_COMMIT;
+                            end
+
                             // Native relation mathematics
                             //--------------------------------------------------
 
@@ -1130,10 +1183,10 @@ module ifa_program_executor_v45 #(
                                             prepare_context_write(
                                                 active_pc + 1'b1,
                                                 fetched_ir,
-                                                active_a,
-                                                active_b,
-                                                active_address,
-                                                active_flags
+                                                (staged_call_valid ? staged_parent_a : active_a),
+                                                (staged_call_valid ? staged_parent_b : active_b),
+                                                (staged_call_valid ? staged_parent_address : active_address),
+                                                (staged_call_valid ? staged_parent_flags : active_flags)
                                             );
 
                                             state <= ST_COMMIT;
@@ -1162,13 +1215,13 @@ module ifa_program_executor_v45 #(
                                                 last_state_valid,
                                                 last_state_code,
 
-                                                active_flags[2],
-                                                active_flags[1],
-                                                active_flags[0],
+                                                (staged_call_valid ? staged_parent_flags[2] : active_flags[2]),
+                                                (staged_call_valid ? staged_parent_flags[1] : active_flags[1]),
+                                                (staged_call_valid ? staged_parent_flags[0] : active_flags[0]),
 
-                                                active_a,
-                                                active_b,
-                                                active_address
+                                                (staged_call_valid ? staged_parent_a : active_a),
+                                                (staged_call_valid ? staged_parent_b : active_b),
+                                                (staged_call_valid ? staged_parent_address : active_address)
                                             };
 
                                             stack_write_valid <= 1'b1;
@@ -1178,7 +1231,7 @@ module ifa_program_executor_v45 #(
                                         end
                                     end
 
-                                    4'hC: begin
+                                    4'hC, 4'hE: begin
                                         // RET
                                         //
                                         // Restore the most recently
@@ -1190,6 +1243,7 @@ module ifa_program_executor_v45 #(
 
                                         stack_transport <= 1'b0;
                                         pending_stack_return <= 1'b1;
+                                        pending_return_void <= (fetched_ir[11:8] == 4'hE);
                                         // Latch the callee result before the
                                         // caller relation is restored by RMU.
                                         pending_return_y <= active_frame_y;
@@ -1242,7 +1296,9 @@ module ifa_program_executor_v45 #(
                     end
 
                     //----------------------------------------------------------
-                    // Kernel consumes execute_valid during this cycle.
+                    // execute_valid was pulsed during decode.  Wait for the
+                    // delayed kernel completion without reissuing the same
+                    // relation request.
                     //
                     // Preserve returned comparison predicates in the YÀRÁ
                     // context flags:
@@ -1253,7 +1309,8 @@ module ifa_program_executor_v45 #(
                     //----------------------------------------------------------
 
                     ST_WAIT_NATIVE: begin
-                        last_operation_valid <= operation_valid;
+                        if (operation_valid) begin
+                            last_operation_valid <= operation_valid;
 
                         last_exception_valid <= exception_valid;
                         last_exception_code  <= exception_code;
@@ -1276,6 +1333,7 @@ module ifa_program_executor_v45 #(
                         );
 
                         state <= ST_COMMIT;
+                        end
                     end
 
                     //----------------------------------------------------------
@@ -1390,7 +1448,7 @@ module ifa_program_executor_v45 #(
                                     // V4.5 return ABI: the callee's relation
                                     // result is delivered in A.  Caller B and
                                     // Address are restored from its frame.
-                                    pending_return_y,
+                                    pending_return_void ? saved_a : pending_return_y,
                                     saved_b,
                                     saved_address,
                                     {
@@ -1420,6 +1478,7 @@ module ifa_program_executor_v45 #(
                             end
 
                             pending_stack_return <= 1'b0;
+                            pending_return_void <= 1'b0;
                             state <= ST_COMMIT;
                         end
                     end
@@ -1452,10 +1511,10 @@ module ifa_program_executor_v45 #(
                                 prepare_context_write_with_sp(
                                     pending_call_target,
                                     fetched_ir,
-                                    active_a,
-                                    active_b,
-                                    active_address,
-                                    active_flags,
+                                    staged_call_valid ? staged_arg0 : active_a,
+                                    staged_call_valid ? staged_arg1 : active_b,
+                                    staged_call_valid ? staged_arg2 : active_address,
+                                    staged_call_valid ? staged_arg3 : active_flags,
                                     active_sp + 1'b1
                                 );
                             end else begin
@@ -1471,6 +1530,7 @@ module ifa_program_executor_v45 #(
                             end
 
                             pending_stack_call <= 1'b0;
+                            staged_call_valid <= 1'b0;
                             state <= ST_COMMIT;
                         end
                     end

@@ -1,0 +1,23 @@
+============================================================
+IFÁ V4.5 COMPLETE NATIVE RAU TEST
+============================================================
+PASS: PAPO Y=20 T=01
+PASS: YO Y=f9 T=01
+PASS: DAGBA Y=00 T=0f
+PASS: PIN quotient=4 remainder=5
+PASS: KU remainder=5 quotient=4
+PASS: PIN division-by-zero exception
+PASS: GBE 3^4 Y=51 T=00 STATE=NONE
+PASS: GBE transport Y=00 T=10
+PASS: GBE entered STATE_POWER_EXTENDED
+PASS: SEDA equality
+PASS: SEDA greater
+PASS: SEDA less
+PASS: JU predicate
+PASS: KERE predicate
+============================================================
+PASS: ALL NATIVE IFÁ MATHEMATICAL FUNCTIONS VERIFIED
+PASS: RA, RD AND R0 ARE UNIVERSAL
+PASS: EXTENDED POWER IS AN IFÁ STATE, NOT OVERFLOW
+============================================================
+build/eda_playground_v45/testbench.sv:496: $finish called at 16000 (1ps)

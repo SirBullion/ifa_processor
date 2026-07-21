@@ -45,6 +45,15 @@
 
 module tb_ifa_v45_os_bridge;
 
+    string vcd_file;
+
+    initial begin
+        if ($value$plusargs("VCD=%s", vcd_file)) begin
+            $dumpfile(vcd_file);
+            $dumpvars(0, clk, rst, executor_busy, executor_halted, executor_fault, executor_pc, executor_ir, executor_state, executor_instruction_done, executor_print_valid, executor_print_kind, executor_print_data, active_pc, active_ir, active_a, active_b, active_address, active_flags, active_sp, executor_execute_valid, executor_execute_op, executor_execute_a, executor_execute_b, operation_valid, eq_flag, gt_flag, lt_flag, rmu_hit, rmu_miss, out_y, out_ra, out_rd, out_r0, out_t, executor_stack_write_valid, executor_stack_read_valid, executor_stack_access_sp, executor_restore_valid, kernel_restore_done, executor_context_write);
+        end
+    end
+
     localparam integer WIDTH      = 8;
     localparam integer OP_WIDTH   = 4;
     localparam integer IR_WIDTH   = 16;
@@ -1373,6 +1382,8 @@ module tb_ifa_v45_os_bridge;
 
         logic run_hit_seen;
         logic run_miss_seen;
+        integer run_hit_count;
+        integer run_miss_count;
 
         logic [OP_WIDTH-1:0] run_out_op;
 
@@ -1410,6 +1421,8 @@ module tb_ifa_v45_os_bridge;
         end else begin
             run_hit_seen  = 1'b0;
             run_miss_seen = 1'b0;
+            run_hit_count = 0;
+            run_miss_count = 0;
 
             run_out_op = {OP_WIDTH{1'b0}};
 
@@ -1445,16 +1458,20 @@ module tb_ifa_v45_os_bridge;
             while (
                 !executor_halted
                 && !executor_fault
-                && cycle_guard < 4096
+                && cycle_guard < 2000000
             ) begin
                 @(posedge clk);
                 #1;
 
-                if (rmu_hit)
+                if (rmu_hit) begin
                     run_hit_seen = 1'b1;
+                    run_hit_count = run_hit_count + 1;
+                end
 
-                if (rmu_miss)
+                if (rmu_miss) begin
                     run_miss_seen = 1'b1;
+                    run_miss_count = run_miss_count + 1;
+                end
 
                 // Native status is a one-cycle pulse. Accumulate it
                 // independently so a later zero cycle cannot erase it.
@@ -1507,7 +1524,7 @@ module tb_ifa_v45_os_bridge;
                 );
             end else begin
                 $display(
-                    "OK RUN ID=%0d PC=%02h IR=%04h A=%02h B=%02h ADDR=%02h FLAGS=%02h HIT=%0d MISS=%0d OP=%0h Y=%02h RA=%02h RD=%02h R0=%02h T=%02h VALID=%0d EXC=%0d EXC_CODE=%0h STATE=%0d STATE_CODE=%0h EQ=%0d GT=%0d LT=%0d",
+                    "OK RUN ID=%0d PC=%02h IR=%04h A=%02h B=%02h ADDR=%02h FLAGS=%02h HIT=%0d MISS=%0d OP=%0h Y=%02h RA=%02h RD=%02h R0=%02h T=%02h VALID=%0d EXC=%0d EXC_CODE=%0h STATE=%0d STATE_CODE=%0h EQ=%0d GT=%0d LT=%0d CYCLES=%0d RMU_HITS=%0d RMU_MISSES=%0d",
                     active_yara,
                     active_pc,
                     active_ir,
@@ -1530,7 +1547,10 @@ module tb_ifa_v45_os_bridge;
                     executor_last_state_code,
                     active_flags[2],
                     active_flags[1],
-                    active_flags[0]
+                    active_flags[0],
+                    cycle_guard,
+                    run_hit_count,
+                    run_miss_count
                 );
             end
         end
@@ -1675,6 +1695,9 @@ module tb_ifa_v45_os_bridge;
     integer arg5;
     integer arg6;
 
+    // Keep the packed string below Verilator's 64-word value limit.  The
+    // bridge commands are bounded, so 256 bytes leaves ample input space
+    // while remaining portable across Icarus and Verilator.
     reg [8*512-1:0] command_line;
     reg [8*32-1:0] command_word;
     reg [8*32-1:0] mode_word;

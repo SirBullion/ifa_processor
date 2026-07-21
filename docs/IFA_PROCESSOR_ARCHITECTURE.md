@@ -57,6 +57,9 @@ Implementation anchors: `parser/tokenizer.py`, `parser/parser.py`, `parser/nodes
 
 Within a PE, Φ-P8 transforms and native/relation computation are parallel inputs to the registered relation frame. The active local RMU supplies a hit or stores the new frame. Write-back can update context, branch flags, output operations, general memory, or a restored relation.
 
+The executor and kernel are both synthesizable RTL modules, but the current `synth_v45.ys` top is `ifa_onile_kernel_v45`. The OS simulation bridge connects the executor externally. Consequently, the current Yosys artifact proves the kernel/RMU/PE subsystem synthesizes; it is not yet an integrated FPGA top that boots and runs the Hanoi instruction image by itself.
+
+
 Implementation anchors: `rtl/v45/ifa_program_executor_v45.sv`, `rtl/v45/ifa_onile_kernel_v45.sv`, `rtl/v4/ifa_yara_context_bank.sv`, `rtl/v45/ifa_yara_pe_bank4.sv`, and `rtl/v45/ifa_yara_pe.sv`.
 
 ## 4. Native relation ALU
@@ -123,6 +126,9 @@ K = {OP, RA, RD, T}
 
 On a hit, the complete stored frame is returned. On a miss, the incoming frame is written at a circular pointer; replacing a valid slot increments the eviction counter. Authorized cross-YÀRÁ sharing and relation restoration use the higher-priority administrative-import port, with duplicate detection. Each RMU maintains hit, miss, store, eviction, and import statistics.
 
+The v4.5 bridge exposes `rmu_hit` and `rmu_miss` as one pulse per logical native relation access and accumulates them over a program run. The recursive Hanoi profile verifies the same reuse behavior in RTL from N=5 through N=10. At N=10, 4,020 of 4,094 accesses hit a stored relation frame (98.19%); 74 miss. The full table and reproduction method are in [`analysis/hanoi_ifa_v45_profile.md`](../analysis/hanoi_ifa_v45_profile.md) and [`IFA_V45_EDA_OPEN_SOURCE_METHODS.md`](IFA_V45_EDA_OPEN_SOURCE_METHODS.md).
+
+
 Implementation anchors: `rtl/v4/ifa_relation_memory_controller_admin.sv` and `rtl/v45/ifa_yara_frame_share_core_v45.sv`.
 
 ## 8. Transport architecture
@@ -152,6 +158,8 @@ The context bank stores PC, IR, A, B, address, flags, and SP independently per Y
 
 General memory uses ownership plus per-address, per-YÀRÁ read/write permissions. Stack storage is physically shared but logically partitioned. The relation fabric is shared and dispatches to a four-PE bank, while its operation-aware RMUs remain local.
 
+The OHÙN V4.5 shell also owns a non-privileged IFÁ service layer for `DÁIFÁ`, `PRINTODU`, `PRINTODUALL`, `ÒPẸ̀LẸ̀`, and `TẸIFÁ`. These services consume canonical V4.5 runtime relation frames and do not import the V4 monitor. BABALÁWO authentication, ONÍLẸ̀ administration, YÀRÁ lifecycle, permissions, and delegation remain outside this user-service layer.
+
 Implementation anchors: `rtl/v45/ifa_onile_kernel_v45.sv`, `rtl/v4/ifa_yara_manager.sv`, `rtl/v4/ifa_yara_context_bank.sv`, `rtl/v4/ifa_onile_supervisor.sv`, `rtl/v4/ifa_general_memory_guard.sv`, and `rtl/v4/ifa_stack_memory_v4.sv`.
 
 ## 10. Complete V4.5 architecture
@@ -168,16 +176,23 @@ The complete view separates three contracts:
 
 The architecture therefore supports multiple software backends without changing language syntax, while retaining a distinct synthesizable processor implementation and native instruction path.
 
+The current verification and synthesis boundaries must remain explicit:
+
+- Icarus plus the OS bridge verifies executor-to-kernel program behavior, including recursive Hanoi and exact RMU hit/miss pulses.
+- `make v45-synth` synthesizes `ifa_onile_kernel_v45`, including local RMUs, PEs, Φ-P8 blocks, contexts, stack, supervisor, and guarded memory.
+- Physical FPGA execution still requires a synthesizable wrapper that connects the executor, instruction ROM or loader, kernel, clock/reset, and observable counter outputs.
+
+
 ## Verification status
 
-The diagrams reflect components exercised by the repository's automated tests and RTL benches:
+The diagrams reflect components exercised by the repository’s automated tests, RTL benches, program profiles, and synthesis flow:
 
-- Python/compiler/runtime regression: 155 tests pass with the installed quantum dependencies; one dependency-missing-path test is intentionally skipped when Qiskit is present.
-- V4.5 native RAU: all nine native operations pass.
-- Relation-frame RTL: 73 checks pass.
-- YÀRÁ PE RTL: 429 checks pass.
-- Four-YÀRÁ bank RTL: 270 checks pass.
-- Complete V4.5 OS bridge elaborates successfully.
-- Backward-compatible V4 regression: 88 checks pass.
+- Focused V4.5 ISA and quantum regression: 19 tests pass; one optional Qiskit-dependent test is skipped when its dependency is unavailable.
+- V4.5 native RAU: all nine native operations pass in the prepared EDA bundle.
+- Full recursive Hanoi produces the exact `2^N - 1` moves for N=5 through N=10.
+- Hanoi RMU hit rate rises from 90.48% at N=5 to 98.19% at N=10.
+- Complete V4.5 OS bridge elaborates and runs successfully under Icarus.
+- `make v45-synth` completes successfully and emits the 2.7 MB generic kernel netlist `build/v45/ifa_onile_kernel_v45.json`.
+- The synthesized hierarchy contains 3,265 generic cells, 34 `$mem_v2` cells, two local RMU controllers, two physical PEs, and six Φ-P8 instances under the current default synthesis parameters.
 
-These validation counts document the audited repository state; they are not architectural blocks.
+These validation counts document the measured repository state; they are not architectural performance limits or proof of operation on physical silicon.

@@ -51,6 +51,13 @@ DATA_ALIASES = {
     "STOREB": "STORE_B",
 }
 
+ARG_SOURCES = {
+    "A": 0x0, "B": 0x1, "ADDRESS": 0x2, "FLAGS": 0x3,
+}
+REGISTER_PRINTS = {
+    "PRINTA": 0x0, "PRINTB": 0x1, "PRINTADDR": 0x2, "PRINTFLAGS": 0x3,
+}
+
 
 def assemble_instruction(line, labels):
     instruction = strip_label(line)
@@ -65,6 +72,32 @@ def assemble_instruction(line, labels):
         if len(parts) != 1:
             raise ValueError(f"{mnemonic} takes no operands")
         return 0x4000 | (DATA_OPERATIONS[mnemonic] << 8)
+
+    if mnemonic == "ARGBEGIN":
+        if len(parts) != 1:
+            raise ValueError("ARGBEGIN takes no operands")
+        return 0x6000
+
+    if mnemonic == "ARG":
+        if len(parts) != 3:
+            raise ValueError("ARG syntax: ARG <0..3> <A|B|ADDRESS|FLAGS>")
+        destination = parse_number(parts[1], labels)
+        source = parts[2].upper()
+        if not 0 <= destination <= 3:
+            raise ValueError("ARG destination must be between 0 and 3")
+        if source not in ARG_SOURCES:
+            raise ValueError("ARG source must be A, B, ADDRESS, or FLAGS")
+        return 0x5000 | (destination << 10) | (ARG_SOURCES[source] << 8)
+
+    if mnemonic in REGISTER_PRINTS:
+        if len(parts) != 1:
+            raise ValueError(f"{mnemonic} takes no operands")
+        return 0x7000 | (REGISTER_PRINTS[mnemonic] << 8)
+
+    if mnemonic == "RETVOID":
+        if len(parts) != 1:
+            raise ValueError("RETVOID takes no operands")
+        return 0xFE00
 
     # V4's published CALL encoding is retained, while avoiding the V4
     # assembler's historical reference to the undefined parse_value helper.

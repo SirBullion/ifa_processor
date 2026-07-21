@@ -1,0 +1,56 @@
+; Full IFÁ V4.5 processor Hanoi program.
+; Four-argument procedure ABI:
+;   A=N, B=SOURCE, Address=TARGET, Flags[2:0]=AUXILIARY.
+
+; Establish FLAGS=1 (A < B), then load HANOI(5, A, C, B).
+LDAI 0
+LDBI 1
+KERE
+LDAI 10
+LDBI 0
+LDADDR 2
+ARGBEGIN
+ARG 0 A
+ARG 1 B
+ARG 2 ADDRESS
+ARG 3 FLAGS
+CALL HANOI
+HALT
+
+HANOI:
+    ; Stage the left child's peg arguments before comparison changes flags.
+    ARGBEGIN
+    ARG 1 B
+    ARG 2 FLAGS
+    ARG 3 ADDRESS
+
+    ; Base case N == 0.
+    LDBI 0
+    SEDA
+    BR_EQ HANOI_RETURN
+
+    ; Left child: HANOI(N-1, SOURCE, AUXILIARY, TARGET).
+    LDBI 1
+    YO
+    MOVY_A
+    ARG 0 A
+    CALL HANOI
+
+    ; RETVOID restored the parent arguments. Emit DISK, SOURCE, TARGET.
+    PRINTA
+    PRINTB
+    PRINTADDR
+
+    ; Right child: HANOI(N-1, AUXILIARY, TARGET, SOURCE).
+    ARGBEGIN
+    ARG 1 FLAGS
+    ARG 2 ADDRESS
+    ARG 3 B
+    LDBI 1
+    YO
+    MOVY_A
+    ARG 0 A
+    CALL HANOI
+
+HANOI_RETURN:
+    RETVOID

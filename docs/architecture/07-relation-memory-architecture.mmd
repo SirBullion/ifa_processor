@@ -17,8 +17,10 @@ flowchart TB
   RMU0 --> STATS["hit · miss · store · evict · import counters"]
   RMU1 --> STATS
   RMUN --> STATS
+  STATS --> OBS["RTL observability\nrmu_hit · rmu_miss · per-YÀRÁ counters"]
+  OBS --> PROF["Verified Hanoi profile N=5…10\n90.48% → 98.19% hit rate"]
 
   classDef frame fill:#ede9fe,color:#4c1d95,stroke:#7c3aed;
   classDef memory fill:#dcfce7,color:#14532d,stroke:#16a34a;
   classDef control fill:#dbeafe,color:#172554,stroke:#2563eb;
-  class F,KEY,HIT,MISS frame; class RMU0,RMU1,RMUN,STORE,STATS memory; class SEL,MATCH,ADMIN,IMP control;
+  class F,KEY,HIT,MISS frame; class RMU0,RMU1,RMUN,STORE,STATS,PROF memory; class SEL,MATCH,ADMIN,IMP,OBS control;

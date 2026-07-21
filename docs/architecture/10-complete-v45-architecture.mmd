@@ -10,15 +10,16 @@ flowchart TB
   BM --> QB["Quantum Backend"]
   BM --> RB["RTL Backend / RTL generation"]
   subgraph HW["IFÁ V4.5 RTL Processor"]
-    IM["Instruction Memory"] --> EX["Program Executor\nPC · IR · decoder · control"]
+    IM["Instruction Memory"] --> EX["Program Executor\nPC · IR · decoder · control\nRTL; bridge-integrated today"]
     EX <--> CTX["Active YÀRÁ Context Bank"]
-    EX --> K["ONÍLẸ̀ Kernel lifecycle guards"]
+    EX --> K["ONÍLẸ̀ Kernel lifecycle guards\ncurrent Yosys synthesis top"]
     K --> PE["Four-YÀRÁ PE Bank\nΦ-P8 + native relation ALU"]
     PE --> FR["Frame\nY · RA · RD · R0 · T"] --> RMU["Per-YÀRÁ Local RMU Bank"]
     K --> SUP["Frame Permission Supervisor"] --> RMU
     K --> MEM["Guarded General Memory"]
     K --> STK["Per-YÀRÁ Relation Stack"]
     RMU --> EX
+    RMU --> CNT["RMU counters\nhit · miss · store · evict · import"]
     MEM --> EX
     STK --> EX
   end
@@ -26,9 +27,12 @@ flowchart TB
   QB --> QPATH["Φ-P8 · relation gates · quantum ALU · measurement"] --> RESULT["Canonical IFÁ result"]
   PY --> RESULT
   HW --> OUTPUT["Processor output / write-back"]
+  CNT --> PROFILE["RTL profile / GTKWave\nHanoi N=10: 4020 hits · 74 misses"]
+  K -. "synth_v45.ys boundary" .-> NET["Yosys generic netlist\nbuild/v45/ifa_onile_kernel_v45.json"]
+  EX -. "integration required for FPGA execution" .-> FPGA["Future executor + kernel FPGA top"]
 
   classDef language fill:#e0e7ff,color:#312e81,stroke:#4f46e5;
   classDef runtime fill:#fef3c7,color:#422006,stroke:#d97706;
   classDef backend fill:#dcfce7,color:#14532d,stroke:#16a34a;
   classDef hardware fill:#ede9fe,color:#4c1d95,stroke:#7c3aed;
-  class SRC,TOK,PAR,AST,OPT,IRG,IR language; class IX,REQ,RUN,BM runtime; class PY,QB,RB,QPATH,RESULT backend; class IM,EX,CTX,K,PE,FR,RMU,SUP,MEM,STK,OUTPUT hardware;
+  class SRC,TOK,PAR,AST,OPT,IRG,IR language; class IX,REQ,RUN,BM runtime; class PY,QB,RB,QPATH,RESULT,PROFILE,NET,FPGA backend; class IM,EX,CTX,K,PE,FR,RMU,CNT,SUP,MEM,STK,OUTPUT hardware;

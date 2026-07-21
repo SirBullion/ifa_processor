@@ -25,6 +25,7 @@ from compiler.ast_optimizer import ast_optimizer
 from compiler.ir import ir_lowerer
 from compiler.rtl_generator import systemverilog_generator
 from compiler.diagnostics import format_diagnostic
+from runtime.ifa_services_v45 import ifa_services_v45
 
 class OhunIFAShell(cmd.Cmd):
 
@@ -238,6 +239,15 @@ Type HELP for commands.
         print(f"YARA GBOBO : {'ON' if self.yara_gbobo else 'OFF'}")
         print()
 
+    def do_services(self, arg):
+        """Show native, non-security IFÁ V4.5 services."""
+        print("IFÁ V4.5 NATIVE SERVICES")
+        print("DAIFA / DÁIFÁ")
+        print("PRINTODU / PRINTODUALL")
+        print("OPELE / ÒPẸ̀LẸ̀ [LAST]")
+        print("TEIFA <ODÙ> [ODÙ|MEJI] | <8 bits> | LAST")
+
+
     # --------------------------------------------------
     # YARA
     # --------------------------------------------------
@@ -263,31 +273,60 @@ Type HELP for commands.
     # --------------------------------------------------
 
     def do_ipo(self, arg):
-
-        target = arg.strip().upper()
-
-        if target == "":
-
-            print("IPO")
-            print("Frame inspection not connected yet.")
-            return
+        target = arg.strip().upper() or "FRAME"
 
         if target == "FRAME":
-
+            channels = ifa_services_v45.last_channels
+            frame = ifa_services_v45.last_frame
+            if channels is None:
+                print("IPO FRAME: no native execution recorded.")
+                return
             print("IPO FRAME")
-            print("Relation Frame not connected yet.")
+            if frame is not None:
+                print(f"Relation : {frame.relation_id}")
+                print(f"Operation: {frame.operation}")
+                print(f"A/B      : {frame.operand_a} / {frame.operand_b}")
+                print(f"VALUE    : {frame.VALUE}")
+                print(f"VALID    : {int(frame.VALID)}")
+            record = ifa_services_v45.last_backend_execution
+            if frame is None and record is not None:
+                print(f"Operation: {record.operation}")
+                print(f"A/B      : {record.operand_a} / {record.operand_b}")
+                print(f"VALUE    : {record.logical_result}")
+            for name in ("y", "ra", "rd", "r0", "t"):
+                print(f"{name.upper():<9}: 0x{channels[name]:02X}")
             return
 
         if target == "RMU":
-
+            rmu = ifa_services_v45.rmu
+            summary = rmu.summary()
             print("IPO RMU")
-            print("RMU inspection not connected yet.")
+            for name in ("frames", "destinations", "fetches", "broadcasts"):
+                print(f"{name.capitalize():<13}: {summary[name]}")
+            for relation_id, frame in rmu.frames.items():
+                print(f"{relation_id}: {frame.compact()}")
             return
 
         if target == "PHI":
-
+            frame = ifa_services_v45.last_frame
+            record = ifa_services_v45.last_backend_execution
+            if frame is None and not all(
+                hasattr(record, name) for name in ("phi_a", "phi_b", "phi_y")
+            ):
+                print("IPO PHI: no Φ-P8 execution recorded.")
+                return
             print("IPO PHI")
-            print("Φ-P8 inspection not connected yet.")
+            if record is not None and all(
+                hasattr(record, name) for name in ("phi_a", "phi_b", "phi_y")
+            ):
+                values = (record.phi_a, record.phi_b, record.phi_y)
+            else:
+                values = tuple(
+                    int("".join(str(bit) for bit in bits), 2)
+                    for bits in (frame.PHI_A, frame.PHI_B, frame.PHI_Y)
+                )
+            for name, value in zip(("PHI_A", "PHI_B", "PHI_Y"), values):
+                print(f"{name:<9}: 0x{value:02X} ({value:08b})")
             return
 
         print("Usage: IPO [FRAME|RMU|PHI]")
@@ -316,6 +355,9 @@ Type HELP for commands.
 
             if command == "status":
                 return self.do_status(args)
+
+            if command == "services":
+                return self.do_services(args)
 
             if command == "backend":
                 return self.do_backend(args)
@@ -349,6 +391,9 @@ Type HELP for commands.
         # IFÁ parser
         # ------------------------------------------
         #
+
+        if ifa_services_v45.handle(line):
+            return
 
         return self.execute_source(line)
 
@@ -426,15 +471,22 @@ Type HELP for commands.
     do_quit = do_exit
 
 
-if __name__ == "__main__":
-    argument_parser = argparse.ArgumentParser(add_help=False)
-    argument_parser.add_argument(
-        "--backend", choices=("python", "rtl", "quantum"), default="python"
+def main(argv=None):
+    argument_parser = argparse.ArgumentParser(
+        description="OHÙN IFÁ Processor V4.5 interactive shell",
     )
-    arguments, _ = argument_parser.parse_known_args()
+    argument_parser.add_argument(
+        "--backend", choices=("python", "rtl", "quantum"), default="python",
+        help="initial execution backend (default: python)",
+    )
+    arguments = argument_parser.parse_args(argv)
     try:
         OhunIFAShell(backend_name=arguments.backend).cmdloop()
     except KeyboardInterrupt:
         print()
         print("Ó dàbọ̀ 👋")
         print()
+
+
+if __name__ == "__main__":
+    main()
