@@ -1,6 +1,6 @@
 //======================================================================
-// IFÁ Processor V4
-// Minimal Program Executor
+// IFÁ Processor V4.5
+// Backward-compatible Program Executor
 //
 // Purpose:
 //     Fetch and decode instructions, then dispatch native mathematics
@@ -36,6 +36,17 @@
 //
 // 0x3 : LDADDR
 //       Address <- instruction[7:0]
+//
+// 0x4 : DATA
+//       [11:8]
+//           0x0 MOVY_A       A <- relation Y
+//           0x1 MOVY_B       B <- relation Y
+//           0x2 MOVADDR_A    Address <- A
+//           0x3 MOVADDR_B    Address <- B
+//           0x4 LOAD_A       A <- Memory[Address]
+//           0x5 LOAD_B       B <- Memory[Address]
+//           0x6 STORE_A      Memory[Address] <- A
+//           0x7 STORE_B      Memory[Address] <- B
 //
 // 0x8 : NATIVE
 //       [11:8] native operation
@@ -79,7 +90,7 @@ module ifa_program_executor_v45 #(
     parameter integer STACK_DEPTH = 16,
 
     parameter integer RELATION_STACK_WIDTH =
-        (6 * WIDTH) + OP_WIDTH + 14,
+        (9 * WIDTH) + OP_WIDTH + 14,
 
     parameter         INIT_FILE  = ""
 ) (
@@ -226,6 +237,19 @@ module ifa_program_executor_v45 #(
     input  logic [OP_WIDTH-1:0]      active_frame_op,
 
     //------------------------------------------------------------------
+    // V4.5 compiler-visible General Memory request
+    //------------------------------------------------------------------
+
+    output logic                     mem_request,
+    output logic                     mem_write,
+    output logic [WIDTH-1:0]         mem_address,
+    output logic [WIDTH-1:0]         mem_write_data,
+
+    input  logic [WIDTH-1:0]         mem_read_data,
+    input  logic                     mem_allowed,
+    input  logic                     mem_denied,
+
+    //------------------------------------------------------------------
     // Program-controlled output
     //------------------------------------------------------------------
 
@@ -299,6 +323,7 @@ module ifa_program_executor_v45 #(
         ST_WAIT_STACK_WRITE = 4'h6,
         ST_WAIT_STACK_READ  = 4'h7,
         ST_WAIT_RESTORE     = 4'h8,
+        ST_WAIT_MEMORY      = 4'h9,
         ST_FAULT            = 4'hF
     } executor_state_t;
 
@@ -319,6 +344,7 @@ module ifa_program_executor_v45 #(
 
     // Selects whether the current relation restore is RPOP or RET.
     logic pending_stack_return;
+    logic [WIDTH-1:0] pending_return_y;
 
     //------------------------------------------------------------------
     // Decoded IFÁ relation-stack entry
@@ -346,6 +372,15 @@ module ifa_program_executor_v45 #(
     logic saved_gt;
     logic saved_lt;
 
+    // V4.5 language-call state.  These fields are deliberately appended
+    // only to the V4.5 stack format; the V4 relation frame is unchanged.
+    logic [WIDTH-1:0] saved_a;
+    logic [WIDTH-1:0] saved_b;
+    logic [WIDTH-1:0] saved_address;
+
+    logic pending_memory_load;
+    logic pending_memory_target_b;
+
     //------------------------------------------------------------------
     // Canonical relation-stack frame unpacking
     //------------------------------------------------------------------
@@ -372,7 +407,11 @@ module ifa_program_executor_v45 #(
 
             saved_eq,
             saved_gt,
-            saved_lt
+            saved_lt,
+
+            saved_a,
+            saved_b,
+            saved_address
         } = stack_read_data;
     end
 
@@ -455,6 +494,7 @@ module ifa_program_executor_v45 #(
             pending_stack_call   <= 1'b0;
             pending_call_target  <= {WIDTH{1'b0}};
             pending_stack_return <= 1'b0;
+            pending_return_y      <= {WIDTH{1'b0}};
 
             halted <= 1'b0;
             fault  <= 1'b0;
@@ -494,6 +534,13 @@ module ifa_program_executor_v45 #(
             execute_a     <= {WIDTH{1'b0}};
             execute_b     <= {WIDTH{1'b0}};
 
+            mem_request    <= 1'b0;
+            mem_write      <= 1'b0;
+            mem_address    <= {WIDTH{1'b0}};
+            mem_write_data <= {WIDTH{1'b0}};
+            pending_memory_load <= 1'b0;
+            pending_memory_target_b <= 1'b0;
+
             instruction_done <= 1'b0;
 
             print_valid <= 1'b0;
@@ -519,6 +566,7 @@ module ifa_program_executor_v45 #(
             restore_valid     <= 1'b0;
             instruction_done <= 1'b0;
             print_valid      <= 1'b0;
+            mem_request      <= 1'b0;
 
             //------------------------------------------------------------------
             // External stop
@@ -691,6 +739,63 @@ module ifa_program_executor_v45 #(
                                 );
 
                                 state <= ST_COMMIT;
+                            end
+
+                            //--------------------------------------------------
+                            // V4.5 data movement and General Memory
+                            //--------------------------------------------------
+
+                            4'h4: begin
+                                case (fetched_ir[11:8])
+                                    4'h0: begin
+                                        prepare_context_write(
+                                            active_pc + 1'b1, fetched_ir,
+                                            active_frame_y, active_b,
+                                            active_address, active_flags
+                                        );
+                                        state <= ST_COMMIT;
+                                    end
+                                    4'h1: begin
+                                        prepare_context_write(
+                                            active_pc + 1'b1, fetched_ir,
+                                            active_a, active_frame_y,
+                                            active_address, active_flags
+                                        );
+                                        state <= ST_COMMIT;
+                                    end
+                                    4'h2: begin
+                                        prepare_context_write(
+                                            active_pc + 1'b1, fetched_ir,
+                                            active_a, active_b,
+                                            active_a, active_flags
+                                        );
+                                        state <= ST_COMMIT;
+                                    end
+                                    4'h3: begin
+                                        prepare_context_write(
+                                            active_pc + 1'b1, fetched_ir,
+                                            active_a, active_b,
+                                            active_b, active_flags
+                                        );
+                                        state <= ST_COMMIT;
+                                    end
+                                    4'h4, 4'h5, 4'h6, 4'h7: begin
+                                        pending_memory_load <=
+                                            !fetched_ir[9];
+                                        pending_memory_target_b <=
+                                            fetched_ir[8];
+                                        mem_write <= fetched_ir[9];
+                                        mem_address <= active_address;
+                                        mem_write_data <= fetched_ir[8]
+                                            ? active_b : active_a;
+                                        mem_request <= 1'b1;
+                                        state <= ST_WAIT_MEMORY;
+                                    end
+                                    default: begin
+                                        fault <= 1'b1;
+                                        state <= ST_FAULT;
+                                    end
+                                endcase
                             end
 
                             //--------------------------------------------------
@@ -944,7 +1049,11 @@ module ifa_program_executor_v45 #(
 
                                                 active_flags[2],
                                                 active_flags[1],
-                                                active_flags[0]
+                                                active_flags[0],
+
+                                                active_a,
+                                                active_b,
+                                                active_address
                                             };
 
                                             stack_write_valid <= 1'b1;
@@ -1055,7 +1164,11 @@ module ifa_program_executor_v45 #(
 
                                                 active_flags[2],
                                                 active_flags[1],
-                                                active_flags[0]
+                                                active_flags[0],
+
+                                                active_a,
+                                                active_b,
+                                                active_address
                                             };
 
                                             stack_write_valid <= 1'b1;
@@ -1077,6 +1190,9 @@ module ifa_program_executor_v45 #(
 
                                         stack_transport <= 1'b0;
                                         pending_stack_return <= 1'b1;
+                                        // Latch the callee result before the
+                                        // caller relation is restored by RMU.
+                                        pending_return_y <= active_frame_y;
 
                                         if (active_sp == 0) begin
                                             relation_absent <= 1'b1;
@@ -1163,6 +1279,33 @@ module ifa_program_executor_v45 #(
                     end
 
                     //----------------------------------------------------------
+                    // Wait for the one-cycle guarded memory request issued by
+                    // decode to be accepted or denied.  The guard registers
+                    // both the status and read data.
+                    //----------------------------------------------------------
+
+                    ST_WAIT_MEMORY: begin
+                        if (mem_denied) begin
+                            fault <= 1'b1;
+                            state <= ST_FAULT;
+                        end else if (mem_allowed) begin
+                            prepare_context_write(
+                                active_pc + 1'b1,
+                                fetched_ir,
+                                pending_memory_load &&
+                                    !pending_memory_target_b
+                                    ? mem_read_data : active_a,
+                                pending_memory_load &&
+                                    pending_memory_target_b
+                                    ? mem_read_data : active_b,
+                                active_address,
+                                active_flags
+                            );
+                            state <= ST_COMMIT;
+                        end
+                    end
+
+                    //----------------------------------------------------------
                     // Wait for the complete IFÁ relation frame to enter
                     // the local YÀRÁ stack window.
                     //----------------------------------------------------------
@@ -1244,9 +1387,12 @@ module ifa_program_executor_v45 #(
                                 prepare_context_write_with_sp(
                                     saved_return_pc,
                                     fetched_ir,
-                                    active_a,
-                                    active_b,
-                                    active_address,
+                                    // V4.5 return ABI: the callee's relation
+                                    // result is delivered in A.  Caller B and
+                                    // Address are restored from its frame.
+                                    pending_return_y,
+                                    saved_b,
+                                    saved_address,
                                     {
                                         {(WIDTH-3){1'b0}},
                                         saved_eq,

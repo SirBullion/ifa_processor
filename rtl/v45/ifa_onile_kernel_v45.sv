@@ -53,9 +53,10 @@ module ifa_onile_kernel_v45 #(
     // EXC, EXC_CODE
     // STATE, STATE_CODE
     // EQ, GT, LT
+    // Caller A, B, Address (V4.5 language-call extension)
     //
     parameter integer RELATION_STACK_WIDTH =
-        (6 * WIDTH) + OP_WIDTH + 14
+        (9 * WIDTH) + OP_WIDTH + 14
 )(
     input  logic                       clk,
     input  logic                       rst,

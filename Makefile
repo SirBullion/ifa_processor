@@ -344,6 +344,19 @@ v45-build:
 
 .PHONY: relation-frame-v45
 
+.PHONY: native-rau-v45
+
+native-rau-v45:
+	mkdir -p sim_v45
+	iverilog \
+		-g2012 \
+		-Wall \
+		-s tb_ifa_native_rau_v45 \
+		-o sim_v45/ifa_native_rau_v45.vvp \
+		rtl/v45/ifa_native_rau_v45.sv \
+		tb/v45/tb_ifa_native_rau_v45.sv
+	vvp sim_v45/ifa_native_rau_v45.vvp
+
 relation-frame-v45:
 	mkdir -p sim_v45
 	iverilog \
@@ -365,6 +378,7 @@ yara-pe-v45:
 		-Wall \
 		-s tb_ifa_yara_pe \
 		-o sim_v45/ifa_yara_pe.vvp \
+		rtl/v45/ifa_phi_p8.sv \
 		rtl/v45/ifa_yara_pe.sv \
 		tb/v45/tb_ifa_yara_pe.sv
 	vvp sim_v45/ifa_yara_pe.vvp

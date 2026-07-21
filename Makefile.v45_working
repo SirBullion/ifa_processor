@@ -349,6 +349,7 @@ yara-pe-v45:
 		-Wall \
 		-s tb_ifa_yara_pe \
 		-o sim_v45/ifa_yara_pe.vvp \
+		rtl/v45/ifa_phi_p8.sv \
 		rtl/v45/ifa_yara_pe.sv \
 		tb/v45/tb_ifa_yara_pe.sv
 	vvp sim_v45/ifa_yara_pe.vvp

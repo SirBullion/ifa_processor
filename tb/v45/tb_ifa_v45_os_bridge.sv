@@ -62,7 +62,7 @@ module tb_ifa_v45_os_bridge;
     localparam integer MEM_ADDR_W = 4;
 
     localparam integer RELATION_STACK_WIDTH =
-        (6 * WIDTH) + OP_WIDTH + 14;
+        (9 * WIDTH) + OP_WIDTH + 14;
     localparam integer MAX_YARA   = 4;
 
     localparam integer IMEM_DEPTH = 256;
@@ -146,6 +146,11 @@ module tb_ifa_v45_os_bridge;
     logic [WIDTH-1:0] executor_restore_r0;
     logic [WIDTH-1:0] executor_restore_t;
 
+    logic executor_mem_request;
+    logic executor_mem_write;
+    logic [WIDTH-1:0] executor_mem_address;
+    logic [WIDTH-1:0] executor_mem_write_data;
+
     // Kernel-facing signals after manual/executor arbitration.
     logic kernel_context_write;
 
@@ -177,6 +182,11 @@ module tb_ifa_v45_os_bridge;
     logic [WIDTH-1:0] kernel_restore_t;
 
     logic kernel_restore_done;
+
+    logic kernel_mem_request;
+    logic kernel_mem_write;
+    logic [MEM_ADDR_W-1:0] kernel_mem_address;
+    logic [WIDTH-1:0] kernel_mem_write_data;
 
     //==================================================================
     // Kernel inputs
@@ -409,6 +419,14 @@ module tb_ifa_v45_os_bridge;
         .active_frame_t(out_t),
         .active_frame_op(out_op),
 
+        .mem_request(executor_mem_request),
+        .mem_write(executor_mem_write),
+        .mem_address(executor_mem_address),
+        .mem_write_data(executor_mem_write_data),
+        .mem_read_data(mem_read_data),
+        .mem_allowed(mem_allowed),
+        .mem_denied(mem_denied),
+
         .print_valid(executor_print_valid),
         .print_kind(executor_print_kind),
         .print_data(executor_print_data),
@@ -468,6 +486,11 @@ module tb_ifa_v45_os_bridge;
         kernel_restore_r0 = {WIDTH{1'b0}};
         kernel_restore_t  = {WIDTH{1'b0}};
 
+        kernel_mem_request = mem_request;
+        kernel_mem_write = mem_write;
+        kernel_mem_address = mem_address;
+        kernel_mem_write_data = mem_write_data;
+
         if (executor_busy) begin
             kernel_context_write = executor_context_write;
 
@@ -516,6 +539,12 @@ module tb_ifa_v45_os_bridge;
 
             kernel_restore_t =
                 executor_restore_t;
+
+            kernel_mem_request = executor_mem_request;
+            kernel_mem_write = executor_mem_write;
+            kernel_mem_address =
+                executor_mem_address[MEM_ADDR_W-1:0];
+            kernel_mem_write_data = executor_mem_write_data;
         end
     end
 
@@ -591,10 +620,10 @@ module tb_ifa_v45_os_bridge;
 
         .restore_done(kernel_restore_done),
 
-        .mem_request(mem_request),
-        .mem_write(mem_write),
-        .mem_address(mem_address),
-        .mem_write_data(mem_write_data),
+        .mem_request(kernel_mem_request),
+        .mem_write(kernel_mem_write),
+        .mem_address(kernel_mem_address),
+        .mem_write_data(kernel_mem_write_data),
 
         .mem_read_data(mem_read_data),
         .mem_allowed(mem_allowed),
