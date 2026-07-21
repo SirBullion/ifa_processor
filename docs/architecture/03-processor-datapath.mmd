@@ -1,0 +1,20 @@
+%% IFÁ Processor V4.5 — Implemented RTL Datapath
+flowchart TB
+  IM["Instruction Memory\n256 × 16-bit default"] --> PC["Program Counter"] --> FETCH["Fetch"] --> IR["Instruction Register"]
+  IR --> DEC["Instruction Decoder"] --> CTRL["Executor Control FSM"]
+  CTRL --> RF["Active YÀRÁ Context\nA · B · Address · Flags · SP"]
+  RF --> REQ["Native execute request\nOP, A, B"] --> BANK["Four-YÀRÁ PE Bank"]
+  BANK --> PHI["Φ-P8(A), Φ-P8(B), Φ-P8(Y)"]
+  BANK --> ALU["Native Operation + Relation Channels"]
+  PHI --> FRAME["Registered Relation Frame"]
+  ALU --> FRAME
+  FRAME --> OUT["Y · RA · RD · R0 · T\nEQ · GT · LT · status"] --> RMU["Active YÀRÁ Local RMU"]
+  RMU --> WB["Write-back / branch flags / print / restore"] --> RF
+  CTRL --> MEM["Guarded General Memory"] --> RF
+  CTRL --> STACK["Per-YÀRÁ Relation Stack"] --> WB
+
+  classDef control fill:#dbeafe,color:#172554,stroke:#2563eb;
+  classDef relation fill:#ede9fe,color:#4c1d95,stroke:#7c3aed;
+  classDef memory fill:#dcfce7,color:#14532d,stroke:#16a34a;
+  classDef state fill:#fef3c7,color:#422006,stroke:#d97706;
+  class IM,PC,FETCH,IR,DEC,CTRL control; class REQ,BANK,PHI,ALU,FRAME,OUT relation; class RMU,MEM,STACK memory; class RF,WB state;

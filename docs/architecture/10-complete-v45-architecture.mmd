@@ -1,0 +1,34 @@
+%% IFÁ Processor V4.5 — Complete Software and RTL Architecture
+flowchart TB
+  subgraph LANG["OHÙN IFÁ Language and Compiler"]
+    SRC["Source"] --> TOK["Tokenizer"] --> PAR["Parser"] --> AST["Program AST"] --> OPT["Optimizer"] --> IRG["IR Generator"] --> IR["IFÁ IR"]
+  end
+  subgraph EXEC["Backend-Independent Execution"]
+    IR --> IX["IR Executor"] --> REQ["ExecutionRequest"] --> RUN["Runtime"] --> BM["BackendManager"]
+  end
+  BM --> PY["Python Backend"]
+  BM --> QB["Quantum Backend"]
+  BM --> RB["RTL Backend / RTL generation"]
+  subgraph HW["IFÁ V4.5 RTL Processor"]
+    IM["Instruction Memory"] --> EX["Program Executor\nPC · IR · decoder · control"]
+    EX <--> CTX["Active YÀRÁ Context Bank"]
+    EX --> K["ONÍLẸ̀ Kernel lifecycle guards"]
+    K --> PE["Four-YÀRÁ PE Bank\nΦ-P8 + native relation ALU"]
+    PE --> FR["Frame\nY · RA · RD · R0 · T"] --> RMU["Per-YÀRÁ Local RMU Bank"]
+    K --> SUP["Frame Permission Supervisor"] --> RMU
+    K --> MEM["Guarded General Memory"]
+    K --> STK["Per-YÀRÁ Relation Stack"]
+    RMU --> EX
+    MEM --> EX
+    STK --> EX
+  end
+  RB -. "compiled SystemVerilog / native instruction flow" .-> IM
+  QB --> QPATH["Φ-P8 · relation gates · quantum ALU · measurement"] --> RESULT["Canonical IFÁ result"]
+  PY --> RESULT
+  HW --> OUTPUT["Processor output / write-back"]
+
+  classDef language fill:#e0e7ff,color:#312e81,stroke:#4f46e5;
+  classDef runtime fill:#fef3c7,color:#422006,stroke:#d97706;
+  classDef backend fill:#dcfce7,color:#14532d,stroke:#16a34a;
+  classDef hardware fill:#ede9fe,color:#4c1d95,stroke:#7c3aed;
+  class SRC,TOK,PAR,AST,OPT,IRG,IR language; class IX,REQ,RUN,BM runtime; class PY,QB,RB,QPATH,RESULT backend; class IM,EX,CTX,K,PE,FR,RMU,SUP,MEM,STK,OUTPUT hardware;

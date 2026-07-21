@@ -1,0 +1,16 @@
+%% IFÁ Processor V4.5 — Quantum Backend Architecture
+flowchart TB
+  Q["ExecutionRequest"] --> B["QuantumBackend.execute"] --> N["Normalize + domain validation"]
+  N --> MAP{"Native operation"}
+  MAP -->|"PAPO · YO · SEDA · JU · KERE"| V["Verified V5 Qiskit ALU path"]
+  MAP -->|"DAGBA · PIN · KU · GBE"| O["Exact reversible XOR-target oracle"]
+  V --> PHI["Φ-P8 / relation-frame representation"]
+  O --> PHI
+  PHI --> G["Relation gates / native quantum operation"] --> M["Statevector measurement / oracle decode"]
+  M --> C["Canonical IFÁ conversion\nlogical result + Y/T + RA/RD/R0 + Φ fields"]
+  C --> R["Runtime-compatible logical result"]
+
+  classDef boundary fill:#fef3c7,color:#422006,stroke:#d97706;
+  classDef quantum fill:#ede9fe,color:#4c1d95,stroke:#7c3aed;
+  classDef result fill:#dcfce7,color:#14532d,stroke:#16a34a;
+  class Q,B,N boundary; class MAP,V,O,PHI,G,M quantum; class C,R result;

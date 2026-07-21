@@ -1,0 +1,20 @@
+%% IFÁ Processor V4.5 — Transport and Relation-Stack Transport
+flowchart TB
+  A["A · B · OP"] --> RAW["Compute unrestricted signed/native VALUE"] --> WIN{"VALUE inside WIDTH-bit\nrelation window?"}
+  WIN -->|yes| T0["T = 0\nSTATE = 0"]
+  WIN -->|no| T1["T = 1\nSTATE = 1"]
+  RAW --> Y["Y = low WIDTH bits"]
+  T0 --> F["Frame {Y, RA, RD, R0, T}"]
+  T1 --> F
+  Y --> F
+  F --> RMU["Local relation memory"]
+  F --> PUSH["RPUSH / CALL preserves complete relation frame"]
+  PUSH --> CAP{"SP inside local stack region?"}
+  CAP -->|yes| STACK["Shared physical stack RAM\naddress = YÀRÁ × depth + SP"]
+  CAP -->|no| ST["STACK_TRANSPORT\nframe remains current"]
+  STACK --> POP["RPOP / RET"] --> RESTORE["Administrative restore into active local RMU"]
+
+  classDef relation fill:#ede9fe,color:#4c1d95,stroke:#7c3aed;
+  classDef transport fill:#fef3c7,color:#422006,stroke:#d97706;
+  classDef memory fill:#dcfce7,color:#14532d,stroke:#16a34a;
+  class A,RAW,Y,F relation; class WIN,T0,T1,CAP,ST transport; class RMU,PUSH,STACK,POP,RESTORE memory;

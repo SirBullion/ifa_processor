@@ -1,0 +1,14 @@
+%% IFÁ Processor V4.5 — Overall Computing Stack
+flowchart TB
+  S["OHÙN IFÁ Source"] --> T["Tokenizer"] --> P["Parser"] --> A["Program AST"]
+  A --> O["AST Optimizer"] --> C["IR Generator / Compiler"] --> IR["IFÁ IR"]
+  IR --> E["IR Executor / Interpreter"] --> Q["ExecutionRequest"] --> R["Runtime"] --> BM["BackendManager"]
+  BM --> PY["Python Backend"]
+  BM --> RTL["RTL Backend"]
+  BM --> QB["Quantum Backend"]
+
+  classDef source fill:#172554,color:#fff,stroke:#0f172a,stroke-width:2px;
+  classDef compiler fill:#dbeafe,color:#172554,stroke:#2563eb;
+  classDef runtime fill:#fef3c7,color:#422006,stroke:#d97706;
+  classDef backend fill:#dcfce7,color:#14532d,stroke:#16a34a;
+  class S source; class T,P,A,O,C,IR compiler; class E,Q,R,BM runtime; class PY,RTL,QB backend;

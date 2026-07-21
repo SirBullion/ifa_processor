@@ -1,0 +1,16 @@
+%% IFÁ Processor V4.5 — Runtime Architecture
+flowchart TB
+  IR["IR Executor"] --> Q["ExecutionRequest\noperator_name · operator · operand_a · operand_b"]
+  Q --> RT["Runtime.execute(request)"] --> BM["BackendManager\nactive backend"]
+  BM --> PY["Python Backend\ncanonical native semantics"]
+  BM --> RTL["RTL Backend\nbehavioral RTL-validation semantics"]
+  BM --> QB["Quantum Backend\nverified circuits / reversible oracles"]
+  PY --> RESULT["Canonical logical result"]
+  RTL --> RESULT
+  QB --> RESULT
+  RESULT --> RT --> IR
+
+  classDef boundary fill:#fef3c7,color:#422006,stroke:#d97706,stroke-width:2px;
+  classDef manager fill:#dbeafe,color:#172554,stroke:#2563eb;
+  classDef backend fill:#dcfce7,color:#14532d,stroke:#16a34a;
+  class IR,Q,RESULT boundary; class RT,BM manager; class PY,RTL,QB backend;

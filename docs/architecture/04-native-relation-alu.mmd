@@ -1,0 +1,31 @@
+%% IFÁ Processor V4.5 — Native Relation ALU / YÀRÁ PE
+flowchart TB
+  A["Operand A"] --> PHIA["Φ-P8(A)"]
+  B["Operand B"] --> PHIB["Φ-P8(B)"]
+  A --> CH["Universal relation channels"]
+  B --> CH
+  CH --> RA["RA = A & B"]
+  CH --> RD["RD = A ⊕ B"]
+  CH --> R0["R0 = ¬(A ∨ B)"]
+  A --> N["Selected native operation\nPAPO · YO · DAGBA · PIN · KU\nGBE · SEDA · JU · KERE"]
+  B --> N
+  N --> RAW["Unrestricted VALUE"] --> Y["Y = VALUE[WIDTH−1:0]"] --> PHIY["Φ-P8(Y)"]
+  RAW --> TC["Relation-window test"] --> T["T / STATE"]
+  A --> CMP["Comparison partition"]
+  B --> CMP
+  CMP --> FLAGS["EQ · GT · LT"]
+  PHIA --> F["Registered Relation Frame"]
+  PHIB --> F
+  PHIY --> F
+  RA --> F
+  RD --> F
+  R0 --> F
+  Y --> F
+  T --> F
+  FLAGS --> F
+
+  classDef operand fill:#172554,color:#fff,stroke:#0f172a;
+  classDef phi fill:#e0e7ff,color:#312e81,stroke:#4f46e5;
+  classDef relation fill:#ede9fe,color:#4c1d95,stroke:#7c3aed;
+  classDef result fill:#dcfce7,color:#14532d,stroke:#16a34a;
+  class A,B operand; class PHIA,PHIB,PHIY phi; class CH,RA,RD,R0,CMP,FLAGS,F relation; class N,RAW,Y,TC,T result;

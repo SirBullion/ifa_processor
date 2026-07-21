@@ -1,0 +1,14 @@
+%% IFÁ Processor V4.5 — Compiler Pipeline
+flowchart TB
+  S["Source text + filename"] --> L["Tokenizer\nlexical tokens"] --> P["Parser\nsyntax + source locations"] --> A["Program AST"]
+  A --> V["Distributed semantic checks\nparser + optimizer + IR lowering"]
+  V --> O["AST Optimizer\nfold / propagate / simplify / eliminate"] --> G["IR Generator"] --> IR["Three-address IFÁ IR"]
+  IR --> X["IR Executor"] --> Q["ExecutionRequest\ncreated per native operation"]
+  IR -. "COMPILE" .-> TX["Text IR (.ir)"]
+  IR -. "RTL generator" .-> SV["SystemVerilog (.sv)"]
+
+  classDef input fill:#172554,color:#fff,stroke:#0f172a,stroke-width:2px;
+  classDef stage fill:#e0e7ff,color:#312e81,stroke:#4f46e5;
+  classDef artifact fill:#f1f5f9,color:#334155,stroke:#64748b;
+  classDef boundary fill:#fef3c7,color:#422006,stroke:#d97706;
+  class S input; class L,P,V,O,G,X stage; class A,IR,TX,SV artifact; class Q boundary;

@@ -1,0 +1,24 @@
+%% IFÁ Processor V4.5 — Operation-Aware Relation Memory
+flowchart TB
+  F["Relation frame input\nOP · Y · RA · RD · R0 · T"] --> SEL["Select active YÀRÁ"]
+  SEL --> KEY["Lookup key K = {OP, RA, RD, T}"]
+  KEY --> RMU0["Local RMU[0]"]
+  KEY --> RMU1["Local RMU[1]"]
+  KEY --> RMUN["Local RMU[n]"]
+  RMU0 --> MATCH{"matching valid entry?"}
+  RMU1 --> MATCH
+  RMUN --> MATCH
+  MATCH -->|hit| HIT["Return stored\nOP · Y · RA · RD · R0 · T"]
+  MATCH -->|miss| STORE["Store at circular write pointer\nreplace valid entry if occupied"]
+  STORE --> MISS["Return new frame"]
+  ADMIN["Authorized frame share / RPOP / RET restore"] --> IMP["Administrative import\npriority over normal request"] --> RMU0
+  IMP --> RMU1
+  IMP --> RMUN
+  RMU0 --> STATS["hit · miss · store · evict · import counters"]
+  RMU1 --> STATS
+  RMUN --> STATS
+
+  classDef frame fill:#ede9fe,color:#4c1d95,stroke:#7c3aed;
+  classDef memory fill:#dcfce7,color:#14532d,stroke:#16a34a;
+  classDef control fill:#dbeafe,color:#172554,stroke:#2563eb;
+  class F,KEY,HIT,MISS frame; class RMU0,RMU1,RMUN,STORE,STATS memory; class SEL,MATCH,ADMIN,IMP control;

@@ -1,0 +1,23 @@
+%% IFÁ Processor V4.5 — ONÍLẸ̀ / YÀRÁ Operating-System Architecture
+flowchart TB
+  B["Babaláwo administrative mode"] --> M["YÀRÁ Manager\ncreate · select · pause · resume · destroy"]
+  M --> ACTIVE["Active YÀRÁ + lifecycle guards"]
+  ACTIVE --> C["Per-YÀRÁ Context Bank\nPC · IR · A · B · Address · Flags · SP"]
+  C <--> E["V4.5 Program Executor\nfetch · decode · control"]
+  ACTIVE --> F["Shared V4.5 relation fabric\nFour-YÀRÁ PE Bank"]
+  E --> F
+  F --> R0["Local RMU[0]"]
+  F --> R1["Local RMU[1]"]
+  F --> RN["Local RMU[n]"]
+  B --> S["ONÍLẸ̀ Frame Supervisor\npermission matrix"]
+  S --> SHARE["Authorized cross-YÀRÁ frame delegation"] --> F
+  ACTIVE --> MG["General Memory Guard\nownership + per-address read/write grants"]
+  E <--> MG
+  ACTIVE --> SM["Shared Stack RAM\nper-YÀRÁ logical regions"]
+  E <--> SM
+
+  classDef admin fill:#fee2e2,color:#7f1d1d,stroke:#dc2626;
+  classDef control fill:#dbeafe,color:#172554,stroke:#2563eb;
+  classDef relation fill:#ede9fe,color:#4c1d95,stroke:#7c3aed;
+  classDef memory fill:#dcfce7,color:#14532d,stroke:#16a34a;
+  class B,S admin; class M,ACTIVE,C,E control; class F,SHARE relation; class R0,R1,RN,MG,SM memory;
