@@ -3,6 +3,8 @@
 This guide preserves the methods used to verify IFÁ v4.5 from native relation
 mathematics through RMU reuse and synthesis.
 
+The GUI and terminal use the [IFÁ Tonal Interface Contract](IFA_TONAL_INTERFACE.md): `KỌ WỌLÉ >` for input, `Ó WỌLÉ` for receipt, `Ó LÈ WỌLÉ — ÀṢẸ` for security permission, `Ó LÈ WỌLÉ — ÀTÚNṢE` for execution correction at 75% or higher, and `KÒ WỌLÉ` for rejection.
+
 ## Desktop launcher
 
 Start the graphical project interface from the repository root:
@@ -25,7 +27,15 @@ Check its open-source dependencies without opening a window:
 python3 tools/ifa_v45_launcher.py --check
 ```
 
-The launcher opens the OHÙN shell and IFÁ monitor in a terminal, streams build, test, synthesis, and Hanoi RMU-profile output into its console, opens available GTKWave traces, and links to the architecture, language, and EDA documentation.
+The launcher embeds the OHÙN shell and IFÁ monitor in its keyboard-enabled console. Enter sends a command, Backspace/Delete edit it, and Up/Down recall history. Build, test, synthesis, auditing, GTKWave, and documentation remain in the same interface.
+
+Select any `.ifa45` source or `.hex` image with **Browse**, then choose **Run + Audit + Wave**. The interface assembles source when necessary, builds the RTL bridge, executes the program, reports cycles and RMU hits/misses, saves the audit log and waveform under `build/v45/audits/`, and opens GTKWave.
+
+The same audit is available without the GUI:
+
+```bash
+python3 tools/ifa_v45_audit.py program.ifa45 --open-wave
+```
 
 ## What each test proves
 

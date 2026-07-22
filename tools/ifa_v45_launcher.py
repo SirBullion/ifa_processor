@@ -12,7 +12,7 @@ import sys
 import threading
 import tkinter as tk
 from pathlib import Path
-from tkinter import messagebox, ttk
+from tkinter import filedialog, messagebox, ttk
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -27,13 +27,28 @@ class IFALauncher(tk.Tk):
         self.minsize(820, 560)
         self.output_queue: queue.Queue[str | None] = queue.Queue()
         self.running = False
+        self.process: subprocess.Popen[str] | None = None
+        self.interactive = False
+        self.command_history: list[str] = []
+        self.history_index = 0
 
         self.backend = tk.StringVar(value="python")
         self.hanoi_level = tk.IntVar(value=10)
+        self.audit_program = tk.StringVar(
+            value="programs_v4/hanoi_recursive_10_v45.ifa45"
+        )
         self.status = tk.StringVar(value="Ready")
 
         self._build_ui()
+        self.append(
+            "FIRST TIME: click OHÙN shell or IFÁ monitor, then type HELP "
+            "or SUGGESTIONS in KỌ WỌLÉ and press Enter.\n"
+            "Correction example: SUM FIST 7 PTIME → Ó LÈ WỌLÉ — ÀTÚNṢE → 58.\n"
+            "To audit hardware, select an .ifa45/.hex program and click "
+            "Run + Audit + Wave.\n"
+        )
         self.after(80, self._drain_output)
+        self.protocol("WM_DELETE_WINDOW", self.close_launcher)
 
     def _build_ui(self) -> None:
         self.columnconfigure(0, weight=1)
@@ -66,7 +81,20 @@ class IFALauncher(tk.Tk):
         ttk.Button(controls, text="Language docs", command=lambda: self.open_path(ROOT / "docs/OHUN_IFA_LANGUAGE_SPECIFICATION_1_0.md")).grid(row=3, column=4, sticky="ew", padx=4)
         ttk.Button(controls, text="EDA methods", command=lambda: self.open_path(ROOT / "docs/IFA_V45_EDA_OPEN_SOURCE_METHODS.md")).grid(row=3, column=5, sticky="ew", padx=(4, 0))
 
-        output_frame = ttk.LabelFrame(self, text="Output", padding=8)
+        ttk.Label(controls, text="Hardware program (.ifa45 or .hex)").grid(
+            row=4, column=0, columnspan=2, sticky="w", pady=(12, 0)
+        )
+        ttk.Entry(controls, textvariable=self.audit_program).grid(
+            row=5, column=0, columnspan=4, sticky="ew", padx=(0, 4)
+        )
+        ttk.Button(controls, text="Browse…", command=self.choose_audit_program).grid(
+            row=5, column=4, sticky="ew", padx=4
+        )
+        ttk.Button(controls, text="Run + Audit + Wave", command=self.audit_selected_program).grid(
+            row=5, column=5, sticky="ew", padx=(4, 0)
+        )
+
+        output_frame = ttk.LabelFrame(self, text="Integrated IFÁ console", padding=8)
         output_frame.grid(row=2, column=0, padx=16, pady=10, sticky="nsew")
         output_frame.columnconfigure(0, weight=1)
         output_frame.rowconfigure(0, weight=1)
@@ -76,11 +104,27 @@ class IFALauncher(tk.Tk):
         self.output.grid(row=0, column=0, sticky="nsew")
         scroll.grid(row=0, column=1, sticky="ns")
 
+        command_bar = ttk.Frame(output_frame, padding=(0, 8, 0, 0))
+        command_bar.grid(row=1, column=0, columnspan=2, sticky="ew")
+        command_bar.columnconfigure(1, weight=1)
+        ttk.Label(command_bar, text="KỌ WỌLÉ").grid(row=0, column=0, padx=(0, 8))
+        self.command_entry = ttk.Entry(command_bar, font=("TkFixedFont", 10))
+        self.command_entry.grid(row=0, column=1, sticky="ew")
+        self.command_entry.bind("<Return>", self.send_console_command)
+        self.command_entry.bind("<Up>", self.history_up)
+        self.command_entry.bind("<Down>", self.history_down)
+        ttk.Button(command_bar, text="Send", command=self.send_console_command).grid(row=0, column=2, padx=6)
+        ttk.Button(command_bar, text="Stop", command=self.stop_process).grid(row=0, column=3)
+
         footer = ttk.Frame(self, padding=(16, 0, 16, 12))
         footer.grid(row=3, column=0, sticky="ew")
         footer.columnconfigure(0, weight=1)
         ttk.Label(footer, textvariable=self.status).grid(row=0, column=0, sticky="w")
-        ttk.Button(footer, text="Clear output", command=self.clear_output).grid(row=0, column=1)
+        ttk.Button(
+            footer, text="First-time guide",
+            command=lambda: self.open_path(ROOT / "docs/FIRST_TIME_IFA_V45.md"),
+        ).grid(row=0, column=1, padx=(0, 8))
+        ttk.Button(footer, text="Clear output", command=self.clear_output).grid(row=0, column=2)
 
     def append(self, text: str) -> None:
         self.output.configure(state="normal")
@@ -93,28 +137,40 @@ class IFALauncher(tk.Tk):
         self.output.delete("1.0", "end")
         self.output.configure(state="disabled")
 
-    def run_command(self, command: list[str], label: str, stdin: str | None = None) -> None:
+    def run_command(self, command: list[str], label: str, stdin: str | None = None, interactive: bool = False) -> None:
         if self.running:
-            messagebox.showinfo("IFÁ v4.5", "Another task is still running.")
+            messagebox.showinfo("IFÁ v4.5", "Another task is still running. Use Stop first.")
             return
         self.running = True
+        self.interactive = interactive
         self.status.set(label)
         self.append(f"\n$ {' '.join(command)}\n")
 
         def worker() -> None:
             try:
-                process = subprocess.Popen(command, cwd=ROOT, stdin=subprocess.PIPE if stdin is not None else None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+                process = subprocess.Popen(
+                    command, cwd=ROOT,
+                    stdin=subprocess.PIPE if stdin is not None or interactive else None,
+                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                    text=True, bufsize=0,
+                    env={**os.environ, "PYTHONUNBUFFERED": "1"},
+                )
+                self.process = process
                 if stdin is not None and process.stdin is not None:
                     process.stdin.write(stdin)
                     process.stdin.close()
                 assert process.stdout is not None
-                for line in process.stdout:
-                    self.output_queue.put(line)
+                while True:
+                    character = process.stdout.read(1)
+                    if character == "":
+                        break
+                    self.output_queue.put(character)
                 code = process.wait()
                 self.output_queue.put(f"\n[finished with status {code}]\n")
             except OSError as error:
-                self.output_queue.put(f"ERROR: {error}\n")
+                self.output_queue.put(f"KÒ WỌLÉ: {error}\n")
             finally:
+                self.process = None
                 self.output_queue.put(None)
 
         threading.Thread(target=worker, daemon=True).start()
@@ -125,6 +181,7 @@ class IFALauncher(tk.Tk):
                 item = self.output_queue.get_nowait()
                 if item is None:
                     self.running = False
+                    self.interactive = False
                     self.status.set("Ready")
                 else:
                     self.append(item)
@@ -132,37 +189,89 @@ class IFALauncher(tk.Tk):
             pass
         self.after(80, self._drain_output)
 
-    def terminal_command(self, command: list[str]) -> list[str] | None:
-        candidates = (
-            ("x-terminal-emulator", ["-e"]),
-            ("gnome-terminal", ["--"]),
-            ("konsole", ["-e"]),
-            ("xfce4-terminal", ["-e"]),
-        )
-        for executable, arguments in candidates:
-            path = shutil.which(executable)
-            if path:
-                return [path, *arguments, *command]
-        return None
-
-    def launch_terminal(self, command: list[str]) -> None:
-        terminal = self.terminal_command(command)
-        if terminal is None:
-            messagebox.showerror("IFÁ v4.5", "No supported terminal emulator was found.")
-            return
-        try:
-            subprocess.Popen(terminal, cwd=ROOT)
-        except OSError as error:
-            messagebox.showerror("IFÁ v4.5", str(error))
-
     def open_shell(self) -> None:
-        self.launch_terminal([PYTHON, "tools/ohunifa_v45.py", "--backend", self.backend.get()])
+        self.run_command(
+            [PYTHON, "-u", "tools/ohunifa_v45.py", "--backend", self.backend.get()],
+            f"OHÙN shell ({self.backend.get()})", interactive=True,
+        )
+        self.command_entry.focus_set()
 
     def open_monitor(self) -> None:
-        self.launch_terminal([PYTHON, "monitor_v45/ifa_monitor.py"])
+        self.run_command(
+            [PYTHON, "-u", "monitor_v45/ifa_monitor.py"],
+            "IFÁ monitor", interactive=True,
+        )
+        self.command_entry.focus_set()
+
+    def send_console_command(self, event=None):
+        command = self.command_entry.get()
+        if not self.interactive or self.process is None or self.process.stdin is None:
+            messagebox.showinfo("IFÁ v4.5", "Start the OHÙN shell or IFÁ monitor first.")
+            return "break"
+        try:
+            self.process.stdin.write(command + "\n")
+            self.process.stdin.flush()
+        except (BrokenPipeError, OSError) as error:
+            messagebox.showerror("IFÁ v4.5", str(error))
+            return "break"
+        self.append(command + "\n")
+        if command.strip():
+            self.command_history.append(command)
+            self.history_index = len(self.command_history)
+        self.command_entry.delete(0, "end")
+        return "break"
+
+    def history_up(self, event=None):
+        if self.command_history:
+            self.history_index = max(0, self.history_index - 1)
+            self._set_command(self.command_history[self.history_index])
+        return "break"
+
+    def history_down(self, event=None):
+        if self.command_history:
+            self.history_index = min(len(self.command_history), self.history_index + 1)
+            value = "" if self.history_index == len(self.command_history) else self.command_history[self.history_index]
+            self._set_command(value)
+        return "break"
+
+    def _set_command(self, value: str) -> None:
+        self.command_entry.delete(0, "end")
+        self.command_entry.insert(0, value)
+        self.command_entry.icursor("end")
+
+    def stop_process(self) -> None:
+        if self.process is not None and self.process.poll() is None:
+            self.process.terminate()
+
+    def close_launcher(self) -> None:
+        self.stop_process()
+        self.destroy()
 
     def run_tests(self) -> None:
         self.run_command([PYTHON, "-m", "unittest", "tests.test_v45_native_isa", "tests.test_quantum_backend"], "Running focused tests")
+
+    def choose_audit_program(self) -> None:
+        selected = filedialog.askopenfilename(
+            parent=self, title="Select an IFÁ v4.5 hardware program",
+            initialdir=ROOT / "programs_v4",
+            filetypes=(("IFÁ v4.5 assembly", "*.ifa45"), ("IFÁ instruction image", "*.hex"), ("All files", "*")),
+        )
+        if selected:
+            try:
+                self.audit_program.set(str(Path(selected).resolve().relative_to(ROOT)))
+            except ValueError:
+                self.audit_program.set(selected)
+
+    def audit_selected_program(self) -> None:
+        requested = Path(self.audit_program.get()).expanduser()
+        program = requested if requested.is_absolute() else ROOT / requested
+        if not program.is_file():
+            messagebox.showerror("IFÁ v4.5", f"KÒ WỌLÉ: Program not found:\n{program}")
+            return
+        self.run_command(
+            [PYTHON, "-u", "tools/ifa_v45_audit.py", str(program), "--open-wave"],
+            f"Auditing {program.name}",
+        )
 
     def profile_hanoi(self) -> None:
         level = self.hanoi_level.get()
@@ -193,7 +302,7 @@ class IFALauncher(tk.Tk):
         try:
             content = path.read_text(encoding="utf-8")
         except (OSError, UnicodeError) as error:
-            messagebox.showerror("IFÁ v4.5", f"Unable to open {path}:\n{error}")
+            messagebox.showerror("IFÁ v4.5", f"KÒ WỌLÉ: Unable to open {path}:\n{error}")
             return
 
         viewer = tk.Toplevel(self)

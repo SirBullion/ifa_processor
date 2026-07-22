@@ -1,5 +1,7 @@
 # OHÙN IFÁ Language Specification 1.0
 
+> Interface tones: `KỌ WỌLÉ >` requests input, `Ó WỌLÉ` confirms receipt, `Ó LÈ WỌLÉ — ÀṢẸ` marks security permission, `Ó LÈ WỌLÉ — ÀTÚNṢE` marks an execution correction accepted at 75% or higher, and `KÒ WỌLÉ` marks rejection. See [IFÁ Tonal Interface Contract](IFA_TONAL_INTERFACE.md).
+
 ## 1. Conformance and execution
 
 An implementation conforms when it accepts this syntax, preserves the defined values and scopes, and routes native operations through `ExecutionRequest` and Runtime. Source is compiled independently of the selected Python, RTL, or quantum backend.

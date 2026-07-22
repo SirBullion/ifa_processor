@@ -1,5 +1,7 @@
 # OHÙN IFÁ V1.0 — Quick Reference Card
 
+**Tonal interface:** `KỌ WỌLÉ >` input · `Ó WỌLÉ` received · `Ó LÈ WỌLÉ — ÀṢẸ` security permitted · `Ó LÈ WỌLÉ — ÀTÚNṢE` execution corrected (≥75%) · `KÒ WỌLÉ` rejected. See [the tonal interface contract](IFA_TONAL_INTERFACE.md).
+
 **Canonical implementation:** IFÁ Processor V4.5  
 **Source extension:** `.ifa` · **Case:** keywords, identifiers, and function names are case-insensitive  
 **Pipeline:** Source → Tokenizer → Parser → AST → Optimizer → IR → Interpreter → ExecutionRequest → Runtime → BackendManager → Backend
@@ -10,7 +12,7 @@
 
 OHÙN IFÁ is a dynamically typed, expression-oriented language for the IFÁ native relation operations. A file is one program containing ordered statements. Programs support mutable variables and lists, functions, recursion, modules, conditionals, and loops. Native arithmetic and relations execute through the selected Python, RTL, or quantum backend.
 
-Blank lines are ignored. Newlines may occur anywhere inside an expression; no continuation marker or semicolon is required. The tokenizer supports quoted strings with escapes. The V4.5 parser does **not** define source-comment syntax.
+Blank lines are ignored. Newlines may occur anywhere inside an expression; no continuation marker or semicolon is required. The tokenizer supports quoted strings with escapes. `#` begins a line comment outside a quoted string.
 
 ## 2. Core syntax and keywords
 
@@ -195,7 +197,7 @@ py tools/ohunifa_v45.py --backend python|rtl|quantum
 | `BACKEND python|rtl|quantum` | select backend |
 | `STATUS` | show V4.5 shell status |
 | `YARA GBOBO` | toggle AST/result diagnostic display |
-| `IPO [FRAME|RMU|PHI]` | inspection command; currently reports not connected |
+| `IPO [FRAME|RMU|PHI]` | inspect the latest native frame, service RMU history, or Φ-P8 channels |
 | `HELP` | list/help for commands |
 | `EXIT`, `QUIT` | leave the shell |
 

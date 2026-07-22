@@ -26,6 +26,7 @@ from compiler.ir import ir_lowerer
 from compiler.rtl_generator import systemverilog_generator
 from compiler.diagnostics import format_diagnostic
 from runtime.ifa_services_v45 import ifa_services_v45
+from runtime.input_entry_v45 import correct_prime_sum, render_correction
 
 class OhunIFAShell(cmd.Cmd):
 
@@ -39,7 +40,7 @@ Native RMU Computation Engine
 Type HELP for commands.
 """
 
-    prompt = "OHUNIFA> "
+    prompt = "KỌ WỌLÉ > "
 
     def __init__(self, backend_name="python"):
         super().__init__()
@@ -54,16 +55,21 @@ Type HELP for commands.
     # Complete program input
     # --------------------------------------------------
 
+    def precmd(self, line):
+        if line.strip():
+            print("Ó WỌLÉ")
+        return line
+
     def onecmd(self, line):
 
         if self.paste_lines is not None:
             if line.strip().upper() in ("OTAN", "END"):
                 source = "\n".join(self.paste_lines)
                 self.paste_lines = None
-                self.prompt = "OHUNIFA> "
+                self.prompt = "KỌ WỌLÉ > "
 
                 if not source.strip():
-                    print("ERROR: No source was entered.")
+                    print("KÒ WỌLÉ: No source was entered.")
                     return
 
                 return self.execute_program(source, source_name="<paste>")
@@ -84,7 +90,7 @@ Type HELP for commands.
                 if self.declaration_depth == 0:
                     source = "\n".join(self.declaration_lines)
                     self.declaration_lines = None
-                    self.prompt = "OHUNIFA> "
+                    self.prompt = "KỌ WỌLÉ > "
                     return self.execute_source(source)
 
             return
@@ -153,13 +159,13 @@ Type HELP for commands.
         )
 
         if source_path is None:
-            print(f"ERROR: Source file not found: {filename}")
+            print(f"KÒ WỌLÉ: Source file not found: {filename}")
             return
 
         try:
             source = source_path.read_text(encoding="utf-8")
         except (OSError, UnicodeError) as error:
-            print(f"ERROR: Unable to read {filename}: {error}")
+            print(f"KÒ WỌLÉ: Unable to read {filename}: {error}")
             return
 
         return self.execute_program(
@@ -175,7 +181,7 @@ Type HELP for commands.
         requested = Path(filename)
         source_path = requested if requested.is_file() else PROJECT_ROOT / requested
         if not source_path.is_file():
-            print(f"ERROR: Source file not found: {filename}"); return
+            print(f"KÒ WỌLÉ: Source file not found: {filename}"); return
         source = ""
         try:
             source = source_path.read_text(encoding="utf-8")
@@ -189,7 +195,7 @@ Type HELP for commands.
             ir_path.write_text(ir.to_text(), encoding="utf-8")
             rtl_path.write_text(rtl, encoding="utf-8")
         except Exception as error:
-            print("ERROR: " + format_diagnostic(
+            print("KÒ WỌLÉ: " + format_diagnostic(
                 error, source, str(source_path.resolve())
             ))
             return
@@ -246,6 +252,17 @@ Type HELP for commands.
         print("PRINTODU / PRINTODUALL")
         print("OPELE / ÒPẸ̀LẸ̀ [LAST]")
         print("TEIFA <ODÙ> [ODÙ|MEJI] | <8 bits> | LAST")
+
+    def do_suggestions(self, arg):
+        """Show a short first-use command list."""
+        print("SUGGESTIONS")
+        print("HELP                 show all commands")
+        print("SERVICES             show IFÁ services")
+        print("2+2                  evaluate an expression")
+        print("PAPO MEJI ATI META   run a native relation")
+        print("RUN <file.ifa>       run an OHÙN program")
+        print("IPO FRAME            inspect the last relation")
+        print("EXIT                 leave the shell")
 
 
     # --------------------------------------------------
@@ -359,6 +376,9 @@ Type HELP for commands.
             if command == "services":
                 return self.do_services(args)
 
+            if command == "suggestions":
+                return self.do_suggestions(args)
+
             if command == "backend":
                 return self.do_backend(args)
 
@@ -392,6 +412,11 @@ Type HELP for commands.
         # ------------------------------------------
         #
 
+        correction = correct_prime_sum(line)
+        if correction is not None:
+            print(render_correction(correction))
+            return
+
         if ifa_services_v45.handle(line):
             return
 
@@ -412,7 +437,7 @@ Type HELP for commands.
 
         except Exception as e:
 
-            print("ERROR: " + format_diagnostic(e, source, "<interactive>"))
+            print("KÒ WỌLÉ: " + format_diagnostic(e, source, "<interactive>"))
             return
 
         if self.yara_gbobo:
@@ -438,7 +463,7 @@ Type HELP for commands.
 
         except Exception as e:
 
-            print("ERROR: " + format_diagnostic(e, source, source_name))
+            print("KÒ WỌLÉ: " + format_diagnostic(e, source, source_name))
             return
 
         if self.yara_gbobo:

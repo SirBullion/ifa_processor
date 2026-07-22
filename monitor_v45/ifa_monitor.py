@@ -17,6 +17,7 @@ import time
 import re
 from pathlib import Path
 from language_v3.spec.voice import VOICE
+from runtime.input_entry_v45 import EntryState, entry_text
 
 OJU_ODU = [
     ("ÒGBÈ", "light, openness, clarity, emergence"),
@@ -424,7 +425,7 @@ def extract_abajade(stdout):
 def run_program(path):
     program = Path(path)
     if not program.exists():
-        print(f"File not found: {program}")
+        print(f"KÒ WỌLÉ: File not found: {program}")
         return
 
     t0 = time.perf_counter()
@@ -1061,14 +1062,14 @@ def require_onile_mode():
 
     if SHELL_MODE != "ONILE":
         print(
-            "DENY: This command is available only "
+            "KÒ WỌLÉ: This command is available only "
             "inside ONÍLẸ̀ administrative mode."
         )
         return False
 
     if not BABALAWO_MODE:
         print(
-            "DENY: ONÍLẸ̀ administration requires "
+            "KÒ WỌLÉ: ONÍLẸ̀ administration requires "
             "BABALÁWO TAN."
         )
         return False
@@ -1097,14 +1098,14 @@ def onile_create_yara(name):
     yara_id = resolve_yara_id(name)
 
     if yara_id is None:
-        print(f"DENY: Invalid YÀRÁ name or ID: {name}")
+        print(f"KÒ WỌLÉ: Invalid YÀRÁ name or ID: {name}")
         return False
 
     state = YARA_STATE[yara_id]
 
     if state["valid"]:
         print(
-            f"DENY: YÀRÁ {state['name']} already exists."
+            f"KÒ WỌLÉ: YÀRÁ {state['name']} already exists."
         )
         return False
 
@@ -1133,14 +1134,14 @@ def onile_destroy_yara(name, force=False):
     yara_id = resolve_yara_id(name)
 
     if yara_id is None:
-        print(f"DENY: Invalid YÀRÁ name or ID: {name}")
+        print(f"KÒ WỌLÉ: Invalid YÀRÁ name or ID: {name}")
         return False
 
     state = YARA_STATE[yara_id]
 
     if not state["valid"]:
         print(
-            f"DENY: YÀRÁ {state['name']} does not exist."
+            f"KÒ WỌLÉ: YÀRÁ {state['name']} does not exist."
         )
         return False
 
@@ -1193,7 +1194,7 @@ def validate_existing_yara(value):
 
     if yara_id is None:
         print(
-            f"DENY: Invalid YÀRÁ name or ID: {value}"
+            f"KÒ WỌLÉ: Invalid YÀRÁ name or ID: {value}"
         )
         return None
 
@@ -1201,7 +1202,7 @@ def validate_existing_yara(value):
 
     if not state["valid"]:
         print(
-            f"DENY: YÀRÁ {yara_display_name(yara_id)} "
+            f"KÒ WỌLÉ: YÀRÁ {yara_display_name(yara_id)} "
             "has not been created."
         )
         return None
@@ -1258,7 +1259,7 @@ def onile_grant_delegation(source, destination):
 
     if source_id == destination_id:
         print(
-            "DENY: Delegation permission requires "
+            "KÒ WỌLÉ: Delegation permission requires "
             "different source and destination YÀRÁ."
         )
         DELEGATION_STATS["denied"] += 1
@@ -1271,7 +1272,7 @@ def onile_grant_delegation(source, destination):
 
     if permission in YARA_DELEGATION_PERMISSIONS:
         print(
-            "DENY: Delegation permission already exists: "
+            "KÒ WỌLÉ: Delegation permission already exists: "
             f"{yara_display_name(source_id)} → "
             f"{yara_display_name(destination_id)}"
         )
@@ -1282,7 +1283,7 @@ def onile_grant_delegation(source, destination):
     DELEGATION_STATS["grants"] += 1
 
     print(
-        "Permission granted: "
+        f"{entry_text(EntryState.OLE_WOLE_ASE)}: Permission granted: "
         f"{yara_display_name(source_id)} → "
         f"{yara_display_name(destination_id)}"
     )
@@ -1313,7 +1314,7 @@ def onile_revoke_delegation(source, destination):
 
     if permission not in YARA_DELEGATION_PERMISSIONS:
         print(
-            "DENY: No delegation permission exists: "
+            "KÒ WỌLÉ: No delegation permission exists: "
             f"{yara_display_name(source_id)} → "
             f"{yara_display_name(destination_id)}"
         )
@@ -1353,7 +1354,7 @@ def onile_share_relation_frame(source, destination):
 
     if source_id == destination_id:
         print(
-            "DENY: A YÀRÁ cannot delegate a frame to itself."
+            "KÒ WỌLÉ: A YÀRÁ cannot delegate a frame to itself."
         )
 
         source_state["share_denied_count"] += 1
@@ -1367,7 +1368,7 @@ def onile_share_relation_frame(source, destination):
 
     if permission not in YARA_DELEGATION_PERMISSIONS:
         print(
-            "DENY: No delegation permission from "
+            "KÒ WỌLÉ: No delegation permission from "
             f"{source_state['name']} to "
             f"{destination_state['name']}."
         )
@@ -1380,7 +1381,7 @@ def onile_share_relation_frame(source, destination):
 
     if relation_frame is None:
         print(
-            f"DENY: YÀRÁ {source_state['name']} "
+            f"KÒ WỌLÉ: YÀRÁ {source_state['name']} "
             "has no recorded relation frame."
         )
         print(
@@ -1404,7 +1405,7 @@ def onile_share_relation_frame(source, destination):
     DELEGATION_STATS["shares"] += 1
 
     print(
-        "Relation frame delegated: "
+        f"{entry_text(EntryState.OLE_WOLE_ASE)}: Relation frame delegated: "
         f"{source_state['name']} → "
         f"{destination_state['name']}"
     )
@@ -1544,14 +1545,14 @@ def select_yara(name):
 
     if SHELL_MODE != "ONILE":
         print(
-            "DENY: Enter ONÍLẸ̀ administrative mode "
+            "KÒ WỌLÉ: Enter ONÍLẸ̀ administrative mode "
             "before selecting a YÀRÁ."
         )
         return False
 
     if not BABALAWO_MODE:
         print(
-            "DENY: YÀRÁ selection through ONÍLẸ̀ "
+            "KÒ WỌLÉ: YÀRÁ selection through ONÍLẸ̀ "
             "requires BABALÁWO TAN."
         )
         return False
@@ -1570,7 +1571,7 @@ def select_yara(name):
 
     if not state["valid"]:
         print(
-            f"DENY: YÀRÁ {state['name']} "
+            f"KÒ WỌLÉ: YÀRÁ {state['name']} "
             "has not been created."
         )
         print(
@@ -1580,7 +1581,7 @@ def select_yara(name):
 
     if not state["running"] or state["paused"]:
         print(
-            f"DENY: YÀRÁ {state['name']} "
+            f"KÒ WỌLÉ: YÀRÁ {state['name']} "
             "is not running."
         )
         return False
@@ -1601,7 +1602,7 @@ def require_active_yara():
     """Return the active YÀRÁ state or deny the request."""
 
     if SHELL_MODE != "YARA" or ACTIVE_YARA is None:
-        print("DENY: No active YÀRÁ execution mode.")
+        print("KÒ WỌLÉ: No active YÀRÁ execution mode.")
         print(
             "Use: BABALAWO TAN → ONILE → "
             "DA OGBE → YARA OGBE"
@@ -1624,14 +1625,14 @@ def pause_active_yara():
 
     if not state["valid"]:
         print(
-            f"DENY: YÀRÁ {state['name']} does not exist."
+            f"KÒ WỌLÉ: YÀRÁ {state['name']} does not exist."
         )
         state["denied_count"] += 1
         return False
 
     if state["paused"] or not state["running"]:
         print(
-            f"DENY: YÀRÁ {state['name']} is already paused."
+            f"KÒ WỌLÉ: YÀRÁ {state['name']} is already paused."
         )
         state["denied_count"] += 1
         return False
@@ -1667,7 +1668,7 @@ def resume_yara(name):
 
     if yara_id is None:
         print(
-            f"DENY: Invalid YÀRÁ name or ID: {name}"
+            f"KÒ WỌLÉ: Invalid YÀRÁ name or ID: {name}"
         )
         return False
 
@@ -1675,14 +1676,14 @@ def resume_yara(name):
 
     if not state["valid"]:
         print(
-            f"DENY: YÀRÁ {state['name']} does not exist."
+            f"KÒ WỌLÉ: YÀRÁ {state['name']} does not exist."
         )
         state["denied_count"] += 1
         return False
 
     if state["running"] and not state["paused"]:
         print(
-            f"DENY: YÀRÁ {state['name']} is already running."
+            f"KÒ WỌLÉ: YÀRÁ {state['name']} is already running."
         )
         state["denied_count"] += 1
         return False
@@ -1710,7 +1711,7 @@ def require_loaded_frame():
     loaded_frame = state.get("loaded_frame")
 
     if loaded_frame is None:
-        print("DENY: No relation frame has been loaded.")
+        print("KÒ WỌLÉ: No relation frame has been loaded.")
         print("Use FRAME LO first.")
         state["denied_count"] += 1
         return state, None
@@ -1776,7 +1777,7 @@ def load_current_frame():
 
     if current is None:
         print(
-            f"DENY: YÀRÁ {state['name']} "
+            f"KÒ WỌLÉ: YÀRÁ {state['name']} "
             "has no current relation frame."
         )
         print(
@@ -1879,7 +1880,7 @@ def calculate_from_loaded_frame(
 
     if operation not in valid_operations:
         print(
-            f"DENY: Unsupported frame operation: {operation}"
+            f"KÒ WỌLÉ: Unsupported frame operation: {operation}"
         )
         print("Lo: FRAME PAPO Y ATI 6")
         state["denied_count"] += 1
@@ -1887,7 +1888,7 @@ def calculate_from_loaded_frame(
 
     if field not in valid_fields:
         print(
-            f"DENY: Unknown relation-frame field: {field}"
+            f"KÒ WỌLÉ: Unknown relation-frame field: {field}"
         )
         print("Fields: Y RA RD R0 T")
         state["denied_count"] += 1
@@ -1897,14 +1898,14 @@ def calculate_from_loaded_frame(
         operand_b = int(str(second_value), 0)
     except ValueError:
         print(
-            f"DENY: Invalid second operand: {second_value}"
+            f"KÒ WỌLÉ: Invalid second operand: {second_value}"
         )
         state["denied_count"] += 1
         return False
 
     if operand_b < 0 or operand_b > 0xFF:
         print(
-            "DENY: Calculation operand must be between "
+            "KÒ WỌLÉ: Calculation operand must be between "
             "0 and 255."
         )
         state["denied_count"] += 1
@@ -2036,7 +2037,7 @@ def monitor_prompt():
     if SHELL_MODE == "YARA" and ACTIVE_YARA is not None:
         return f"OHÙN IFÁ[{active_yara_name()}]> "
 
-    return "OHÙN IFÁ> "
+    return "KỌ WỌLÉ > "
 
 
 
@@ -2058,7 +2059,7 @@ def enter_onile_mode():
     # Entering ONÍLẸ̀ from the general shell requires Babaláwo.
     if not BABALAWO_MODE:
         print(
-            "DENY: ONÍLẸ̀ administrative mode requires "
+            "KÒ WỌLÉ: ONÍLẸ̀ administrative mode requires "
             "BABALÁWO TAN."
         )
         return False
@@ -2100,7 +2101,7 @@ def ita_leave_onile(force=False):
 
     if SHELL_MODE == "YARA":
         print(
-            "DENY: ITA is an ONÍLẸ̀ administrative command."
+            "KÒ WỌLÉ: ITA is an ONÍLẸ̀ administrative command."
         )
         print(
             "Use ONILE first to return from the active YÀRÁ."
@@ -2109,7 +2110,7 @@ def ita_leave_onile(force=False):
 
     if SHELL_MODE != "ONILE":
         print(
-            "DENY: You are not inside ONÍLẸ̀ administrative mode."
+            "KÒ WỌLÉ: You are not inside ONÍLẸ̀ administrative mode."
         )
         return False
 
@@ -2518,6 +2519,15 @@ def execute(cmd):
 
     if u == "HELP":
         print(HELP)
+        return
+
+    if u == "SUGGESTIONS":
+        print("SUGGESTIONS")
+        print("HELP          show all monitor commands")
+        print("SERVICES      show native services")
+        print("STATE         show processor state")
+        print("HISTORY       show earlier inputs")
+        print("EXIT          leave the monitor")
         return
 
     if u == "VERSION":
@@ -2968,7 +2978,7 @@ def execute(cmd):
     ):
         if SHELL_MODE != "ONILE":
             print(
-                "DENY: Enter ONÍLẸ̀ administrative mode first."
+                "KÒ WỌLÉ: Enter ONÍLẸ̀ administrative mode first."
             )
             return
 
@@ -2982,7 +2992,7 @@ def execute(cmd):
     ):
         if SHELL_MODE != "ONILE":
             print(
-                "DENY: YÀRÁ registry is an ONÍLẸ̀ "
+                "KÒ WỌLÉ: YÀRÁ registry is an ONÍLẸ̀ "
                 "administrative service."
             )
             return
@@ -3056,7 +3066,7 @@ def execute(cmd):
     ):
         if SHELL_MODE != "YARA" or ACTIVE_YARA is None:
             print(
-                "DENY: YARA STATS requires an active YÀRÁ."
+                "KÒ WỌLÉ: YARA STATS requires an active YÀRÁ."
             )
             print(
                 "Select a created YÀRÁ from ONÍLẸ̀ first."
@@ -3073,7 +3083,7 @@ def execute(cmd):
     ):
         if SHELL_MODE != "YARA" or ACTIVE_YARA is None:
             print(
-                "DENY: YARA SUN requires an active YÀRÁ."
+                "KÒ WỌLÉ: YARA SUN requires an active YÀRÁ."
             )
             return
 
@@ -3093,7 +3103,7 @@ def execute(cmd):
     ):
         if SHELL_MODE != "ONILE":
             print(
-                "DENY: YARA JI is an ONÍLẸ̀ "
+                "KÒ WỌLÉ: YARA JI is an ONÍLẸ̀ "
                 "administrative command."
             )
             print(
@@ -3148,7 +3158,7 @@ def execute(cmd):
 
     if u in ("ORO", "Ọ̀RỌ̀"):
         if SHELL_MODE != "YARA" or ACTIVE_YARA is None:
-            print("DENY: No active YÀRÁ execution mode.")
+            print("KÒ WỌLÉ: No active YÀRÁ execution mode.")
             print(
                 "Use: BABALAWO TAN → ONILE → YARA OGBE"
             )
@@ -3206,7 +3216,10 @@ def main():
     boot()
     while True:
         try:
-            execute(input(monitor_prompt()))
+            command = input(monitor_prompt())
+            if command.strip():
+                print("Ó WỌLÉ")
+            execute(command)
         except (EOFError, KeyboardInterrupt):
             print()
             break
